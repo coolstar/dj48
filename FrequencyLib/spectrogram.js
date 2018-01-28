@@ -53,7 +53,7 @@ var soundSource, concertHallBuffer;
 
 ajaxRequest = new XMLHttpRequest();
 
-ajaxRequest.open('GET', 'https://mdn.github.io/voice-change-o-matic/audio/concert-crowd.ogg', true);
+ajaxRequest.open('GET', 'https://coolstar.org/misc/cs48-test/electricity-ncs.mp3', true);
 
 ajaxRequest.responseType = 'arraybuffer';
 
@@ -65,11 +65,23 @@ ajaxRequest.onload = function() {
                              concertHallBuffer = buffer;
                              soundSource = audioCtx.createBufferSource();
                              soundSource.buffer = concertHallBuffer;
-                             }, function(e){ console.log("Error with decoding audio data" + e.err);});
-    
-    //soundSource.connect(audioCtx.destination);
-    //soundSource.loop = true;
-    //soundSource.start();
+
+                             soundSource.connect(audioCtx.destination);
+    soundSource.loop = true;
+    soundSource.start();
+
+
+    soundSource.connect(analyser);
+    analyser.connect(distortion);
+    distortion.connect(biquadFilter);
+    biquadFilter.connect(convolver);
+    convolver.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+                            
+    visualize();
+    }, function(e){
+        console.log("Error with decoding audio data" + e.err);
+    });
 };
 
 ajaxRequest.send();
@@ -89,7 +101,7 @@ var drawVisual;
 
 //main block for doing the audio recording
 
-if (navigator.getUserMedia) {
+/*if (navigator.getUserMedia) {
     console.log('getUserMedia supported.');
     navigator.getUserMedia (
                             // constraints - only audio needed for this app
@@ -119,7 +131,7 @@ if (navigator.getUserMedia) {
                             );
 } else {
     console.log('getUserMedia not supported on your browser!');
-}
+}*/
 
 function visualize() {
     WIDTH = canvas.width;
@@ -214,7 +226,6 @@ function visualize() {
     
 }
 
-/*
 function voiceChange() {
     
     distortion.oversample = '4x';
@@ -245,7 +256,7 @@ visualSelect.onchange = function() {
     visualize();
 };
 
-voiceSelect.onchange = function() {
+/*voiceSelect.onchange = function() {
     voiceChange();
 };
 
@@ -261,5 +272,4 @@ function voiceMute() {
         mute.id = "";
         mute.innerHTML = "Mute";
     }
-}
- */
+}*/
