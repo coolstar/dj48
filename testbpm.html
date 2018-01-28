@@ -98,7 +98,8 @@
 			}
 
 			var request = new XMLHttpRequest();
-      		request.open('GET', "https://coolstar.org/misc/cs48-test/electricity.mp3", true);
+      		//request.open('GET', "https://coolstar.org/misc/cs48-test/electricity-ncs.mp3", true);
+      		request.open('GET', "https://coolstar.org/misc/cs48-test/theedge-ncs.mp3", true);
   			request.responseType = 'arraybuffer';
       		request.onload = function() {
 				var OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
