@@ -9,5 +9,10 @@ https://alemangui.github.io/pizzicato/
 https://jmperezperez.com/beats-audio-api/
 
 Week 1:
-Work on library 1 to find specific frequencies. We want a spectrogram completed as soon as possible.
+Work on library 1 to find specific frequencies. We want a spectrogram completed as soon as possible. By the end of the day, we should have a html file with Javascript running, in which the sound file can play, and be able to run the Fourier Transform on.
+
+After completing a spectrogram, we will work getting the Beats Per Minute library to display the bpm.
+
+
+Then, we will work on using the sound mixing library to mix sounds. 
 
