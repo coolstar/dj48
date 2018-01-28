@@ -22,6 +22,7 @@
       <h3>A Web Application for sound mixing and audio analysis</h3>
     </header>
     <input type="text" id="audiofile" size="80" value="demo.mp3" />
+    <audio id="myaudio"></audio>
     <script>  
       var currentFile = "";
         function playAudio() {
@@ -41,11 +42,11 @@
                     // Tests the paused attribute and set state. 
                     if (oAudio.paused) {
                         oAudio.play();
-                        btn.textContent = "Pause";
+                        //btn.textContent = "Pause";
                     }
                     else {
                         oAudio.pause();
-                        btn.textContent = "Play";
+                        //btn.textContent = "Play";
                     }
                 }
                 catch (e) {
