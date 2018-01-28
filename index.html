@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>DJ-48</title>
-	
-	<!--[if le IE 9]>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>DJ-48</title>
+  
+  <!--[if le IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="scripts/respond.js"></script>
     <![endif]-->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link href='https://fonts.googleapis.com/css?family=Righteous|Nova+Square' rel='stylesheet' type='text/css'>
-	  <link href="styles/normalize.css" rel="stylesheet" type="text/css">
+    <link href="styles/normalize.css" rel="stylesheet" type="text/css">
     <link href="styles/app.css" rel="stylesheet" type="text/css">
-	
+  
 </head>
 <body>
     
@@ -22,6 +22,7 @@
       <h3>A Web Application for sound mixing and audio analysis</h3>
     </header>
     <input type="text" id="audiofile" size="80" value="demo.mp3" />
+    <audio id="myaudio"></audio>
     <script>  
       var currentFile = "";
         function playAudio() {
@@ -31,13 +32,11 @@
                     var oAudio = document.getElementById('myaudio');
                     var btn = document.getElementById('play'); 
                     var audioURL = document.getElementById('audiofile'); 
-
                     //Skip loading if current file hasn't changed.
                     if (audioURL.value !== currentFile) {
                         oAudio.src = audioURL.value;
                         currentFile = audioURL.value;                       
                     }
-
                     // Tests the paused attribute and set state. 
                     if (oAudio.paused) {
                         oAudio.play();
@@ -61,11 +60,11 @@
               class="btn waves-effect waves-red"
               type="button"
               >Input File</button>
-      <button id="PF"
+      <button id="play"
               class="btn waves-effect waves-red"
               type="button"
-              onclick= "playAudio()"
-              >Play File</button>
+              onclick="playAudio();"
+              >Play</button>
     </div>
 
 
@@ -77,6 +76,6 @@
     <!-- Below is your custom application script -->
 
     <!--<script src="scripts/app.js"></script> -->
-	
+  
 </body>
 </html>
