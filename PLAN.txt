@@ -1,0 +1,13 @@
+DJMixing Application:
+
+Three libraries:
+1) Fourier Transform to find specific frequencies
+https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode#Examples 
+2) Sound Mixing library to edit our audio files for a DJ
+https://alemangui.github.io/pizzicato/
+3) Beats Per Minute Library to tell our sound mixing library the speed of a song
+https://jmperezperez.com/beats-audio-api/
+
+Week 1:
+Work on library 1 to find specific frequencies. We want a spectrogram completed as soon as possible.
+
