@@ -1,0 +1,11 @@
+As a user, I want to be able to see the frequencies of the tracks I'm playing.
+
+As a user, I want to be able to see the BPM of a track.
+
+As a user, I want to be able to save and retrieve the tracks I upload.
+
+As a user, I want to be able to modify the speed of a track.
+
+As a user, I want to be able to sync two tracks together.
+
+As a user, I want to be able to interact with a track live like a DJ.
