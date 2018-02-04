@@ -14,11 +14,11 @@ var currentFile = "";
                 // Tests the paused attribute and set state.
                 if (oAudio.paused) {
                     oAudio.play();
-                    btn.textContent = "Pause";
+                    btn.textContent = '\u275A\u275A';
                 }
                 else {
                     oAudio.pause();
-                    btn.textContent = "Play";
+                    btn.textContent = '\u25BA';
                 }
             }
             catch (e) {
