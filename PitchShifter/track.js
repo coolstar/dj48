@@ -4,28 +4,28 @@ class Track {
     constructor(x){
         console.log("Constructor Called");
 
-        window.t = new RateTransposer(true);
-        window.s = new Stretch(true);
-        window.st = new SoundTouch();
-        window.st.pitch = 1.0;
-        window.s.tempo = .5;
-        window.st.rate = 1.0;
+        this.t = new RateTransposer(true);
+        this.s = new Stretch(true);
+        this.st = new SoundTouch();
+        this.st.pitch = 1.0;
+        this.s.tempo = .5;
+        this.st.rate = 1.0;
 
-        window.buffer = {};
-        window.bufferDuration;
+        this.buffer = {};
+        this.bufferDuration;
 
-        window.node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
+        this.node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
 
         window.samples = new Float32Array(BUFFER_SIZE * 2);
 
         window.pos = 0;
 
-        window.leftchannel = [];
-        window.rightchannel = [];
-        window.recordingLength = 0;
+        this.leftchannel = [];
+        this.rightchannel = [];
+        this.recordingLength = 0;
 
-        node.onaudioprocess = function (e) {
-            if (buffer.getChannelData){
+        this.node.onaudioprocess = function (e) {
+            if (track.buffer.getChannelData){
                 pos+=BUFFER_SIZE / context.sampleRate;
                 var l = e.outputBuffer.getChannelData(0);
                 var r = e.outputBuffer.getChannelData(1);
@@ -38,14 +38,14 @@ class Track {
                     r[i] = samples[i * 2 + 1];
                 }
 
-                leftchannel.push (new Float32Array (l));
-                rightchannel.push (new Float32Array (r));
-                recordingLength += BUFFER_SIZE;
+                track.leftchannel.push (new Float32Array (l));
+                track.rightchannel.push (new Float32Array (r));
+                track.recordingLength += BUFFER_SIZE;
             }
         };
 
         //Stretch (s) or Rate (t) object goes in this filter function!
-        window.f = new SimpleFilter(source, st);
+        window.f = new SimpleFilter(source, this.st);
     }
 
     play() {
@@ -61,8 +61,8 @@ class Track {
             source.start(0);
         }
 
-        node.connect(context.destination);
-        node.connect(analyser);
+        this.node.connect(context.destination);
+        this.node.connect(analyser);
 
         analyser.connect (audioCtx.destination);
 
@@ -70,7 +70,7 @@ class Track {
     }
 
     pause() {
-        node.disconnect();
+        this.node.disconnect();
         //ga('send', 'event', 'Pitch shift playback', "Pause");
     }
 }
@@ -83,9 +83,9 @@ var source = {
         //$("#progress").width(100*position/(bufferDuration*context.sampleRate) + "%");
         if (updateSlider){
             console.log("Updating...");
-            $("#play-slider")[0].noUiSlider.set(100*position/(bufferDuration*context.sampleRate));
+            $("#play-slider")[0].noUiSlider.set(100*position/(track.bufferDuration*context.sampleRate));
         }
-        if (Math.round(100 *position/(bufferDuration*context.sampleRate)) == 100 && is_playing){
+        if (Math.round(100 *position/(track.bufferDuration*context.sampleRate)) == 100 && is_playing){
             //stop recorder
             recorder && recorder.stop();
             __log('Recording complete.');
@@ -98,11 +98,11 @@ var source = {
             }
             is_playing = false;
         }
-        var l = buffer.getChannelData(0);
-        if (buffer.numberofChannels > 1){
-            var r = buffer.getChannelData(1);
+        var l = track.buffer.getChannelData(0);
+        if (track.buffer.numberofChannels > 1){
+            var r = track.buffer.getChannelData(1);
         } else {
-            var r = buffer.getChannelData(0);
+            var r = track.buffer.getChannelData(0);
         }
         for (var i = 0; i < numFrames; i++) {
             target[i * 2] = l[i + position];

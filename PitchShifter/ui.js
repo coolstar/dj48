@@ -42,37 +42,30 @@ fileInput.on("change", function() {
     $("#loading").show();
     $("#play-pitchshifter").addClass("disabled");
 
-    if (is_playing) pause();
+    if (is_playing) track.pause();
     var reader = new FileReader();
     reader.onload = function(ev) {
         context.decodeAudioData(ev.target.result, function(theBuffer){
             track.pause();
             //ga('send', 'event', 'File Upload', "Success");
 
-            buffer = theBuffer;
-            bufferDuration = theBuffer.duration;
+            track.buffer = theBuffer;
+            track.bufferDuration = theBuffer.duration;
             $("#play-pitchshifter").removeClass("disabled");
 
-            $("#total-time").html(minsSecs(bufferDuration));
+            $("#total-time").html(minsSecs(track.bufferDuration));
 
             $("#progress").width("0%");
             $("#current-time").html("0:00");
 
 
-            st = new SoundTouch();
-            st.pitch = ($(".pitch-slider")[0].noUiSlider.get() / 100);
-            st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
+            track.st = new SoundTouch();
+            track.st.pitch = ($(".pitch-slider")[0].noUiSlider.get() / 100);
+            track.st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
 
+            f = new SimpleFilter(source, track.st);
 
-
-           f = new SimpleFilter(source, st);
-           var BUFFER_SIZE = 2048;
-
-            var node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
-
-            var samples = new Float32Array(BUFFER_SIZE * 2);
-
-            var pos = 0;
+            track.pos = 0;
 
             f.sourcePosition = 0;
 
@@ -97,12 +90,12 @@ noUiSlider.create($(".pitch-slider")[0],{
 });
 
 twelth_root = 1.05946309436;
-st.pitch = 1;
+track.st.pitch = 1;
 
 $(".pitch-slider")[0].noUiSlider.on("slide", function(){
     var value = $(".pitch-slider")[0].noUiSlider.get();
-    st.pitch = (value / 100);
-    st.tempo = 1;
+    track.st.pitch = (value / 100);
+    track.st.tempo = 1;
     var pitch = Math.pow(twelth_root, parseFloat(value)) 
     var pitchFormatted = (100 * pitch).toFixed(2);
     // console.log($(this).val() / 100);
@@ -121,11 +114,11 @@ noUiSlider.create($(".tempo-slider")[0],{
     }
 });
 
-st.tempo = 1;
+track.st.tempo = 1;
 
 $(".tempo-slider")[0].noUiSlider.on("slide", function(){
     var value = $(".tempo-slider")[0].noUiSlider.get();
-    st.tempo = (value / 100);
+    track.st.tempo = (value / 100);
     $("#tempo-shift-value").html(value);
 });
 
@@ -195,18 +188,13 @@ $(document.body).on("mouseup",function(e){
 $(".play-slider")[0].noUiSlider.on("slide", function(){
     var value = $(".play-slider")[0].noUiSlider.get();
     track.pause();
-    st = new SoundTouch();
-   st.pitch = $(".pitch-slider")[0].noUiSlider.get() /100;
-   st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
-   f = new SimpleFilter(source, st);
-   var BUFFER_SIZE = 2048;
+    track.st = new SoundTouch();
+   track.st.pitch = $(".pitch-slider")[0].noUiSlider.get() /100;
+   track.st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
+   f = new SimpleFilter(source, track.st);
 
-   var node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
-
-   var samples = new Float32Array(BUFFER_SIZE * 2);
-
-   var pos = 0;
-   f.sourcePosition = parseInt((value / 100) * bufferDuration * context.sampleRate);
+   track.pos = 0;
+   f.sourcePosition = parseInt((value / 100) * track.bufferDuration * context.sampleRate);
    if (is_playing){
        track.play();
    }
