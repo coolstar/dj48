@@ -1,7 +1,7 @@
 // set up forked web audio context, for multiple browsers
 // window. is needed otherwise Safari explodes
 
-var audioCtx = context;
+var audioCtx = track.audioCtx;
 
 //set up the different audio nodes we will use for the app
 

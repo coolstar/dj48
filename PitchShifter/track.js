@@ -4,6 +4,8 @@ class Track {
     constructor(x){
         console.log("Constructor Called");
 
+        this.audioCtx = new contextClass();
+
         this.t = new RateTransposer(true);
         this.s = new Stretch(true);
         this.st = new SoundTouch();
@@ -14,7 +16,7 @@ class Track {
         this.buffer = {};
         this.bufferDuration;
 
-        this.node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
+        this.node = this.audioCtx.createScriptProcessor ? this.audioCtx.createScriptProcessor(BUFFER_SIZE, 2, 2) : this.audioCtx.createJavaScriptNode(BUFFER_SIZE, 2, 2);
 
         this.samples = new Float32Array(BUFFER_SIZE * 2);
 
@@ -26,7 +28,7 @@ class Track {
 
         this.node.onaudioprocess = function (e) {
             if (this.track.buffer.getChannelData){
-                this.track.pos+=BUFFER_SIZE / context.sampleRate;
+                this.track.pos+=BUFFER_SIZE / this.track.audioCtx.sampleRate;
                 var l = e.outputBuffer.getChannelData(0);
                 var r = e.outputBuffer.getChannelData(1);
                 var framesExtracted = this.track.f.extract(this.track.samples, BUFFER_SIZE);
@@ -46,13 +48,13 @@ class Track {
 
         this.source = {
             extract: function (target, numFrames, position) {
-                $("#current-time").html(minsSecs(position/(context.sampleRate)));
-                //$("#progress").width(100*position/(bufferDuration*context.sampleRate) + "%");
+                $("#current-time").html(minsSecs(position/(this.parent.audioCtx.sampleRate)));
+                //$("#progress").width(100*position/(bufferDuration*this.parent.audioCtx.sampleRate) + "%");
                 if (updateSlider){
                     console.log("Updating...");
-                    $("#play-slider")[0].noUiSlider.set(100*position/(this.parent.bufferDuration*context.sampleRate));
+                    $("#play-slider")[0].noUiSlider.set(100*position/(this.parent.bufferDuration*this.parent.audioCtx.sampleRate));
                 }
-                if (Math.round(100 *position/(this.parent.bufferDuration*context.sampleRate)) == 100 && is_playing){
+                if (Math.round(100 *position/(this.parent.bufferDuration*this.parent.audioCtx.sampleRate)) == 100 && is_playing){
                     //stop recorder
                     recorder && recorder.stop();
                     __log('Recording complete.');
@@ -87,18 +89,18 @@ class Track {
     play() {
         if (!audioInitialized){
             audioInitialized = true;
-            context.resume();
+            this.audioCtx.resume();
 
-            var buffer = context.createBuffer(1, 1, 22050);
-            var source = context.createBufferSource();
+            var buffer = this.audioCtx.createBuffer(1, 1, 22050);
+            var source = this.audioCtx.createBufferSource();
             source.buffer = buffer;
             // Connect to output (speakers)
-            source.connect(context.destination);
+            source.connect(this.audioCtx.destination);
             source.start(0);
         }
 
         this.node.track = this;
-        this.node.connect(context.destination);
+        this.node.connect(this.audioCtx.destination);
         this.node.connect(analyser);
 
         analyser.connect (audioCtx.destination);

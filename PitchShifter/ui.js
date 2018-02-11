@@ -45,7 +45,7 @@ fileInput.on("change", function() {
     if (is_playing) track.pause();
     var reader = new FileReader();
     reader.onload = function(ev) {
-        context.decodeAudioData(ev.target.result, function(theBuffer){
+        track.audioCtx.decodeAudioData(ev.target.result, function(theBuffer){
             track.pause();
             //ga('send', 'event', 'File Upload', "Success");
 
@@ -194,7 +194,7 @@ $(".play-slider")[0].noUiSlider.on("slide", function(){
    track.f = new SimpleFilter(track.source, track.st);
 
    track.pos = 0;
-   track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * context.sampleRate);
+   track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
    if (is_playing){
        track.play();
    }
