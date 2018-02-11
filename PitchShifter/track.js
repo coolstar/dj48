@@ -18,7 +18,7 @@ class Track {
 
         window.samples = new Float32Array(BUFFER_SIZE * 2);
 
-        window.pos = 0;
+        this.pos = 0;
 
         this.leftchannel = [];
         this.rightchannel = [];
@@ -26,10 +26,10 @@ class Track {
 
         this.node.onaudioprocess = function (e) {
             if (track.buffer.getChannelData){
-                pos+=BUFFER_SIZE / context.sampleRate;
+                track.pos+=BUFFER_SIZE / context.sampleRate;
                 var l = e.outputBuffer.getChannelData(0);
                 var r = e.outputBuffer.getChannelData(1);
-                var framesExtracted = f.extract(samples, BUFFER_SIZE);
+                var framesExtracted = track.f.extract(samples, BUFFER_SIZE);
                 if (framesExtracted == 0) {
                     pause();
                 }
@@ -45,7 +45,7 @@ class Track {
         };
 
         //Stretch (s) or Rate (t) object goes in this filter function!
-        window.f = new SimpleFilter(source, this.st);
+        this.f = new SimpleFilter(source, this.st);
     }
 
     play() {

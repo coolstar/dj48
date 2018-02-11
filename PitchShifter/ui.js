@@ -63,11 +63,11 @@ fileInput.on("change", function() {
             track.st.pitch = ($(".pitch-slider")[0].noUiSlider.get() / 100);
             track.st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
 
-            f = new SimpleFilter(source, track.st);
+            track.f = new SimpleFilter(source, track.st);
 
             track.pos = 0;
 
-            f.sourcePosition = 0;
+            track.f.sourcePosition = 0;
 
             $("#play-pitchshifter").addClass("beginTuning");
             $(".timing").show();
@@ -191,10 +191,10 @@ $(".play-slider")[0].noUiSlider.on("slide", function(){
     track.st = new SoundTouch();
    track.st.pitch = $(".pitch-slider")[0].noUiSlider.get() /100;
    track.st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
-   f = new SimpleFilter(source, track.st);
+   track.f = new SimpleFilter(source, track.st);
 
    track.pos = 0;
-   f.sourcePosition = parseInt((value / 100) * track.bufferDuration * context.sampleRate);
+   track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * context.sampleRate);
    if (is_playing){
        track.play();
    }
