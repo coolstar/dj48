@@ -2,8 +2,6 @@ var audioInitialized = false;
 
 class Track {
     constructor(x){
-        console.log("Constructor Called");
-
         this.audioCtx = new contextClass();
 
         this.t = new RateTransposer(true);
@@ -25,6 +23,8 @@ class Track {
         this.leftchannel = [];
         this.rightchannel = [];
         this.recordingLength = 0;
+
+        this.spectrogram = new Spectrogram(this);
 
         this.node.onaudioprocess = function (e) {
             if (this.track.buffer.getChannelData){
@@ -101,11 +101,11 @@ class Track {
 
         this.node.track = this;
         this.node.connect(this.audioCtx.destination);
-        this.node.connect(analyser);
+        this.node.connect(this.spectrogram.analyser);
 
-        analyser.connect (audioCtx.destination);
+        this.spectrogram.analyser.connect(this.audioCtx.destination);
 
-        visualize();
+        this.spectrogram.visualize();
     }
 
     pause() {
