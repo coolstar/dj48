@@ -4,7 +4,7 @@ $("#play-pitchshifter").click(function(e){
     } else if ($(this).hasClass("disabled")) {
     	// alert("Currently loading audio, please wait a few seconds...");
     } else{
-        play();
+        track.play();
         is_playing = true;
         if ($("#save-output").prop("checked") == true){
             recorder = new Recorder(node, {workerPath: 'recorderWorkerMP3.js'});
@@ -14,7 +14,7 @@ $("#play-pitchshifter").click(function(e){
 });
 
 $("#pause-pitchshifter").click(function(e){
-    pause();
+    track.pause();
     is_playing = false;
 });
 
@@ -46,47 +46,43 @@ fileInput.on("change", function() {
     var reader = new FileReader();
     reader.onload = function(ev) {
         context.decodeAudioData(ev.target.result, function(theBuffer){
-            pause();
+            track.pause();
             //ga('send', 'event', 'File Upload', "Success");
 
-                    buffer = theBuffer;
-                    bufferDuration = theBuffer.duration;
-                    $("#play-pitchshifter").removeClass("disabled");
+            buffer = theBuffer;
+            bufferDuration = theBuffer.duration;
+            $("#play-pitchshifter").removeClass("disabled");
 
-                    $("#total-time").html(minsSecs(bufferDuration));
+            $("#total-time").html(minsSecs(bufferDuration));
 
-                    $("#progress").width("0%");
-                    $("#current-time").html("0:00");
-
-
-                        st = new SoundTouch();
-                        st.pitch = ($(".pitch-slider")[0].noUiSlider.get() / 100);
-                        st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
+            $("#progress").width("0%");
+            $("#current-time").html("0:00");
 
 
-
-                       f = new SimpleFilter(source, st);
-                       var BUFFER_SIZE = 2048;
-
-                        var node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
-
-                       var samples = new Float32Array(BUFFER_SIZE * 2);
-
-                       var pos = 0;
-                       f.sourcePosition = 0;
-
-                        $("#play-pitchshifter").addClass("beginTuning");
-                        $(".timing").show();
-                        $("#loading").hide();
+            st = new SoundTouch();
+            st.pitch = ($(".pitch-slider")[0].noUiSlider.get() / 100);
+            st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
 
 
 
+           f = new SimpleFilter(source, st);
+           var BUFFER_SIZE = 2048;
 
-                }, function(){ //error function
-                	$("#loading").html("Sorry, we could not process this audio file.");
-                	//ga('send', 'event', 'File Upload', "Failure");
+            var node = context.createScriptProcessor ? context.createScriptProcessor(BUFFER_SIZE, 2, 2) : context.createJavaScriptNode(BUFFER_SIZE, 2, 2);
 
-                })
+            var samples = new Float32Array(BUFFER_SIZE * 2);
+
+            var pos = 0;
+
+            f.sourcePosition = 0;
+
+            $("#play-pitchshifter").addClass("beginTuning");
+            $(".timing").show();
+            $("#loading").hide();
+        }, function(){ //error function
+        	$("#loading").html("Sorry, we could not process this audio file.");
+        	//ga('send', 'event', 'File Upload', "Failure");
+        })
     };
     reader.readAsArrayBuffer(this.files[0]);
 });
@@ -198,7 +194,7 @@ $(document.body).on("mouseup",function(e){
 
 $(".play-slider")[0].noUiSlider.on("slide", function(){
     var value = $(".play-slider")[0].noUiSlider.get();
-    pause();
+    track.pause();
     st = new SoundTouch();
    st.pitch = $(".pitch-slider")[0].noUiSlider.get() /100;
    st.tempo = !$("#maintain-tempo").prop("checked") ? ($(".pitch-slider")[0].noUiSlider.get() / 100) : 1;
@@ -212,6 +208,6 @@ $(".play-slider")[0].noUiSlider.on("slide", function(){
    var pos = 0;
    f.sourcePosition = parseInt((value / 100) * bufferDuration * context.sampleRate);
    if (is_playing){
-       play();
+       track.play();
    }
 });
