@@ -1,3 +1,13 @@
+var track = new Track();
+
+track.spectrogram.canvas = document.querySelector('.visualizer');
+track.spectrogram.visualSelect = document.getElementById("visual");
+
+track.currentTimeSlider = $("#current-time");
+track.playSlider = $("#play-slider")[0];
+
+track.initialize();
+
 $("#play-pitchshifter").click(function(e){
     if (fileInput.val()==""){
         alert("Please choose a file to play");

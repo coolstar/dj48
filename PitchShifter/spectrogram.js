@@ -7,17 +7,15 @@ class Spectrogram {
         this.analyser.minDecibels = -90;
         this.analyser.maxDecibels = -10;
         this.analyser.smoothingTimeConstant = 0.85;
+    }
 
+    initialize(){
         // set up canvas context for visualizer
-
-        this.canvas = document.querySelector('.visualizer');
         this.canvasCtx = this.canvas.getContext("2d");
 
         this.intendedWidth = document.querySelector('.wrapper').clientWidth;
 
         this.canvas.setAttribute('width',this.intendedWidth);
-
-        this.visualSelect = document.getElementById("visual");
 
         this.drawVisual;
 
