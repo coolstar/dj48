@@ -48,11 +48,11 @@ class Track {
 
         this.source = {
             extract: function (target, numFrames, position) {
-                $("#current-time").html(minsSecs(position/(this.parent.audioCtx.sampleRate)));
+                this.parent.currentTimeSlider.html(minsSecs(position/(this.parent.audioCtx.sampleRate)));
                 //$("#progress").width(100*position/(bufferDuration*this.parent.audioCtx.sampleRate) + "%");
                 if (updateSlider){
                     console.log("Updating...");
-                    $("#play-slider")[0].noUiSlider.set(100*position/(this.parent.bufferDuration*this.parent.audioCtx.sampleRate));
+                    this.parent.playSlider.noUiSlider.set(100*position/(this.parent.bufferDuration*this.parent.audioCtx.sampleRate));
                 }
                 if (Math.round(100 *position/(this.parent.bufferDuration*this.parent.audioCtx.sampleRate)) == 100 && is_playing){
                     //stop recorder
@@ -86,6 +86,10 @@ class Track {
         this.f = new SimpleFilter(this.source, this.st);
     }
 
+    initialize(){
+        this.spectrogram.initialize();
+    }
+
     play() {
         if (!audioInitialized){
             audioInitialized = true;
@@ -113,5 +117,3 @@ class Track {
         //ga('send', 'event', 'Pitch shift playback', "Pause");
     }
 }
-
-var track = new Track();
