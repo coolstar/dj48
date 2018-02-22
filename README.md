@@ -16,6 +16,6 @@ Our project is a free web-based DJ application that allows users to upload, save
 ### Build and Execute
 1. Clone repo.
 2. Checkout 'draftproject' branch.
-3. Open the top-level index.html file.
+3. Open the top-level index.html file.  
    Note: Recorder feature requires web workers; some browsers may not allow this functionality on local files.
-   In this case, use Firefox (seems to work), or go to the server-based copy of this repo at [http://cs48-vps.coolstar.org/draftproject/](http://cs48-vps.coolstar.org/draftproject/)
+   In this case, use Firefox, or go to the server-based copy of this repo at [http://cs48-vps.coolstar.org/draftproject/](http://cs48-vps.coolstar.org/draftproject/)
