@@ -28,7 +28,7 @@ Our project is a free web-based DJ application that allows users to upload, save
 10. You can play and mix two tracks by using the section for the second track, under the section for the first track.
 
 ### Dependencies
-All below libraries are included in the repo under 'repos'.
+All below libraries are included in the repo under 'vendors'.
 * jquery
 * soundtouch
 * nouislider
