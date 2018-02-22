@@ -26,3 +26,10 @@ Our project is a free web-based DJ application that allows users to upload, save
 8. You can change the Visualizer setting by selecting your visualizer choice in the dropdown menu next to 'Visualizer setting'.
 9. If you had the 'Save output...' box checked, your recording will be available under 'Recordings' of that track when you hit 'pause'.
 10. You can play and mix two tracks by using the section for the second track, under the section for the first track.
+
+### Dependencies
+All below libraries are included in the repo under 'repos'.
+* jquery
+* soundtouch
+* nouislider
+* recorder
