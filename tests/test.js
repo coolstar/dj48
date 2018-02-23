@@ -1,6 +1,6 @@
 var request = require('request');
-var Spotify = require('spotify-web-api-js');
-var s = new Spotify();
+var SpotifyWebAPI = require('spotify-web-api-node');
+var s = new SpotifyWebAPI();
 
 var client_id = 'd48e99918eaa4667a5555a2a4dc304e3'; // Your client id
 var client_secret = 'c05f9e20f809412d9303c29ce2e7456d'; // Your secret
@@ -33,16 +33,16 @@ request.post(authOptions, function(error, response, body) {
 			s.setAccessToken(token);
 			
 			var trackID1 = "5mOVGtU5mxgZWfdo8FyxMf";	// Culture Code - Electricity
-			s.getAudioAnalysisForTrack(trackID1, function(error, response) {
-				var trackBPM1 = response.track.tempo;
+			s.getAudioFeaturesForTrack(trackID1, function(error, response) {
+				var trackBPM1 = response.body.tempo;
 				
 				console.log("Culture Code - Electricity's Spotify BPM: " + trackBPM1);
 			
 			});
 			
 			var trackID2 = "4DHRbvvQyC3mBa3Y0JNl4n";	// Culture Code - Make Me Move
-			s.getAudioAnalysisForTrack(trackID2, function(error, response) {
-				var trackBPM2 = response.track.tempo;
+			s.getAudioFeaturesForTrack(trackID2, function(error, response) {
+				var trackBPM2 = response.body.tempo;
 				
 				console.log("Culture Code - Make Me Move's Spotify BPM: " + trackBPM2);
 			
