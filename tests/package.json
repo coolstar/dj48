@@ -13,5 +13,9 @@
     "spotify-web-api-js": "^0.23.0"
   },
   "devDependencies": {},
+
   "description": "The BPM test uses the Spotify Web API to check the BPM of a track."
+
+  "description": ""
+
 }
