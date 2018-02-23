@@ -1,2 +1,0 @@
-This test logs the BPM of the first track returned by Spotify's API when a query, modifiable in 'test.js', is searched.
-Compare the logged BPM with the BPM returned by the BPM calculator used in the main web application to confirm accuracy of said calculator.
