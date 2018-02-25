@@ -2,7 +2,7 @@ var audioInitialized = false;
 
 class Track {
     constructor(x){
-        this.audioCtx = new contextClass();
+        this.audioCtx = context;
 
         //this.t = new RateTransposer(true);
         this.s = new Stretch(true);
