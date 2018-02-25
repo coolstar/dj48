@@ -13,9 +13,9 @@ class Spectrogram {
         // set up canvas context for visualizer
         this.canvasCtx = this.canvas.getContext("2d");
 
-        this.intendedWidth = document.querySelector('.wrapper').clientWidth;
+        //this.intendedWidth = document.querySelector('.wrapper').clientWidth;
 
-        this.canvas.setAttribute('width',this.intendedWidth);
+        //this.canvas.setAttribute('width',this.intendedWidth);
 
         this.drawVisual;
 

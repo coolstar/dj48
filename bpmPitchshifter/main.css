@@ -980,4 +980,12 @@ select{
         margin-left:-20px
     }
 }
- 
+.vertical-slider {
+    height: 200px;
+    margin: auto;
+ }
+ .slider-control {
+    width: 150px;
+    float: left;
+    text-align: center;
+ }
