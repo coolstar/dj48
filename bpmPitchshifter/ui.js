@@ -15,6 +15,7 @@ var updateSlider = true;
 $(document.body).on("pointerup touchend",function(e){
     console.log("Mouse up");
     updateSlider = true;
+    
 });
 
 $(document.body).on("mouseup",function(e){
@@ -352,13 +353,17 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
 
 function sync(){
-	bpm1 = trackui.track.bpm;
-	bpm2 = trackui2.track.bpm;
+	bpm1 = trackui.original_bpm;
+	bpm2 = trackui2.original_bpm;
 	average = Math.round((bpm1+bpm2)/2);
 	trackui.track.bpm = average
 	trackui.track.st.tempo = trackui2.track.st.tempo*(average/bpm1);
 	trackui2.track.bpm = average;
 	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
+	$("#bpm-label").text(trackui.track.bpm);
+	$("#bpm-label2").text(trackui2.track.bpm);
+	
+        
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 }
