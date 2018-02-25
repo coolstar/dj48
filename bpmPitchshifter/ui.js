@@ -23,10 +23,15 @@ $(document.body).on("mouseup",function(e){
 });
 
 class TrackUI {
-    constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
-        volumeSliderSelector, playButtonSelector, pauseButtonSelector, fileInputSelector,
-        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
-        tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
+//    constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
+//        volumeSliderSelector, playButtonSelector, pauseButtonSelector, fileInputSelector,
+//        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
+//        tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
+constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
+    volumeSliderSelector, playButtonSelector, fileInputSelector,
+    timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
+    tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
+
 
         this.track = new Track();
 
@@ -45,18 +50,53 @@ class TrackUI {
                 alert("Please choose a file to play");
             } else if ($(this).hasClass("disabled")) {
                 // alert("Currently loading audio, please wait a few seconds...");
-            } else{
+            } else if (is_playing == false){
                 track.play();
+                $(playButtonSelector).html("pause");
                 is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(track.gainNode, {workerPath: 'recorderWorkerMP3.js'});
                     track.recorder && track.recorder.record();
                     __log('Started recording.');
                 }
+            } else {
+
+                track.pause();
+                $(playButtonSelector).html( "play");
+                is_playing = false;
+                if ($(saveOutputSelector).prop("checked") == true){
+                    track.recorder && track.recorder.stop();
+                     __log('Stopped recording.');
+                
+                    // create WAV download link using audio data blob
+                    track.recorder && track.recorder.exportAudio(function(blob) {
+                        var recordingslist = document.getElementById(recordingslistSelector);
+
+                        var url = URL.createObjectURL(blob);
+                        var li = document.createElement('li');
+                        var au = document.createElement('audio');
+                        var hf = document.createElement('a');
+                  
+                        au.controls = true;
+                        au.src = url;
+                        hf.href = url;
+                        // hf.download = new Date().toISOString() + '.wav';
+                        // hf.download = new Date().toISOString() + '.mp3';
+                        hf.download = "pitch-shifted-" + $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
+                        hf.innerHTML = hf.download;
+                        li.appendChild(au);
+                        li.appendChild(hf);
+                        recordingslist.appendChild(li);
+                        //ga('send', 'event', 'Pitch shift download', "Download Added");
+                    });
+                
+                    track.recorder && track.recorder.clear();
+                  }
             }
         });
 
-        $(pauseButtonSelector).click(function(e){
+	/*
+        $(pauseButtonSelector).click(function (e){
             track.pause();
             is_playing = false;
             if ($(saveOutputSelector).prop("checked") == true){
@@ -87,7 +127,7 @@ class TrackUI {
                 
                 track.recorder && track.recorder.clear();
             }
-        });
+        }); */
 
         var fileInput = $(fileInputSelector);
         // bufferSource.gain.value = 1;
@@ -273,14 +313,24 @@ class TrackUI {
            }
         });
     }
+
 }
 
+//var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
+// "#play-pitchshifter", "#pause-pitchshifter", "#audio-file", ".timing",
+// ".loading", "#total-time", "#progress", ".pitch-slider", "#pitch-shift-value",
+// ".tempo-slider", "#tempo-shift-value", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
+
+//var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
+// "#play-pitchshifter2", "#pause-pitchshifter2", "#audio-file2", ".timing2",
+// ".loading2", "#total-time2", "#progress2", ".pitch-slider2", "#pitch-shift-value2",
+// ".tempo-slider2", "#tempo-shift-value2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
- "#play-pitchshifter", "#pause-pitchshifter", "#audio-file", ".timing",
+ "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider", "#pitch-shift-value",
  ".tempo-slider", "#tempo-shift-value", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
- "#play-pitchshifter2", "#pause-pitchshifter2", "#audio-file2", ".timing2",
+ "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2", "#pitch-shift-value2",
  ".tempo-slider2", "#tempo-shift-value2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
