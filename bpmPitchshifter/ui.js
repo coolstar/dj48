@@ -24,7 +24,7 @@ $(document.body).on("mouseup",function(e){
 
 class TrackUI {
 //    constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
-//        volumeSliderSelector, playButtonSelector, pauseButtonSelector, fileInputSelector,
+//        volumeSliderSelector, playButtonSelector, ileInputSelector,
 //        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
 //        tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
 //constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
@@ -350,3 +350,12 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
+
+function sync(){
+	bpm1 = trackui.track.bpm;
+	bpm2 = trackui2.track.bpm;
+	trackui2.track.bpm = bpm1;
+	trackui2.track.st.tempo = trackui2.track.st.tempo*(bpm1/bpm2);
+	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
+	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
+}
