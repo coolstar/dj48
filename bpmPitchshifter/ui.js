@@ -354,8 +354,11 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
 function sync(){
 	bpm1 = trackui.track.bpm;
 	bpm2 = trackui2.track.bpm;
-	trackui2.track.bpm = bpm1;
-	trackui2.track.st.tempo = trackui2.track.st.tempo*(bpm1/bpm2);
+	average = Math.round((bpm1+bpm2)/2);
+	trackui.track.bpm = average
+	trackui.track.st.tempo = trackui2.track.st.tempo*(average/bpm1);
+	trackui2.track.bpm = average;
+	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 }
