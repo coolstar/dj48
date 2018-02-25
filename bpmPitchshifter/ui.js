@@ -41,8 +41,8 @@ class TrackUI {
         this.track = new Track();
 
         var track = this.track;
-        var original_bpm;
-        track.spectrogram.canvas = document.querySelector(visualizerSelector);
+        var original_bpm = 0;
+	track.spectrogram.canvas = document.querySelector(visualizerSelector);
         track.spectrogram.visualSelect = document.getElementById(visualSelectIdentifier);
 
         track.currentTimeSlider = $(currentTimeSliderSelector);
@@ -353,8 +353,9 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
 
 function sync(){
-	bpm1 = trackui.original_bpm;
-	bpm2 = trackui2.original_bpm;
+	bpm1 = trackui.track.bpm;
+	bpm2 = trackui2.track.bpm;
+
 	average = Math.round((bpm1+bpm2)/2);
 	trackui.track.bpm = average
 	trackui.track.st.tempo = trackui2.track.st.tempo*(average/bpm1);
@@ -362,8 +363,8 @@ function sync(){
 	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
 	$("#bpm-label").text(trackui.track.bpm);
 	$("#bpm-label2").text(trackui2.track.bpm);
-	
-        
+	$(".tempo-slider").value = trackui.track.st.tempo*100;
+        //$(".tempo-slider").trigger('change');
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 }
