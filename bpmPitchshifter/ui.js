@@ -155,6 +155,8 @@ class TrackUI {
                 'min': 50,
                 'max': 150
             },
+            orientation: 'vertical',
+            direction: 'rtl'
         });
 
         var twelth_root = 1.05946309436;
@@ -179,7 +181,9 @@ class TrackUI {
             range: {
                 'min': 25,
                 'max': 400
-            }
+            },
+            orientation: 'vertical',
+            direction: 'rtl'
         });
 
         track.st.tempo = 1;
@@ -235,7 +239,9 @@ class TrackUI {
             range: {
                 'min': 0,
                 'max': 100
-            }
+            },
+            orientation: 'vertical',
+            direction: 'rtl'
         });
 
         $(volumeSliderSelector)[0].noUiSlider.on("slide", function(){

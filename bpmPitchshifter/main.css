@@ -980,4 +980,6 @@ select{
         margin-left:-20px
     }
 }
- 
+.vertical-slider {
+    height: 200px;
+ }
