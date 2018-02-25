@@ -982,4 +982,9 @@ select{
 }
 .vertical-slider {
     height: 200px;
+    margin: auto;
+ }
+ .slider-control {
+    width: 200px;
+    float: left;
  }
