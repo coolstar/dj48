@@ -25,8 +25,8 @@ $(document.body).on("mouseup",function(e){
 class TrackUI {
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
         volumeSliderSelector, playButtonSelector, pauseButtonSelector, fileInputSelector,
-        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
-        tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
+        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
+        tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
 
         this.track = new Track();
 
@@ -172,9 +172,6 @@ class TrackUI {
             // console.log($(this).val() / 100);
             // $(semitonesSelector).val(parseFloat(($(this).val() / 100 - 1) / 0.05946309436).toFixed(2));
             $(semitonesSelector).val(Math.log(value / 100)/Math.log(twelth_root));
-            $(pitchShiftValueSelector).html(value);
-
-
         });
 
         noUiSlider.create($(tempoSliderSelector)[0],{
@@ -197,7 +194,6 @@ class TrackUI {
             	track.bpm = Math.round(original_bpm*(value/100));
             	$(bpmLabelSelector).text(track.bpm);
             }
-            $(tempoShiftValueSelector).html(value);
         });
 
 
@@ -226,7 +222,6 @@ class TrackUI {
             st.pitch = pitch;
 
             $(pitchSliderSelector)[0].noUiSlider.set(pitchFormatted);
-            $(pitchShiftValueSelector).html(pitchFormatted);
 
             st.tempo = !$(maintainTempoSelector).prop("checked") ? ($(".pitch-slider").val() / 100) : 1;
 
@@ -286,10 +281,10 @@ class TrackUI {
 
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#pause-pitchshifter", "#audio-file", ".timing",
- ".loading", "#total-time", "#progress", ".pitch-slider", "#pitch-shift-value",
- ".tempo-slider", "#tempo-shift-value", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
+ ".loading", "#total-time", "#progress", ".pitch-slider",
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#pause-pitchshifter2", "#audio-file2", ".timing2",
- ".loading2", "#total-time2", "#progress2", ".pitch-slider2", "#pitch-shift-value2",
- ".tempo-slider2", "#tempo-shift-value2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
+ ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
+ ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
