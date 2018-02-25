@@ -31,7 +31,7 @@ class TrackUI {
         this.track = new Track();
 
         var track = this.track;
-
+        var original_bpm;
         track.spectrogram.canvas = document.querySelector(visualizerSelector);
         track.spectrogram.visualSelect = document.getElementById(visualSelectIdentifier);
 
@@ -82,6 +82,7 @@ class TrackUI {
 
                     calculateBPM (track.buffer, function (bpm) {
                         track.bpm = bpm;
+			original_bpm = bpm;
                         console.log("BPM: " + track.bpm);
                         $(bpmLabelSelector).text(track.bpm);
 
@@ -155,6 +156,10 @@ class TrackUI {
         $(tempoSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(tempoSliderSelector)[0].noUiSlider.get();
             track.st.tempo = (value / 100);
+            if (track.bpm != 0){
+            	track.bpm = Math.round(original_bpm*(value/100));
+            	$(bpmLabelSelector).text(track.bpm);
+            }
             $(tempoShiftValueSelector).html(value);
         });
 
