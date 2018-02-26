@@ -346,7 +346,7 @@ function sync(){
 
 	average = Math.round((bpm1+bpm2)/2);
 	trackui.track.bpm = average
-	trackui.track.st.tempo = trackui2.track.st.tempo*(average/bpm1);
+	trackui.track.st.tempo = trackui.track.st.tempo*(average/bpm1);
 	trackui2.track.bpm = average;
 	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
 	$("#bpm-label").text(trackui.track.bpm);
