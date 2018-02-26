@@ -15,7 +15,6 @@ var updateSlider = true;
 $(document.body).on("pointerup touchend",function(e){
     console.log("Mouse up");
     updateSlider = true;
-    
 });
 
 $(document.body).on("mouseup",function(e){
@@ -24,19 +23,11 @@ $(document.body).on("mouseup",function(e){
 });
 
 class TrackUI {
-//    constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
-//        volumeSliderSelector, playButtonSelector, ileInputSelector,
-//        timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
-//        tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
-//constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
-//    volumeSliderSelector, playButtonSelector, fileInputSelector,
-//    timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, pitchShiftValueSelector, 
-//    tempoSliderSelector, tempoShiftValueSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
-
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
         volumeSliderSelector, playButtonSelector, fileInputSelector,
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
-        tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector){
+        tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
+        distortionSliderSelector){
 
         this.track = new Track();
 
@@ -100,7 +91,7 @@ class TrackUI {
             }
         });
 
-	/*
+    /*
         $(pauseButtonSelector).click(function (e){
             track.pause();
             is_playing = false;
@@ -158,7 +149,7 @@ class TrackUI {
 
                     calculateBPM (track.buffer, function (bpm) {
                         track.bpm = bpm;
-			original_bpm = bpm;
+            original_bpm = bpm;
                         console.log("BPM: " + track.bpm);
                         $(bpmLabelSelector).text(track.bpm);
 
@@ -236,8 +227,8 @@ class TrackUI {
             var value = $(tempoSliderSelector)[0].noUiSlider.get();
             track.st.tempo = (value / 100);
             if (track.bpm != 0){
-            	track.bpm = Math.round(original_bpm*(value/100));
-            	$(bpmLabelSelector).text(track.bpm);
+                track.bpm = Math.round(original_bpm*(value/100));
+                $(bpmLabelSelector).text(track.bpm);
             }
         });
 
@@ -293,6 +284,17 @@ class TrackUI {
             console.log("value: "+ value/100.0);
         });
 
+        noUiSlider.create($(distortionSliderSelector)[0],{
+            start: 100,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
             range: {
@@ -325,45 +327,21 @@ class TrackUI {
 
 }
 
-//var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
-// "#play-pitchshifter", "#pause-pitchshifter", "#audio-file", ".timing",
-// ".loading", "#total-time", "#progress", ".pitch-slider", "#pitch-shift-value",
-// ".tempo-slider", "#tempo-shift-value", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
-
-//var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
-// "#play-pitchshifter2", "#pause-pitchshifter2", "#audio-file2", ".timing2",
-// ".loading2", "#total-time2", "#progress2", ".pitch-slider2", "#pitch-shift-value2",
-// ".tempo-slider2", "#tempo-shift-value2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
-// "#play-pitchshifter", "#audio-file", ".timing",
-// ".loading", "#total-time", "#progress", ".pitch-slider", "#pitch-shift-value",
-// ".tempo-slider", "#tempo-shift-value", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
-
-//var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
-// "#play-pitchshifter2", "#audio-file2", ".timing2",
-// ".loading2", "#total-time2", "#progress2", ".pitch-slider2", "#pitch-shift-value2",
-// ".tempo-slider2", "#tempo-shift-value2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist");
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
- ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2");
+ ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2");
 
 function sync(){
-	bpm1 = trackui.original_bpm;
-	bpm2 = trackui2.original_bpm;
-	average = Math.round((bpm1+bpm2)/2);
-	trackui.track.bpm = average
-	trackui.track.st.tempo = trackui2.track.st.tempo*(average/bpm1);
-	trackui2.track.bpm = average;
-	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
-	$("#bpm-label").text(trackui.track.bpm);
-	$("#bpm-label2").text(trackui2.track.bpm);
-	
-        
-	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
-	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
+    bpm1 = trackui.track.bpm;
+    bpm2 = trackui2.track.bpm;
+    trackui2.track.bpm = bpm1;
+    trackui2.track.st.tempo = trackui2.track.st.tempo*(bpm1/bpm2);
+    console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
+    console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 }
