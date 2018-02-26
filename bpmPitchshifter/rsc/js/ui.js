@@ -285,7 +285,7 @@ class TrackUI {
         });
 
         noUiSlider.create($(distortionSliderSelector)[0],{
-            start: 100,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 100
@@ -294,7 +294,15 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-
+        
+		
+		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(distortionSliderSelector)[0].noUiSlider.get();
+            track.effects.distortion.gain = value/100.0;
+            console.log("distortion gain: "+ value/100.0);
+        });
+		
+		
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
             range: {

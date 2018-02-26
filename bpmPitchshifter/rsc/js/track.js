@@ -28,6 +28,9 @@ class Track {
 
         this.spectrogram = new Spectrogram(this);
 
+
+		this.effects = new Effects (this.audioCtx);
+		
         this.gainNode = this.audioCtx.createGain();
         this.gainNode.gain.value = 1.0;
 
@@ -109,9 +112,9 @@ class Track {
         }
 
         this.node.track = this;
-        this.node.connect(distortion);
+        this.node.connect(this.effects.distortion);
 		
-		distortion.connect(this.gainNode);
+		this.effects.distortion.connect(this.gainNode);
 
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);
