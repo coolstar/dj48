@@ -15,6 +15,9 @@ var updateSlider = true;
 $(document.body).on("pointerup touchend",function(e){
     console.log("Mouse up");
     updateSlider = true;
+
+    //sync();    
+
 });
 
 $(document.body).on("mouseup",function(e){
@@ -32,8 +35,8 @@ class TrackUI {
         this.track = new Track();
 
         var track = this.track;
-        var original_bpm;
-        track.spectrogram.canvas = document.querySelector(visualizerSelector);
+        var original_bpm = 0;
+	track.spectrogram.canvas = document.querySelector(visualizerSelector);
         track.spectrogram.visualSelect = document.getElementById(visualSelectIdentifier);
 
         track.currentTimeSlider = $(currentTimeSliderSelector);
@@ -346,10 +349,19 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2");
 
 function sync(){
-    bpm1 = trackui.track.bpm;
-    bpm2 = trackui2.track.bpm;
-    trackui2.track.bpm = bpm1;
-    trackui2.track.st.tempo = trackui2.track.st.tempo*(bpm1/bpm2);
-    console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
-    console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
+	bpm1 = trackui.track.bpm;
+	bpm2 = trackui2.track.bpm;
+
+	average = (bpm1+bpm2)/2;
+	trackui.track.bpm = average
+	trackui.track.st.tempo = trackui.track.st.tempo*(average/bpm1);
+	trackui2.track.bpm = average;
+	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
+	$("#bpm-label").text(Math.round(trackui.track.bpm));
+	$("#bpm-label2").text(Math.round(trackui2.track.bpm));
+	$(".tempo-slider")[0].noUiSlider.set(trackui.track.st.tempo*100);
+	$(".tempo-slider2")[0].noUiSlider.set(trackui2.track.st.tempo*100);
+	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
+	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
+
 }
