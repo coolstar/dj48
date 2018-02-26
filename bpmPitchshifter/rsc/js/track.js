@@ -109,7 +109,9 @@ class Track {
         }
 
         this.node.track = this;
-        this.node.connect(this.gainNode);
+        this.node.connect(distortion);
+		
+		distortion.connect(this.gainNode);
 
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);
