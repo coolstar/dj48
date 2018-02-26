@@ -32,7 +32,7 @@ class Track {
 		this.effects = new Effects (this.audioCtx);
 		
         this.gainNode = this.audioCtx.createGain();
-        this.gainNode.gain.value = 1.0;
+        this.gainNode.gain.value = 2.0;
 
         this.node.onaudioprocess = function (e) {
             if (this.track.buffer.getChannelData){

@@ -283,7 +283,7 @@ class TrackUI {
 
         $(volumeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(volumeSliderSelector)[0].noUiSlider.get();
-            track.gainNode.gain.value = value/100.0;
+            track.gainNode.gain.value = value*2/100.0;
             console.log("value: "+ value/100.0);
         });
 
