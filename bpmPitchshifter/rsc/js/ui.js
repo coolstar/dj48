@@ -15,7 +15,7 @@ var updateSlider = true;
 $(document.body).on("pointerup touchend",function(e){
     console.log("Mouse up");
     updateSlider = true;
-    
+    //sync();    
 });
 
 $(document.body).on("mouseup",function(e){
@@ -363,8 +363,8 @@ function sync(){
 	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
 	$("#bpm-label").text(trackui.track.bpm);
 	$("#bpm-label2").text(trackui2.track.bpm);
-	$(".tempo-slider").value = trackui.track.st.tempo*100;
-        //$(".tempo-slider").trigger('change');
+	$(".tempo-slider")[0].noUiSlider.set(trackui.track.st.tempo*100);
+	$(".tempo-slider2")[0].noUiSlider.set(trackui2.track.st.tempo*100);
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 }
