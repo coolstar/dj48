@@ -110,8 +110,18 @@
     <h2>Distortion</h2>
     <div class="vertical-slider" id="distortion-slider"></div>
   </div>
+	
+  <div class="slider-control">
+        <h2>Delay</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="delayMix-slider"></div>
+        <h4>Feedback</h4>
+    <div class="vertical-slider" id="delayFeedback-slider"></div>
+        <h4>Time</h4>
+    <div class="vertical-slider" id="delayTime-slider"></div>
+  </div>
 
-	<div class="clear"></div>
+<div class="clear"></div>
 
 
 	<label class="semitone-shift-label">Shifted by <input id='semitones' type="text" value="0"> semitones<br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
@@ -188,7 +198,17 @@
     <h2>Distortion</h2>
     <div class="vertical-slider" id="distortion-slider2"></div>
   </div>
-
+  
+  <div class="slider-control">
+    	<h2>Delay</h2>
+    	<h4>Mix</h4>
+    <div class="vertical-slider" id="delayMix-slider2"></div>
+    	<h4>Feedback</h4>
+    <div class="vertical-slider" id="delayFeedback-slider2"></div>
+	<h4>Time</h4>
+    <div class="vertical-slider" id="delayTime-slider2"></div>
+  </div>
+  
   <div class="clear"></div>
 
 
@@ -239,7 +259,7 @@ $("#save-output").click(function(){
 <script src="./rsc/js/bpmCalc.js"></script>
 <script src="./rsc/js/spectrogram.js"></script>
 <script src="./rsc/js/track.js"></script>
-<script src="./rsc/js/pzScript.js"></script>
+<script src="./rsc/js/Effects.js"></script>
 <script src="./rsc/js/ui.js"></script>
 </body>
 </html>
