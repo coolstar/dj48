@@ -6,9 +6,14 @@ class Effects {
 			gain: 0.0
 		});	
 		this.delay = new Pizzicato.Effects.Delay({
-			mix:  0.0,
+			mix: 0.0,
 			feedback: 0.6,
 			time: 0.4
+		});
+		this.ringModulator = new Pizzicato.Effects.RingModulator({
+			mix: 0.0,
+			speed: 30,
+			distortion: 1
 		});
 	}
 }

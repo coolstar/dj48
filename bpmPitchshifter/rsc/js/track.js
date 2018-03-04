@@ -113,10 +113,9 @@ class Track {
 
         this.node.track = this;
         this.node.connect(this.effects.distortion);
-	this.effects.distortion.connect(this.effects.delay);
-		this.effects.delay.connect(this.gainNode);
-		//this.effects.delay.connect(this.effects.distortion);	
-		//this.effects.distortion.connect(this.gainNode);
+		this.effects.distortion.connect(this.effects.delay);
+		this.effects.delay.connect(this.effects.ringModulator);
+		this.effects.ringModulator.connect(this.gainNode);
 
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);

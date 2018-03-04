@@ -30,7 +30,8 @@ class TrackUI {
         volumeSliderSelector, playButtonSelector, fileInputSelector,
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
-        distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector){
+        distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
+		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector){
 
         this.track = new Track();
 
@@ -289,6 +290,7 @@ class TrackUI {
             console.log("value: "+ value/100.0);
         });
 
+		// DISTORTION
         noUiSlider.create($(distortionSliderSelector)[0],{
             start: 0,
             range: {
@@ -307,7 +309,8 @@ class TrackUI {
             console.log("distortion gain: "+ value/100.0);
         });
 
-	noUiSlider.create($(delayMixSliderSelector)[0],{
+		// DELAY
+		noUiSlider.create($(delayMixSliderSelector)[0],{
             start: 0,
             range: {
                 'min': 0,
@@ -318,12 +321,12 @@ class TrackUI {
             tooltips: true
         });
 
-
-                $(delayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayMixSliderSelector)[0].noUiSlider.get();
             track.effects.delay.mix = value/100.0;
             console.log("delay mix: "+ value/100.0);		
-	});
+		});
+		
      	noUiSlider.create($(delayFeedbackSliderSelector)[0],{
             start: 60,
             range: {
@@ -335,14 +338,13 @@ class TrackUI {
             tooltips: true
         });
 
-
-                $(delayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayFeedbackSliderSelector)[0].noUiSlider.get();
             track.effects.delay.feedback = value/100.0;
             console.log("delay feedback: "+ value/100.0);
         });
 	
-	noUiSlider.create($(delayTimeSliderSelector)[0],{
+		noUiSlider.create($(delayTimeSliderSelector)[0],{
             start: 0.4,
             range: {
                 'min': 0,
@@ -353,13 +355,65 @@ class TrackUI {
             tooltips: true
         });
 
-
-                $(delayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayTimeSliderSelector)[0].noUiSlider.get();
             track.effects.delay.time = value;
             console.log("delay time: "+ value);
         });
-	
+		
+		// RING MODULATOR
+		noUiSlider.create($(ringModulatorMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(ringModulatorMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(ringModulatorMixSliderSelector)[0].noUiSlider.get();
+            track.effects.ringModulator.mix = value/100.0;
+            console.log("ringModulator mix: "+ value/100.0);		
+		});
+		
+		noUiSlider.create($(ringModulatorSpeedSliderSelector)[0],{
+            start: 30,
+            range: {
+                'min': 0,
+                'max': 2000
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(ringModulatorSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(ringModulatorSpeedSliderSelector)[0].noUiSlider.get();
+            track.effects.ringModulator.speed = value;
+            console.log("ringModulator speed: "+ value);		
+		});
+		
+		noUiSlider.create($(ringModulatorDistortionSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0.2,
+                'max': 50
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(ringModulatorDistortionSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(ringModulatorDistortionSliderSelector)[0].noUiSlider.get();
+            track.effects.ringModulator.distortion = value;
+            console.log("ringModulator distortion: "+ value);		
+		});
+		
+		// PLAY
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
             range: {
@@ -395,12 +449,14 @@ class TrackUI {
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider");
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
+ "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider" );
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
- ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2");
+ ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
+ "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2" );
 
 $("#sync-together").click (function (e) {
 	bpm1 = trackui.track.bpm;
