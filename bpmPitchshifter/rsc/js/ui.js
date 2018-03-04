@@ -33,6 +33,7 @@ class TrackUI {
         distortionSliderSelector,
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
 		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
+		stereoPannerPanSliderSelector,
 		reverbTimeSliderSelector, reverbDecaySliderSelector, reverbMixSliderSelector,
 		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector,
 		tremoloMixSliderSelector, tremoloSpeedSliderSelector, tremoloDepthSliderSelector
@@ -305,8 +306,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        
-		
+        		
 		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
@@ -362,7 +362,7 @@ class TrackUI {
 
 		$(delayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayTimeSliderSelector)[0].noUiSlider.get();
-            track.effects.delay.time = value;
+            track.effects.delay.time = parseFloat(value);
             console.log("delay time: "+ value);
         });
 		
@@ -380,7 +380,7 @@ class TrackUI {
 		
 		$(highPassFilterMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(highPassFilterMixSliderSelector)[0].noUiSlider.get();
-            track.effects.highPassFilter.mix = value;
+            track.effects.highPassFilter.mix = parseFloat(value);
 			console.log("highPassFilter actual mix: " + track.effects.highPassFilter.mix);
             console.log("highPassFilter slider mix: "+ value);		
 		});
@@ -398,7 +398,7 @@ class TrackUI {
 		
 		$(highPassFilterFrequencySliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(highPassFilterFrequencySliderSelector)[0].noUiSlider.get();
-            track.effects.highPassFilter.frequency = value;
+            track.effects.highPassFilter.frequency = parseFloat(value);
 			console.log("highPassFilter actual frequency: " + track.effects.highPassFilter.frequency);
             console.log("highPassFilter frequency: "+ value);		
 		});
@@ -416,9 +416,28 @@ class TrackUI {
 
 		$(highPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(highPassFilterPeakSliderSelector)[0].noUiSlider.get();
-            track.effects.highPassFilter.peak = value;
+            track.effects.highPassFilter.peak = parseFloat(value);
             console.log("highPassFilter peak: "+ value);		
 		});
+		
+		// STEREO PANNER
+		noUiSlider.create($(stereoPannerPanSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': -1,
+                'max': 1
+            },
+            orientation: 'horizontal',
+            direction: 'ltr',
+            tooltips: true
+        });
+        		
+		$(stereoPannerPanSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(stereoPannerPanSliderSelector)[0].noUiSlider.get();
+            track.effects.stereoPanner.pan = parseFloat(value);
+			console.log("stereoPanner actual pan: " + track.effects.stereoPanner.pan);
+            console.log("stereoPanner slider pan: "+ value);
+        });
 		
 		// REVERB
 		noUiSlider.create($(reverbTimeSliderSelector)[0],{
@@ -434,7 +453,7 @@ class TrackUI {
 		
 		$(reverbTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(reverbTimeSliderSelector)[0].noUiSlider.get();
-            track.effects.reverb.time = value;
+            track.effects.reverb.time = parseFloat(value);
 			console.log("reverb actual time: " + track.effects.reverb.time);
             console.log("reverb slider time: "+ value);		
 		});
@@ -452,7 +471,7 @@ class TrackUI {
 		
 		$(reverbDecaySliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(reverbDecaySliderSelector)[0].noUiSlider.get();
-            track.effects.reverb.decay = value;
+            track.effects.reverb.decay = parseFloat(value);
 			console.log("reverb actual decay: " + track.effects.reverb.decay);
             console.log("reverb slider decay: "+ value);		
 		});
@@ -470,9 +489,9 @@ class TrackUI {
 		
 		$(reverbMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(reverbMixSliderSelector)[0].noUiSlider.get();
-            track.effects.reverb.mix = value;
+            track.effects.reverb.mix = parseFloat(value);
 			console.log("reverb actual mix: " + track.effects.reverb.mix);
-            console.log("reverb slider mix: "+ value);		
+            console.log("reverb slider mix: " + value);		
 		});
 			
 		// RING MODULATOR
@@ -507,7 +526,7 @@ class TrackUI {
 
 		$(ringModulatorSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(ringModulatorSpeedSliderSelector)[0].noUiSlider.get();
-            track.effects.ringModulator.speed = value
+            track.effects.ringModulator.speed = parseFloat(value);
             console.log("ringModulator speed: "+ value);		
 		});
 		
@@ -524,7 +543,7 @@ class TrackUI {
 
 		$(ringModulatorDistortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(ringModulatorDistortionSliderSelector)[0].noUiSlider.get();
-            track.effects.ringModulator.distortion = value;
+            track.effects.ringModulator.distortion = parseFloat(value);
             console.log("ringModulator distortion: "+ value);		
 		});
 		
@@ -542,7 +561,7 @@ class TrackUI {
 
 		$(tremoloMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(tremoloMixSliderSelector)[0].noUiSlider.get();
-            track.effects.tremolo.mix = value;
+            track.effects.tremolo.mix = parseFloat(value);
 			console.log("tremolo actual mix: " + track.effects.tremolo.mix);
             console.log("tremolo slider mix: " + value);		
 		});
@@ -560,7 +579,7 @@ class TrackUI {
 
 		$(tremoloSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(tremoloSpeedSliderSelector)[0].noUiSlider.get();
-            track.effects.tremolo.speed = value;
+            track.effects.tremolo.speed = parseFloat(value);
 			console.log("tremolo actual speed: " + track.effects.tremolo.speed);
             console.log("tremolo slider speed: " + value);		
 		});
@@ -578,7 +597,7 @@ class TrackUI {
 
 		$(tremoloDepthSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(tremoloDepthSliderSelector)[0].noUiSlider.get();
-            track.effects.tremolo.depth = value;
+            track.effects.tremolo.depth = parseFloat(value);
 			console.log("tremolo actual depth: " + track.effects.tremolo.depth);
             console.log("tremolo slider depth: " + value);		
 		});
@@ -621,6 +640,7 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
  "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
+ "#stereoPannerPan-slider",
  "#reverbTime-slider", "#reverbDecay-slider", "#reverbMix-slider",
  "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider",
  "#tremoloMix-slider", "#tremoloSpeed-slider", "#tremoloDepth-slider"
@@ -631,6 +651,7 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
  "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
+ "#stereoPannerPan-slider2",
  "#reverbTime-slider2", "#reverbDecay-slider2", "#reverbMix-slider2",
  "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2",
  "#tremoloMix-slider2", "#tremoloSpeed-slider2", "#tremoloDepth-slider2"

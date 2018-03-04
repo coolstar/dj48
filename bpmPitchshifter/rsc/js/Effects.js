@@ -15,6 +15,9 @@ class Effects {
 			frequency: 10,
 			peak: 1
 		});
+		this.stereoPanner = new Pizzicato.Effects.StereoPanner({
+			pan: 0
+		});
 		this.reverb = new Pizzicato.Effects.Reverb({
 			time: 0.01,
 			decay: 0.01,

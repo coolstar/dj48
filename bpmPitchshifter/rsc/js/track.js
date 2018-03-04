@@ -115,7 +115,8 @@ class Track {
         this.node.connect(this.effects.distortion);
 		
 		this.effects.distortion.connect(this.effects.delay);
-		this.effects.delay.connect(this.effects.highPassFilter);
+		this.effects.delay.connect(this.effects.stereoPanner);
+		this.effects.stereoPanner.connect(this.effects.highPassFilter);
 		this.effects.highPassFilter.connect(this.effects.reverb);
 		this.effects.reverb.connect(this.effects.ringModulator);
 		this.effects.ringModulator.connect(this.effects.tremolo);
