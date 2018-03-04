@@ -13,12 +13,17 @@ class Effects {
 		this.highPassFilter = new Pizzicato.Effects.HighPassFilter({
 			mix: 0.0,
 			frequency: 10,
-			peak: 10
+			peak: 1
 		});
 		this.ringModulator = new Pizzicato.Effects.RingModulator({
 			mix: 0.0,
 			speed: 30,
 			distortion: 1
+		});
+		this.tremolo = new Pizzicato.Effects.Tremolo({
+			mix: 0.0,
+			speed: 4,
+			depth: 1
 		});
 	}
 }

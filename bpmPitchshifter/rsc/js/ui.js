@@ -33,8 +33,8 @@ class TrackUI {
         distortionSliderSelector,
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
 		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
-		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector
-		
+		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector,
+		tremoloMixSliderSelector, tremoloSpeedSliderSelector, tremoloDepthSliderSelector
 		){
 
         this.track = new Track();
@@ -309,6 +309,7 @@ class TrackUI {
 		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
+			console.log("distortion actual gain: " + track.effects.distortion.gain);
             console.log("distortion gain: "+ value/100.0);
         });
 
@@ -366,7 +367,7 @@ class TrackUI {
 		
 		// HIGH-PASS FILTER
 		noUiSlider.create($(highPassFilterMixSliderSelector)[0],{
-            start: 0.0,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -402,10 +403,10 @@ class TrackUI {
 		});
 		
 		noUiSlider.create($(highPassFilterPeakSliderSelector)[0],{
-            start: 10,
+            start: 1,
             range: {
                 'min': 0.0001,
-                'max': 20
+                'max': 1000
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -470,6 +471,61 @@ class TrackUI {
             console.log("ringModulator distortion: "+ value);		
 		});
 		
+		// TREMOLO
+		noUiSlider.create($(tremoloMixSliderSelector)[0],{
+            start: 0.0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(tremoloMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(tremoloMixSliderSelector)[0].noUiSlider.get();
+            track.effects.tremolo.mix = value;
+			console.log("tremolo actual mix: " + track.effects.tremolo.mix);
+            console.log("tremolo slider mix: " + value);		
+		});
+		
+		noUiSlider.create($(tremoloSpeedSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 20
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(tremoloSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(tremoloSpeedSliderSelector)[0].noUiSlider.get();
+            track.effects.tremolo.speed = value;
+			console.log("tremolo actual speed: " + track.effects.tremolo.speed);
+            console.log("tremolo slider speed: " + value);		
+		});
+		
+		noUiSlider.create($(tremoloDepthSliderSelector)[0],{
+            start: 1,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(tremoloDepthSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(tremoloDepthSliderSelector)[0].noUiSlider.get();
+            track.effects.tremolo.depth = value;
+			console.log("tremolo actual depth: " + track.effects.tremolo.depth);
+            console.log("tremolo slider depth: " + value);		
+		});
+		
 		// PLAY
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
@@ -508,7 +564,8 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
  "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
- "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider"
+ "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider",
+ "#tremoloMix-slider", "#tremoloSpeed-slider", "#tremoloDepth-slider"
 );
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
@@ -516,7 +573,8 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
  "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
- "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2"
+ "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2",
+ "#tremoloMix-slider2", "#tremoloSpeed-slider2", "#tremoloDepth-slider2"
  );
 
 $("#sync-together").click (function (e) {

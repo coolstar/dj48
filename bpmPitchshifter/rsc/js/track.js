@@ -117,8 +117,9 @@ class Track {
 		this.effects.distortion.connect(this.effects.delay);
 		this.effects.delay.connect(this.effects.highPassFilter);
 		this.effects.highPassFilter.connect(this.effects.ringModulator);
-		this.effects.ringModulator.connect(this.gainNode);
-
+		this.effects.ringModulator.connect(this.effects.tremolo);
+		this.effects.tremolo.connect(this.gainNode);
+		
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);
 
