@@ -29,7 +29,7 @@ class Track {
         this.spectrogram = new Spectrogram(this);
 
 
-		this.effects = new Effects (this.audioCtx);
+	this.effects = new Effects (this.audioCtx);
 		
         this.gainNode = this.audioCtx.createGain();
         this.gainNode.gain.value = 2.0;
@@ -96,6 +96,7 @@ class Track {
 
     initialize(){
         this.spectrogram.initialize();
+        this.spectrogram.visualize();
     }
 
     play() {

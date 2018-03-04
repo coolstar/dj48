@@ -44,17 +44,18 @@ class TrackUI {
         track.playSlider = $(playSliderSelector)[0];
 
         track.initialize();
-
+        this.is_playing = false;
         $(playButtonSelector).click(function(e){
             if (fileInput.val()==""){
                 //alert("Please choose a file to play");
 		console.log ("No file selected");
-            } else if ($(this).hasClass("disabled")) {
+            } else if ($(this).hasClass("disabled")) { 
+                console.log ("disabled");
                 // alert("Currently loading audio, please wait a few seconds...");
-            } else if (is_playing == false){
+            } else if (this.is_playing == false || this.is_playing == undefined){
                 track.play();
                 $(playButtonSelector).html("pause");
-                is_playing = true;
+                this.is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(track.gainNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
                     track.recorder && track.recorder.record();
@@ -64,7 +65,7 @@ class TrackUI {
 
                 track.pause();
                 $(playButtonSelector).html( "play");
-                is_playing = false;
+                this.is_playing = false;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder && track.recorder.stop();
                      __log('Stopped recording.');
@@ -142,7 +143,7 @@ class TrackUI {
             $(loadingSelector).show();
             $(playButtonSelector).addClass("disabled");
 
-            if (is_playing) track.pause();
+            if (this.is_playing) track.pause();
             var reader = new FileReader();
             reader.onload = function(ev) {
                 track.audioCtx.decodeAudioData(ev.target.result, function(theBuffer){
@@ -437,7 +438,7 @@ class TrackUI {
 
            track.pos = 0;
            track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
-           if (is_playing){
+           if (this.is_playing){
                track.play();
            }
         });
@@ -477,8 +478,13 @@ $("#sync-together").click (function (e) {
 
 $("#play-all").click(function (e) {
 
-	document.getElementById ("play-pitchshifter2").click();
-     	document.getElementById ("play-pitchshifter").click();
 	//document.getElementById ("play-pitchshifter2").click();
+	//if (!trackui.is_playing) {
+     		document.getElementById ("play-pitchshifter").click();
+	//}
+	//sleep (100);
+	//if (!trackui2.is_playing) {
+		document.getElementById ("play-pitchshifter2").click();
+	//}
      	console.log ("Play all");	
 });
