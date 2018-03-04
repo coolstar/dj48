@@ -989,3 +989,33 @@ select{
     float: left;
     text-align: center;
  }
+
+
+.toolbar{
+    border:solid 1px #999;
+    background:#f0f0f0;
+    padding: 0 20px 0 20px;
+    padding-top:0;
+    -webkit-border-radius:3px;
+    -ms-border-radius:3px;
+    -moz-border-radius:3px;
+    -o-border-radius:3px;
+    border-radius:3px;
+    margin-bottom:20px;
+    height: calc(30% + 50px);
+    height: 100%;
+    float: up;
+    line-height: 3em;
+}
+
+
+.toolbar-container{
+    overflow:hidden;
+    margin:40px 0
+}
+.toolbar-wrapper{
+    float:left;
+    /* width:370px; */
+    /* width:calc(100% - 330px); */
+    overflow:hidden
+}

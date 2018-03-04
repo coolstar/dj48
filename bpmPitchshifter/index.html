@@ -35,6 +35,19 @@
 <!-- <script src="http://documentcloud.github.com/underscore/underscore.js"></script> -->
 
 <div class="wrapper">
+	<div class="toolbar">
+	
+		<button id="play-all" class="tuningButton">play</button>
+
+		<button id="sync-together" class="tuningButton">sync</button>
+		<label for="save-output">
+			Save output to downloadable file?
+			<input type="checkbox" id='save-output'>
+		</label>
+
+
+	</div>
+
 <div class="pitch-shifter" style="float:left;">
 	<h2>Load Audio File<br />(mp3 or wav)</h2>
 	<input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" />
@@ -45,10 +58,10 @@
 
 	<button id="play-pitchshifter" class="tuningButton">play</button>
 	<!-- <button id="pause-pitchshifter" class="tuningButton button--pause">pause</button> -->
-	<label for="save-output">
+<!--	<label for="save-output">
 		Save output to downloadable file?
 		<input type="checkbox" id='save-output'>
-	</label>
+	</label> -->
   <div class="clear"></div>
 	<p id="timing">
 		<div class="timing">
@@ -132,10 +145,10 @@
 
   <button id="play-pitchshifter2" class="tuningButton">play</button>
   <!-- <button id="pause-pitchshifter2" class="tuningButton button--pause">pause</button> -->
-  <label for="save-output2">
+  <!--  <label for="save-output2">
     Save output to downloadable file?
     <input type="checkbox" id='save-output2'>
-  </label>
+  </label> -->
   <div class="clear"></div>
 
   <p id="timing2">
