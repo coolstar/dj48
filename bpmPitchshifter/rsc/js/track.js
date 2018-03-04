@@ -113,8 +113,10 @@ class Track {
 
         this.node.track = this;
         this.node.connect(this.effects.distortion);
+		
 		this.effects.distortion.connect(this.effects.delay);
-		this.effects.delay.connect(this.effects.ringModulator);
+		this.effects.delay.connect(this.effects.highPassFilter);
+		this.effects.highPassFilter.connect(this.effects.ringModulator);
 		this.effects.ringModulator.connect(this.gainNode);
 
         this.gainNode.connect(this.audioCtx.destination);

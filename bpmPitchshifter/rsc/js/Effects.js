@@ -10,6 +10,11 @@ class Effects {
 			feedback: 0.6,
 			time: 0.4
 		});
+		this.highPassFilter = new Pizzicato.Effects.HighPassFilter({
+			mix: 0.0,
+			frequency: 10,
+			peak: 10
+		});
 		this.ringModulator = new Pizzicato.Effects.RingModulator({
 			mix: 0.0,
 			speed: 30,

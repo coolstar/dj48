@@ -30,8 +30,12 @@ class TrackUI {
         volumeSliderSelector, playButtonSelector, fileInputSelector,
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
-        distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
-		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector){
+        distortionSliderSelector,
+		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
+		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
+		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector
+		
+		){
 
         this.track = new Track();
 
@@ -189,7 +193,6 @@ class TrackUI {
             };
             reader.readAsArrayBuffer(this.files[0]);
         });
-
 
         noUiSlider.create($(pitchSliderSelector)[0],{
             start: 100,
@@ -361,6 +364,60 @@ class TrackUI {
             console.log("delay time: "+ value);
         });
 		
+		// HIGH-PASS FILTER
+		noUiSlider.create($(highPassFilterMixSliderSelector)[0],{
+            start: 0.0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+		
+		$(highPassFilterMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(highPassFilterMixSliderSelector)[0].noUiSlider.get();
+            track.effects.highPassFilter.mix = value;
+			console.log("highPassFilter actual mix: " + track.effects.highPassFilter.mix);
+            console.log("highPassFilter slider mix: "+ value);		
+		});
+		
+		noUiSlider.create($(highPassFilterFrequencySliderSelector)[0],{
+            start: 10,
+            range: {
+                'min': 10,
+                'max': 22050
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+		
+		$(highPassFilterFrequencySliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(highPassFilterFrequencySliderSelector)[0].noUiSlider.get();
+            track.effects.highPassFilter.frequency = value;
+			console.log("highPassFilter actual frequency: " + track.effects.highPassFilter.frequency);
+            console.log("highPassFilter frequency: "+ value);		
+		});
+		
+		noUiSlider.create($(highPassFilterPeakSliderSelector)[0],{
+            start: 10,
+            range: {
+                'min': 0.0001,
+                'max': 20
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(highPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(highPassFilterPeakSliderSelector)[0].noUiSlider.get();
+            track.effects.highPassFilter.peak = value;
+            console.log("highPassFilter peak: "+ value);		
+		});
+		
 		// RING MODULATOR
 		noUiSlider.create($(ringModulatorMixSliderSelector)[0],{
             start: 0,
@@ -450,13 +507,17 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
- "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider" );
+ "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
+ "#ringModulatorMix-slider", "#ringModulatorSpeed-slider", "#ringModulatorDistortion-slider"
+);
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
- "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2" );
+ "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
+ "#ringModulatorMix-slider2", "#ringModulatorSpeed-slider2", "#ringModulatorDistortion-slider2"
+ );
 
 $("#sync-together").click (function (e) {
 	bpm1 = trackui.track.bpm;
