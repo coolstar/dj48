@@ -25,6 +25,8 @@ $(document.body).on("mouseup",function(e){
     updateSlider = true;
 });
 
+
+
 class TrackUI {
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
         volumeSliderSelector, playButtonSelector, fileInputSelector,
@@ -41,30 +43,32 @@ class TrackUI {
 
         track.currentTimeSlider = $(currentTimeSliderSelector);
         track.playSlider = $(playSliderSelector)[0];
+        
 
         track.initialize();
-        this.is_playing = false;
+        var that = this;
+        this.is_playing = false; 
         $(playButtonSelector).click(function(e){
+            console.log("is_playing = " + that.is_playing);
             if (fileInput.val()==""){
                 //alert("Please choose a file to play");
 		console.log ("No file selected");
             } else if ($(this).hasClass("disabled")) { 
                 console.log ("disabled");
                 // alert("Currently loading audio, please wait a few seconds...");
-            } else if (this.is_playing == false || this.is_playing == undefined){
+            } else if (that.is_playing == false){
                 track.play();
                 $(playButtonSelector).html("pause");
-                this.is_playing = true;
+                that.is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(track.gainNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
                     track.recorder && track.recorder.record();
                     __log('Started recording.');
                 }
             } else {
-
                 track.pause();
                 $(playButtonSelector).html( "play");
-                this.is_playing = false;
+                that.is_playing = false;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder && track.recorder.stop();
                      __log('Stopped recording.');
@@ -97,39 +101,6 @@ class TrackUI {
             }
         });
 
-    /*
-        $(pauseButtonSelector).click(function (e){
-            track.pause();
-            is_playing = false;
-            if ($(saveOutputSelector).prop("checked") == true){
-                track.recorder && track.recorder.stop();
-                __log('Stopped recording.');
-                
-                // create WAV download link using audio data blob
-                track.recorder && track.recorder.exportAudio(function(blob) {
-                  var recordingslist = document.getElementById(recordingslistSelector);
-
-                  var url = URL.createObjectURL(blob);
-                  var li = document.createElement('li');
-                  var au = document.createElement('audio');
-                  var hf = document.createElement('a');
-                  
-                  au.controls = true;
-                  au.src = url;
-                  hf.href = url;
-                  // hf.download = new Date().toISOString() + '.wav';
-                  // hf.download = new Date().toISOString() + '.mp3';
-                  hf.download = "pitch-shifted-" + $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
-                  hf.innerHTML = hf.download;
-                  li.appendChild(au);
-                  li.appendChild(hf);
-                  recordingslist.appendChild(li);
-                  //ga('send', 'event', 'Pitch shift download', "Download Added");
-                });
-                
-                track.recorder && track.recorder.clear();
-            }
-        }); */
 
         var fileInput = $(fileInputSelector);
         // bufferSource.gain.value = 1;
@@ -142,7 +113,7 @@ class TrackUI {
             $(loadingSelector).show();
             $(playButtonSelector).addClass("disabled");
 
-            if (this.is_playing) track.pause();
+            if (that.is_playing) track.pause();
             var reader = new FileReader();
             reader.onload = function(ev) {
                 track.audioCtx.decodeAudioData(ev.target.result, function(theBuffer){
@@ -385,7 +356,7 @@ class TrackUI {
 
            track.pos = 0;
            track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
-           if (this.is_playing){
+           if (that.is_playing){
                track.play();
            }
         });
@@ -423,12 +394,20 @@ $("#sync-together").click (function (e) {
 $("#play-all").click(function (e) {
 
 	//document.getElementById ("play-pitchshifter2").click();
-	//if (!trackui.is_playing) {
+        console.log("trackui1_playing = " + trackui.is_playing);
+        console.log("trackui2_playing = " + trackui2.is_playing);
+	if ((!trackui.is_playing && !trackui2.is_playing) || (trackui.is_playing && trackui2.is_playing)) {
      		document.getElementById ("play-pitchshifter").click();
-	//}
-	//sleep (100);
-	//if (!trackui2.is_playing) {
-		document.getElementById ("play-pitchshifter2").click();
-	//}
+                document.getElementById ("play-pitchshifter2").click();
+                console.log("hit both trackui");
+	}
+        else if (!trackui.is_playing && trackui2.is_playing) {
+                document.getElementById("play-pitchshifter2").click();
+                console.log("stop trackui2");
+	}
+        else{
+		document.getElementById ("play-pitchshifter").click();
+                console.log("stop trackui1");
+	}
      	console.log ("Play all");	
 });
