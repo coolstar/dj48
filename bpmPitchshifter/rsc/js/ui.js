@@ -30,7 +30,8 @@ class TrackUI {
         volumeSliderSelector, playButtonSelector, fileInputSelector,
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
-        distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector){
+        distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector, PPdelayMixSliderSelector,
+	PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector){
 
         this.track = new Track();
 
@@ -299,14 +300,14 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        
-		
+        //EFFECTS
+	//DISTORTION
 		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
             console.log("distortion gain: "+ value/100.0);
         });
-
+	//DELAY
 	noUiSlider.create($(delayMixSliderSelector)[0],{
             start: 0,
             range: {
@@ -317,7 +318,6 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-
 
                 $(delayMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayMixSliderSelector)[0].noUiSlider.get();
@@ -359,6 +359,59 @@ class TrackUI {
             track.effects.delay.time = value;
             console.log("delay time: "+ value);
         });
+
+	//PPDELAY
+	noUiSlider.create($(PPdelayMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });	
+       
+	$(PPdelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(PPdelayMixSliderSelector)[0].noUiSlider.get();
+            track.effects.PPdelay.mix = value/100.0;
+            console.log("PPdelay mix: "+ value/100.0);
+        });
+        noUiSlider.create($(PPdelayFeedbackSliderSelector)[0],{
+            start: 60,
+            range: {
+                'min': 0,
+                'max': 100
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+
+                $(PPdelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(PPdelayFeedbackSliderSelector)[0].noUiSlider.get();
+            track.effects.PPdelay.feedback = value/100.0;
+            console.log("PPdelay feedback: "+ value/100.0);
+        });
+
+        noUiSlider.create($(PPdelayTimeSliderSelector)[0],{
+            start: 0.4,
+            range: {
+                'min': 0,
+                'max': 5
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+
+                $(PPdelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(PPdelayTimeSliderSelector)[0].noUiSlider.get();
+            track.effects.PPdelay.time = value;
+            console.log("PPdelay time: "+ value);
+        });
 	
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
@@ -395,12 +448,15 @@ class TrackUI {
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider");
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider", "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
- ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2");
+ ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", 
+ "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", 
+ "#delayFeedback-slider2", "#delayTime-slider2", 
+ "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2");
 
 $("#sync-together").click (function (e) {
 	bpm1 = trackui.track.bpm;

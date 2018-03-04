@@ -10,5 +10,10 @@ class Effects {
 			feedback: 0.6,
 			time: 0.4
 		});
+		this.PPdelay = new Pizzicato.Effects.PingPongDelay({
+			mix: 0.0,
+			feedback: 0.6,
+			time: 0.4
+		});
 	}
 }
