@@ -54,7 +54,7 @@ class TrackUI {
                 $(playButtonSelector).html("pause");
                 is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
-                    track.recorder = new Recorder(track.gainNode, {workerPath: 'recorderWorkerMP3.js'});
+                    track.recorder = new Recorder(track.gainNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
                     track.recorder && track.recorder.record();
                     __log('Started recording.');
                 }
@@ -86,9 +86,10 @@ class TrackUI {
                         li.appendChild(au);
                         li.appendChild(hf);
                         recordingslist.appendChild(li);
+                        //console.log ("End export");
                         //ga('send', 'event', 'Pitch shift download', "Download Added");
                     });
-                
+                    //console.log ("Clear recorder");
                     track.recorder && track.recorder.clear();
                   }
             }
