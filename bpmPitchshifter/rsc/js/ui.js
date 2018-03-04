@@ -46,7 +46,8 @@ class TrackUI {
 
         $(playButtonSelector).click(function(e){
             if (fileInput.val()==""){
-                alert("Please choose a file to play");
+                //alert("Please choose a file to play");
+		console.log ("No file selected");
             } else if ($(this).hasClass("disabled")) {
                 // alert("Currently loading audio, please wait a few seconds...");
             } else if (is_playing == false){
@@ -349,7 +350,7 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2");
 
-function sync(){
+$("#sync-together").click (function (e) {
 	bpm1 = trackui.track.bpm;
 	bpm2 = trackui2.track.bpm;
 
@@ -364,8 +365,7 @@ function sync(){
 	$(".tempo-slider2")[0].noUiSlider.set(trackui2.track.st.tempo*100);
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
-
-}
+});
 
 $("#play-all").click(function (e) {
 
