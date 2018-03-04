@@ -366,3 +366,11 @@ function sync(){
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 
 }
+
+$("#play-all").click(function (e) {
+
+	document.getElementById ("play-pitchshifter2").click();
+     	document.getElementById ("play-pitchshifter").click();
+	//document.getElementById ("play-pitchshifter2").click();
+     	console.log ("Play all");	
+});
