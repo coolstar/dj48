@@ -989,3 +989,19 @@ select{
     float: left;
     text-align: center;
  }
+
+
+.toolbar{
+    border:solid 1px #999;
+    background:#f0f0f0;
+    padding: 0 20px 0 20px;
+    padding-top:0;
+    -webkit-border-radius:3px;
+    -ms-border-radius:3px;
+    -moz-border-radius:3px;
+    -o-border-radius:3px;
+    border-radius:3px;
+    margin-bottom:20px;
+    height: calc(20% - 50px);
+    float: up;
+}
