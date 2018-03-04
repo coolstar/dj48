@@ -32,6 +32,7 @@ class TrackUI {
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
         distortionSliderSelector,
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
+		lowPassFilterMixSliderSelector, lowPassFilterFrequencySliderSelector, lowPassFilterPeakSliderSelector,
 		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
 		stereoPannerPanSliderSelector,
 		reverbTimeSliderSelector, reverbDecaySliderSelector, reverbMixSliderSelector,
@@ -366,6 +367,61 @@ class TrackUI {
             console.log("delay time: "+ value);
         });
 		
+		// LOW-PASS FILTER
+		noUiSlider.create($(lowPassFilterMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+		
+		$(lowPassFilterMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(lowPassFilterMixSliderSelector)[0].noUiSlider.get();
+            track.effects.lowPassFilter.mix = parseFloat(value);
+			console.log("lowPassFilter actual mix: " + track.effects.lowPassFilter.mix);
+            console.log("lowPassFilter slider mix: "+ value);		
+		});
+		
+		noUiSlider.create($(lowPassFilterFrequencySliderSelector)[0],{
+            start: 22050,
+            range: {
+                'min': 10,
+                'max': 22050
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+		
+		$(lowPassFilterFrequencySliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(lowPassFilterFrequencySliderSelector)[0].noUiSlider.get();
+            track.effects.lowPassFilter.frequency = parseFloat(value);
+			console.log("lowPassFilter actual frequency: " + track.effects.lowPassFilter.frequency);
+            console.log("lowPassFilter frequency: "+ value);		
+		});
+		
+		noUiSlider.create($(lowPassFilterPeakSliderSelector)[0],{
+            start: 1,
+            range: {
+                'min': 0.0001,
+                'max': 1000
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+		$(lowPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(lowPassFilterPeakSliderSelector)[0].noUiSlider.get();
+            track.effects.lowPassFilter.peak = parseFloat(value);
+			console.log("lowPassFilter actual peak: " + track.effects.lowPassFilter.peak);
+            console.log("lowPassFilter slider peak: "+ value);	
+		});
+		
 		// HIGH-PASS FILTER
 		noUiSlider.create($(highPassFilterMixSliderSelector)[0],{
             start: 0,
@@ -639,6 +695,7 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
+ "#lowPassFilterMix-slider", "#lowPassFilterFrequency-slider", "#lowPassFilterPeak-slider",
  "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
  "#stereoPannerPan-slider",
  "#reverbTime-slider", "#reverbDecay-slider", "#reverbMix-slider",
@@ -650,6 +707,7 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
+ "#lowPassFilterMix-slider2", "#lowPassFilterFrequency-slider2", "#lowPassFilterPeak-slider2",
  "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
  "#stereoPannerPan-slider2",
  "#reverbTime-slider2", "#reverbDecay-slider2", "#reverbMix-slider2",

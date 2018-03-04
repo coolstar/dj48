@@ -10,6 +10,19 @@ class Effects {
 			feedback: 0.6,
 			time: 0.4
 		});
+		this.compressor = new Pizzicato.Effects.Compressor({
+			threshold: -24;
+			knee: 30,
+			attack: 0.003,
+			release: 0.025,
+			ratio: 12,
+			mix: 0.0
+		});
+		this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({
+			mix: 0.0,
+			frequency: 22050,
+			peak: 1
+		});
 		this.highPassFilter = new Pizzicato.Effects.HighPassFilter({
 			mix: 0.0,
 			frequency: 10,
