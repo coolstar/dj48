@@ -100,6 +100,7 @@ class TrackUI {
                     track.recorder && track.recorder.clear();
                   }
             }
+            updatePlayallButton();
         });
 
 
@@ -127,7 +128,7 @@ class TrackUI {
 
                     calculateBPM (track.buffer, function (bpm) {
                         track.bpm = bpm;
-            original_bpm = bpm;
+                        original_bpm = bpm;
                         console.log("BPM: " + track.bpm);
                         $(bpmLabelSelector).text(track.bpm);
 
@@ -153,8 +154,12 @@ class TrackUI {
                         $(playButtonSelector).addClass("beginTuning");
                         $(timingSelector).show();
                         $(loadingSelector).hide();
+                        updatePlayallButton();
+                        updateSyncButton();
                     });
                 }, function(){ //error function
+                    updatePlayallButton();
+                    updateSyncButton();
                     $(loadingSelector).html("Sorry, we could not process this audio file.");
                     //ga('send', 'event', 'File Upload', "Failure");
                 })
@@ -538,5 +543,46 @@ $("#play-all").click(function (e) {
 		document.getElementById ("play-pitchshifter").click();
                 console.log("stop trackui1");
 	}
+        updatePlayallButton(); 
      	console.log ("Play all");	
 });
+
+function updatePlayallButton () {
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        
+        if (fileInput == "" && fileInput2 == "") {
+             $("#play-all").removeClass ("beginTuning");
+             $("#play-all").addClass ("disabled");   
+        }
+        else {
+             $("#play-all").removeClass ("disabled");
+             $("#play-all").addClass ("beginTuning");
+        }
+        
+        var bool = (trackui.is_playing || trackui2.is_playing);
+        if (bool) {
+             $("#play-all").html ("pause");
+        }
+        else {
+             $("#play-all").html ("play");
+        }
+}
+
+
+function updateSyncButton () {
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        if (fileInput == "" || fileInput2 == "") {
+             $("#sync-together").removeClass ("beginTuning");
+             $("#sync-together").addClass ("disabled");   
+        }
+        else {
+             $("#sync-together").removeClass ("disabled");
+             $("#sync-together").addClass ("beginTuning");
+        }
+}
