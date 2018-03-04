@@ -15,6 +15,12 @@ class Effects {
 			frequency: 10,
 			peak: 1
 		});
+		this.reverb = new Pizzicato.Effects.Reverb({
+			time: 0.01,
+			decay: 0.01,
+			reverse: false,
+			mix: 0.0
+		});
 		this.ringModulator = new Pizzicato.Effects.RingModulator({
 			mix: 0.0,
 			speed: 30,
