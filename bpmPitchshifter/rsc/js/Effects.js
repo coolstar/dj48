@@ -1,9 +1,6 @@
 class Effects {
 	constructor (audioCtx) {
 		Pizzicato.context = audioCtx;
-		this.distortion = new Pizzicato.Effects.Distortion({
-			gain: 0.0
-		});	
 		this.delay = new Pizzicato.Effects.Delay({
 			mix: 0.0,
 			feedback: 0.6,
@@ -20,6 +17,9 @@ class Effects {
             time: 0.4,
 			cutoff: 700
         });
+		this.distortion = new Pizzicato.Effects.Distortion({
+			gain: 0.0
+		});	
 		this.quad = new Pizzicato.Effects.Quadrafuzz({
 			lowGain: 0.6,
    	 		midLowGain: 0.8,

@@ -116,9 +116,9 @@ class Track {
         this.node.connect(this.effects.delay);
 		
 		this.effects.delay.connect(this.effects.PPdelay);
-		this.effects.distortion.connect(this.effects.delay);
 		this.effects.PPdelay.connect(this.effects.dDelay);
-		this.effects.dDelay.connect(this.effects.quad);
+		this.effects.dDelay.connect(this.effects.distortion);
+		this.effects.distortion.connect(this.effects.quad);
 		this.effects.quad.connect(this.effects.flanger);
 		this.effects.flanger.connect(this.effects.compressor);
 		this.effects.compressor.connect(this.effects.lowPassFilter);
