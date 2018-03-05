@@ -35,48 +35,47 @@
 
 <div class="wrapper">
 	<div class="toolbar">
-	
-		<button id="play-all" class="tuningButton">play</button>
-
-		<button id="sync-together" class="tuningButton">sync</button>
-		<label for="save-output">
-			Save output to downloadable file?
-			<input type="checkbox" id='save-output'>
-		</label>
-
-
+    <div style="float: left;width:calc(50% - 120px);height:100px;">
+      <canvas class="visualizer" style="width: 100%;height: 50px;"></canvas>
+      <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
+        <button id="play-pitchshifter" class="tuningButton" style="float:left;">play</button>
+        <div id='play-slider' class="play-slider"></div>
+        <div id="timing" style="width: 110px;" class="timingcontainer">
+          <div class="timing">
+            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+          </div>
+          <span id='loading2' style='display:none;'>Loading...</span>
+        </div>
+      </div>
+    </div>
+		<div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
+      <button id="play-all" class="tuningButton">play</button>
+      <button id="sync-together" class="tuningButton">sync</button>
+      <label for="save-output">
+        <input type="checkbox" id='save-output'>Record
+      </label>
+    </div>
+    <div style="float: left;width:calc(50% - 120px);height:100px;">
+      <canvas class="visualizer2" style="width: 100%;height: 50px;"></canvas>
+      <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
+        <button id="play-pitchshifter2" class="tuningButton" style="float:left;">play</button>
+        <div id='play-slider2' class="play-slider"></div>
+        <div id="timing2" style="width: 110px;" class="timingcontainer">
+          <div class="timing">
+            <span id="current-time2">0:00</span> / <span id="total-time2">0:00</span>
+          </div>
+          <span id='loading2' style='display:none;'>Loading...</span>
+        </div>
+      </div>
+    </div>
 	</div>
 
 <div class="pitch-shifter" style="float:left;">
-	<h2>Load Audio File</h2>
 	<input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" />
 
 	<p class="clear"></p>
 
 	<script>var is_playing;</script>
-
-	<button id="play-pitchshifter" class="tuningButton">play</button>
-	<!-- <button id="pause-pitchshifter" class="tuningButton button--pause">pause</button> -->
-<!--	<label for="save-output">
-		Save output to downloadable file?
-		<input type="checkbox" id='save-output'>
-	</label> -->
-  <div class="clear"></div>
-	<p id="timing">
-		<div class="timing">
-			<span id="current-time">0:00</span>
-			/
-			<span id="total-time">0:00</span>
-		</div>
-		<span id='loading' style='display:none;'>Loading...</span>
-	</p>
-
-  <div id='play-slider' class="play-slider">
-  </div>
-
-	<div class="clear2"></div>
-
-   <canvas class="visualizer" style="width:100%;height:100px"></canvas> 
 
    <!-- Toggle between sinewave and frequency bars -->
   <form class="controls">
@@ -259,36 +258,11 @@
 
 <!-- RIGHT SCREEN -->
 <div class="pitch-shifter" style="float:right;">
-  <h2>Load Audio File</h2>
   <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" />
 
   <p class="clear"></p>
 
   <script>var is_playing;</script>
-
-  <button id="play-pitchshifter2" class="tuningButton">play</button>
-  <!-- <button id="pause-pitchshifter2" class="tuningButton button--pause">pause</button> -->
-  <!--  <label for="save-output2">
-    Save output to downloadable file?
-    <input type="checkbox" id='save-output2'>
-  </label> -->
-  <div class="clear"></div>
-
-  <p id="timing2">
-    <div class="timing">
-      <span id="current-time2">0:00</span>
-      /
-      <span id="total-time2">0:00</span>
-    </div>
-    <span id='loading2' style='display:none;'>Loading...</span>
-  </p>
-
-  <div id='play-slider2' class="play-slider">
-  </div>
-
-  <div class="clear2"></div>
-
-   <canvas class="visualizer2" style="width:100%;height:100px"></canvas> 
 
    <!-- Toggle between sinewave and frequency bars -->
   <form class="controls">
