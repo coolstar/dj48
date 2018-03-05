@@ -21,5 +21,12 @@ class Effects {
                         time: 0.4,
 			cutoff: 700
                 });
+		this.quad = new Pizzicato.Effects.Quadrafuzz({
+			lowGain: 0.6,
+   	 		midLowGain: 0.8,
+    			midHighGain: 0.5,
+    			highGain: 0.6,
+   			 mix: 1.0
+			});
 	}
 }
