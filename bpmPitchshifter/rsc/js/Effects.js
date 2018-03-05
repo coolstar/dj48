@@ -27,6 +27,14 @@ class Effects {
     			midHighGain: 0.5,
     			highGain: 0.6,
    			 mix: 1.0
-			});
+		});
+		this.flanger = new Pizzicato.Effects.Flanger({
+                        mix:  0.0,
+                        feedback: 0.1,
+                        time: 0.45,
+			depth: .1,
+			speed: .2
+                    
+                });
 	}
 }

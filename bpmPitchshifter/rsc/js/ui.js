@@ -33,7 +33,7 @@ class TrackUI {
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
         distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector, PPdelayMixSliderSelector,
-	PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector, dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector, quadMixSliderSelector, quadLGainSliderSelector, quadMLGainSliderSelector, quadMHGainSliderSelector, quadHGainSliderSelector){
+	PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector, dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector, quadMixSliderSelector, quadLGainSliderSelector, quadMLGainSliderSelector, quadMHGainSliderSelector, quadHGainSliderSelector, flangerMixSliderSelector, flangerFeedbackSliderSelector, flangerTimeSliderSelector, flangerDepthSliderSelector, flangerSpeedSliderSelector){
 
         this.track = new Track();
 
@@ -548,7 +548,89 @@ class TrackUI {
             console.log("quad HG: "+ value);
         });
 
-        noUiSlider.create($(playSliderSelector)[0],{
+	noUiSlider.create($(flangerMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+                $(flangerMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(flangerMixSliderSelector)[0].noUiSlider.get();
+            track.effects.flanger.mix = parseFloat(value);
+            console.log("Flanger mix: "+ track.effects.flanger.mix);
+    });
+
+	noUiSlider.create($(flangerFeedbackSliderSelector)[0],{
+            start: 0.1,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+                $(flangerFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(flangerFeedbackSliderSelector)[0].noUiSlider.get();
+            track.effects.flanger.feedback = parseFloat(value);
+            console.log("Flanger Feedback: "+ track.effects.flanger.feedback);
+    });
+	noUiSlider.create($(flangerTimeSliderSelector)[0],{
+            start: 0.45,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+                $(flangerTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(flangerTimeSliderSelector)[0].noUiSlider.get();
+            track.effects.flanger.time = parseFloat(value);
+            console.log("Flanger time: "+ track.effects.flanger.time);
+    });
+	noUiSlider.create($(flangerDepthSliderSelector)[0],{
+            start: 0.1,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+                $(flangerDepthSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(flangerDepthSliderSelector)[0].noUiSlider.get();
+            track.effects.flanger.depth = parseFloat(value);
+            console.log("Flanger depth: "+ track.effects.flanger.depth);
+    });
+	noUiSlider.create($(flangerSpeedSliderSelector)[0],{
+            start: 0.2,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+                $(flangerSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(flangerSpeedSliderSelector)[0].noUiSlider.get();
+            track.effects.flanger.speed = parseFloat(value);
+            console.log("Flanger speed: "+ track.effects.flanger.speed);
+    });
+
+	 noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
             range: {
                 'min': 0,
@@ -576,14 +658,13 @@ class TrackUI {
                track.play();
            }
         });
-    }
-
+}
 }
 
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider", "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider","#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider", "#quadMix-slider", "#quadLGain-slider", "#quadMLGain-slider", "#quadMHGain-slider", "#quadHGain-slider");
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider", "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider","#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider", "#quadMix-slider", "#quadLGain-slider", "#quadMLGain-slider", "#quadMHGain-slider", "#quadHGain-slider", "#flangerMix-slider","#flangerFeedback-slider", "#flangerTime-slider","#flangerDepth-slider","#flangerSpeed-slider");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
@@ -593,7 +674,8 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#delayFeedback-slider2", "#delayTime-slider2", 
  "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2",
 "#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2",
-"#quadMix-slider2", "#quadLGain-slider2", "#quadMLGain-slider2", "#quadMHGain-slider2", "#quadHGain-slider2");
+"#quadMix-slider2", "#quadLGain-slider2", "#quadMLGain-slider2", "#quadMHGain-slider2", "#quadHGain-slider2",
+ "#flangerMix-slider2","#flangerFeedback-slider2", "#flangerTime-slider2","#flangerDepth-slider2","#flangerSpeed-slider2");
 
 $("#sync-together").click (function (e) {
         
