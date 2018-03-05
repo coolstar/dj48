@@ -32,6 +32,7 @@ class TrackUI {
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
         distortionSliderSelector,
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
+		compressorThresholdSliderSelector, compressorKneeSliderSelector, compressorAttackSliderSelector, compressorReleaseSliderSelector, compressorRatioSliderSelector, compressorMixSliderSelector,
 		lowPassFilterMixSliderSelector, lowPassFilterFrequencySliderSelector, lowPassFilterPeakSliderSelector,
 		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
 		stereoPannerPanSliderSelector,
@@ -367,6 +368,115 @@ class TrackUI {
             console.log("delay time: "+ value);
         });
 		
+		// COMPRESSOR
+		noUiSlider.create($(compressorThresholdSliderSelector)[0],{
+            start: -24,
+            range: {
+                'min': -100,
+                'max': 0
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorThresholdSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorThresholdSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.threshold = parseFloat(value);
+			console.log("compressor actual threshold: " + track.effects.compressor.threshold);
+            console.log("compressor slider threshold: "+ value);
+        });
+		
+		noUiSlider.create($(compressorKneeSliderSelector)[0],{
+            start: 30,
+            range: {
+                'min': 0,
+                'max': 40
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorKneeSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorKneeSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.knee = parseFloat(value);
+			console.log("compressor actual knee: " + track.effects.compressor.knee);
+            console.log("compressor slider knee: "+ value);
+        });
+		
+		noUiSlider.create($(compressorAttackSliderSelector)[0],{
+            start: 0.003,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorAttackSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorAttackSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.attack = parseFloat(value);
+			console.log("compressor actual attack: " + track.effects.compressor.attack);
+            console.log("compressor slider attack: "+ value);
+        });
+		
+		noUiSlider.create($(compressorReleaseSliderSelector)[0],{
+            start: 0.025,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorReleaseSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorReleaseSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.release = parseFloat(value);
+			console.log("compressor actual release: " + track.effects.compressor.release);
+            console.log("compressor slider release: " + value);
+        });
+		
+		noUiSlider.create($(compressorRatioSliderSelector)[0],{
+            start: 12,
+            range: {
+                'min': 1,
+                'max': 20
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorRatioSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorRatioSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.ratio = parseFloat(value);
+			console.log("compressor actual ratio: " + track.effects.compressor.ratio);
+            console.log("compressor slider ratio: "+ value);
+        });
+		
+		noUiSlider.create($(compressorMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+        		
+		$(compressorMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(compressorMixSliderSelector)[0].noUiSlider.get();
+            track.effects.compressor.mix = parseFloat(value);
+			console.log("compressor actual mix: " + track.effects.compressor.mix);
+            console.log("compressor slider mix: " + value);
+        });
+		
 		// LOW-PASS FILTER
 		noUiSlider.create($(lowPassFilterMixSliderSelector)[0],{
             start: 0,
@@ -695,6 +805,7 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
+ "#compressorThreshold-slider", "#compressorKnee-slider", "#compressorAttack-slider", "#compressorRelease-slider", "#compressorRatio-slider", "#compressorMix-slider",
  "#lowPassFilterMix-slider", "#lowPassFilterFrequency-slider", "#lowPassFilterPeak-slider",
  "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
  "#stereoPannerPan-slider",
@@ -707,6 +818,7 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
+ "#compressorThreshold-slider2", "#compressorKnee-slider2", "#compressorAttack-slider2", "#compressorRelease-slider2", "#compressorRatio-slider2", "#compressorMix-slider2",
  "#lowPassFilterMix-slider2", "#lowPassFilterFrequency-slider2", "#lowPassFilterPeak-slider2",
  "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
  "#stereoPannerPan-slider2",

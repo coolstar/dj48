@@ -11,7 +11,7 @@ class Effects {
 			time: 0.4
 		});
 		this.compressor = new Pizzicato.Effects.Compressor({
-			threshold: -24;
+			threshold: -24,
 			knee: 30,
 			attack: 0.003,
 			release: 0.025,
