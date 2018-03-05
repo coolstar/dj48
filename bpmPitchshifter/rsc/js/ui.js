@@ -111,6 +111,8 @@ class TrackUI {
 
         fileInput.on("change", function() {
 
+            updatePlayallButton();
+            updateSyncButton();
             $(timingSelector).hide();
             $(loadingSelector).show();
             $(playButtonSelector).addClass("disabled");
@@ -154,14 +156,13 @@ class TrackUI {
                         $(playButtonSelector).addClass("beginTuning");
                         $(timingSelector).show();
                         $(loadingSelector).hide();
-                        updatePlayallButton();
-                        updateSyncButton();
+                       
                     });
                 }, function(){ //error function
-                    updatePlayallButton();
-                    updateSyncButton();
+                    $(bpmLabelSelector).text(track.bpm);
                     $(loadingSelector).html("Sorry, we could not process this audio file.");
                     //ga('send', 'event', 'File Upload', "Failure");
+                    console.log("broke");
                 })
             };
             reader.readAsArrayBuffer(this.files[0]);
