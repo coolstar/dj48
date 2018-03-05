@@ -509,6 +509,14 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
 "#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2");
 
 $("#sync-together").click (function (e) {
+        
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        if (fileInput == "" || fileInput2 == "") {
+               return;
+        }
 	bpm1 = trackui.track.bpm;
 	bpm2 = trackui2.track.bpm;
 
