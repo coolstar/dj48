@@ -1,484 +1,489 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        
-            <title>DJ48</title>
-        
-        <meta name="viewport" content="initial-scale=1">
 
-        <link href="./rsc/css/main.css?v=3" rel="stylesheet" type="text/css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <link rel="stylesheet" type="text/css" href="./lib/nouislider/nouislider.min.css">
+    <title>DJ48</title>
 
-        <script src="./lib/jquery/jquery.min.js"></script>
+    <meta name="viewport" content="initial-scale=1">
 
-        <style type="text/css">
+    <link href="./rsc/css/main.css?v=3" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="./lib/nouislider/nouislider.min.css">
+
+    <script src="./lib/jquery/jquery.min.js"></script>
+
+    <style type="text/css">
         .noUi-connect {
             background: rgb(56, 163, 235);
         }
-
+        
         .clear2 {
-          padding-top: 20px;
+            padding-top: 20px;
         }
-        </style>
+    </style>
 
-    </head>
+</head>
 
-    <body>
+<body>
+    <script src='./lib/nouislider/nouislider.min.js'></script>
+    <!-- <script src="http://documentcloud.github.com/underscore/underscore.js"></script> -->
 
-
-
-<script src='./lib/nouislider/nouislider.min.js'></script>
-<!-- <script src="http://documentcloud.github.com/underscore/underscore.js"></script> -->
-
-<div class="wrapper">
-	<div class="toolbar">
-    <div style="float: left;width:calc(50% - 120px);height:100px;">
-      <canvas class="visualizer" style="width: 100%;height: 50px;"></canvas>
-      <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
-        <button id="play-pitchshifter" class="tuningButton" style="float:left;">play</button>
-        <div id='play-slider' class="play-slider"></div>
-        <div id="timing" style="width: 110px;" class="timingcontainer">
-          <div class="timing">
-            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
-          </div>
-          <span id='loading2' style='display:none;'>Loading...</span>
+    <div class="wrapper">
+        <div class="toolbar">
+            <div style="float: left;width:calc(50% - 120px);height:100px;">
+                <canvas class="visualizer" style="width: 100%;height: 50px;"></canvas>
+                <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
+                    <button id="play-pitchshifter" class="tuningButton" style="float:left;">play</button>
+                    <div id='play-slider' class="play-slider"></div>
+                    <div id="timing" style="width: 110px;" class="timingcontainer">
+                        <div class="timing">
+                            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+                        </div>
+                        <span id='loading2' style='display:none;'>Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
+                <button id="play-all" class="tuningButton">play</button>
+                <button id="sync-together" class="tuningButton">sync</button>
+                <label for="save-output">
+                    <input type="checkbox" id='save-output'>Record
+                </label>
+            </div>
+            <div style="float: left;width:calc(50% - 120px);height:100px;">
+                <canvas class="visualizer2" style="width: 100%;height: 50px;"></canvas>
+                <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
+                    <button id="play-pitchshifter2" class="tuningButton" style="float:left;">play</button>
+                    <div id='play-slider2' class="play-slider"></div>
+                    <div id="timing2" style="width: 110px;" class="timingcontainer">
+                        <div class="timing">
+                            <span id="current-time2">0:00</span> / <span id="total-time2">0:00</span>
+                        </div>
+                        <span id='loading2' style='display:none;'>Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-		<div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
-      <button id="play-all" class="tuningButton">play</button>
-      <button id="sync-together" class="tuningButton">sync</button>
-      <label for="save-output">
-        <input type="checkbox" id='save-output'>Record
-      </label>
-    </div>
-    <div style="float: left;width:calc(50% - 120px);height:100px;">
-      <canvas class="visualizer2" style="width: 100%;height: 50px;"></canvas>
-      <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
-        <button id="play-pitchshifter2" class="tuningButton" style="float:left;">play</button>
-        <div id='play-slider2' class="play-slider"></div>
-        <div id="timing2" style="width: 110px;" class="timingcontainer">
-          <div class="timing">
-            <span id="current-time2">0:00</span> / <span id="total-time2">0:00</span>
-          </div>
-          <span id='loading2' style='display:none;'>Loading...</span>
+
+        <div class="pitch-shifter" style="float:left;">
+            <input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" />
+
+            <p class="clear"></p>
+
+            <script>
+                var is_playing;
+            </script>
+
+            <!-- Toggle between sinewave and frequency bars -->
+            <form class="controls">
+                <div>
+                    <label for="visual">Visualizer setting</label>
+                    <select id="visual" name="visual">
+                        <option value="sinewave">Sinewave</option>
+                        <option value="frequencybars" selected>Frequency bars</option>
+                        <option value="off">Off</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="slider-control">
+                <h2>Volume</h2>
+                <div class="vertical-slider" id="volume-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Pitch</h2>
+                <div class="vertical-slider pitch-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Tempo<br>BPM = <span id="bpm-label">0</span></h2>
+                <div class="vertical-slider tempo-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="delayMix-slider"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="delayFeedback-slider"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="delayTime-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Ping-Pong Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="PPdelayMix-slider"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="PPdelayFeedback-slider"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="PPdelayTime-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Dub Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="dDelayMix-slider"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="dDelayFeedback-slider"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="dDelayTime-slider"></div>
+                <h4>Cutoff</h4>
+                <div class="vertical-slider" id="dDelayCutoff-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Distortion</h2>
+                <h4>Gain</h4>
+                <div class="vertical-slider" id="distortionGain-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Quadrafuzz</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="quadMix-slider"></div>
+                <h4>Low Gain</h4>
+                <div class="vertical-slider" id="quadLGain-slider"></div>
+                <h4>Mid Low Gain </h4>
+                <div class="vertical-slider" id="quadMLGain-slider"></div>
+                <h4>Mid High Gain</h4>
+                <div class="vertical-slider" id="quadMHGain-slider"></div>
+                <h4>High Gain </h4>
+                <div class="vertical-slider" id="quadHGain-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Flanger</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="flangerMix-slider"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="flangerFeedback-slider"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="flangerTime-slider"></div>
+                <h4>Depth</h4>
+                <div class="vertical-slider" id="flangerDepth-slider"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="flangerSpeed-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Compressor</h2>
+                <h4>Threshold</h4>
+                <div class="vertical-slider" id="compressorThreshold-slider"></div>
+                <h4>Knee</h4>
+                <div class="vertical-slider" id="compressorKnee-slider"></div>
+                <h4>Attack</h4>
+                <div class="vertical-slider" id="compressorAttack-slider"></div>
+                <h4>Release</h4>
+                <div class="vertical-slider" id="compressorRelease-slider"></div>
+                <h4>Ratio</h4>
+                <div class="vertical-slider" id="compressorRatio-slider"></div>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="compressorMix-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Low-Pass Filter</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="lowPassFilterMix-slider"></div>
+                <h4>Frequency</h4>
+                <div class="vertical-slider" id="lowPassFilterFrequency-slider"></div>
+                <h4>Peak</h4>
+                <div class="vertical-slider" id="lowPassFilterPeak-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>High-Pass Filter</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="highPassFilterMix-slider"></div>
+                <h4>Frequency</h4>
+                <div class="vertical-slider" id="highPassFilterFrequency-slider"></div>
+                <h4>Peak</h4>
+                <div class="vertical-slider" id="highPassFilterPeak-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Stereo Panner</h2>
+                <h4>Pan</h4>
+                <div class="vertical-slider" id="stereoPannerPan-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Reverb</h2>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="reverbTime-slider"></div>
+                <h4>Decay</h4>
+                <div class="vertical-slider" id="reverbDecay-slider"></div>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="reverbMix-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Ring Modulator</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="ringModulatorMix-slider"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="ringModulatorSpeed-slider"></div>
+                <h4>Distortion</h4>
+                <div class="vertical-slider" id="ringModulatorDistortion-slider"></div>
+            </div>
+
+            <div class="slider-control">
+                <h2>Tremolo</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="tremoloMix-slider"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="tremoloSpeed-slider"></div>
+                <h4>Depth</h4>
+                <div class="vertical-slider" id="tremoloDepth-slider"></div>
+            </div>
+
+            <div class="clear"></div>
+
+            <label class="semitone-shift-label">Shifted by
+                <input id='semitones' type="text" value="0"> semitones
+                <br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
+
+            <div class="js-downloads-section" style='display:none;'>
+                <h2>Recordings</h2>
+                <ul id="recordingslist"></ul>
+
+                <h2>Status Log</h2>
+                <pre id="log"></pre>
+            </div>
         </div>
-      </div>
-    </div>
-	</div>
 
-<div class="pitch-shifter" style="float:left;">
-	<input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" />
+        <!-- RIGHT SCREEN -->
+        <div class="pitch-shifter" style="float:right;">
+            <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" />
 
-	<p class="clear"></p>
+            <p class="clear"></p>
 
-	<script>var is_playing;</script>
+            <script>
+                var is_playing;
+            </script>
 
-   <!-- Toggle between sinewave and frequency bars -->
-  <form class="controls">
-      <div>
-          <label for="visual">Visualizer setting</label>
-          <select id="visual" name="visual">
-              <option value="sinewave">Sinewave</option>
-              <option value="frequencybars" selected>Frequency bars</option>
-              <option value="off">Off</option>
-          </select>
-      </div>
-  </form>
+            <!-- Toggle between sinewave and frequency bars -->
+            <form class="controls">
+                <div>
+                    <label for="visual">Visualizer setting</label>
+                    <select id="visual2" name="visual">
+                        <option value="sinewave">Sinewave</option>
+                        <option value="frequencybars" selected>Frequency bars</option>
+                        <option value="off">Off</option>
+                    </select>
+                </div>
+            </form>
 
-  <div class="slider-control">
-    <h2>Volume</h2>
-    <div class="vertical-slider" id="volume-slider"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Volume</h2>
+                <div class="vertical-slider" id="volume-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-    <h2>Pitch</h2>
-    <div class="vertical-slider pitch-slider"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Pitch</h2>
+                <div class="vertical-slider pitch-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-    <h2>Tempo<br>BPM = <span id="bpm-label">0</span></h2>
-    <div class="vertical-slider tempo-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Delay</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="delayMix-slider"></div>
-        <h4>Feedback</h4>
-    <div class="vertical-slider" id="delayFeedback-slider"></div>
-        <h4>Time</h4>
-    <div class="vertical-slider" id="delayTime-slider"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Tempo<br>BPM = <span id="bpm-label2">0</span></h2>
+                <div class="vertical-slider tempo-slider2"></div>
+            </div>
 
-	<div class="slider-control">
-		<h2>Ping-Pong Delay</h2>
-			<h4>Mix</h4>
-				<div class="vertical-slider" id="PPdelayMix-slider"></div>
-			<h4>Feedback</h4>
-				<div class="vertical-slider" id="PPdelayFeedback-slider"></div>
-			<h4>Time</h4>
-				<div class="vertical-slider" id="PPdelayTime-slider"></div>
-	</div>
+            <div class="slider-control">
+                <h2>Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="delayMix-slider2"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="delayFeedback-slider2"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="delayTime-slider2"></div>
+            </div>
 
-	<div class="slider-control">
-        <h2>Dub Delay</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="dDelayMix-slider"></div>
-        <h4>Feedback</h4>
-    <div class="vertical-slider" id="dDelayFeedback-slider"></div>
-        <h4>Time</h4>
-    <div class="vertical-slider" id="dDelayTime-slider"></div>
-    	<h4>Cutoff</h4>
-    <div class="vertical-slider" id="dDelayCutoff-slider"></div> 
-	</div>
-	
-	<div class="slider-control">
-		<h2>Distortion</h2>
-		<h4>Gain</h4>
-			<div class="vertical-slider" id="distortionGain-slider"></div>
-	</div>
-	
-	<div class="slider-control">
-        <h2>Quadrafuzz</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="quadMix-slider"></div>
-        <h4>Low Gain</h4>
-    <div class="vertical-slider" id="quadLGain-slider"></div>
-        <h4>Mid Low Gain </h4>
-    <div class="vertical-slider" id="quadMLGain-slider"></div>
-        <h4>Mid High Gain</h4>
-    <div class="vertical-slider" id="quadMHGain-slider"></div>
-        <h4>High Gain </h4>
-    <div class="vertical-slider" id="quadHGain-slider"></div>
-	</div>
-  
-  <div class="slider-control">
-        <h2>Flanger</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="flangerMix-slider"></div>
-        <h4>Feedback</h4>
-    <div class="vertical-slider" id="flangerFeedback-slider"></div>
-        <h4>Time</h4>
-    <div class="vertical-slider" id="flangerTime-slider"></div>
-        <h4>Depth</h4>
-    <div class="vertical-slider" id="flangerDepth-slider"></div>
-        <h4>Speed</h4>
-    <div class="vertical-slider" id="flangerSpeed-slider"></div>
-  </div>
- 
-  <div class="slider-control">
-    <h2>Compressor</h2>
-	<h4>Threshold</h4>
-		<div class="vertical-slider" id="compressorThreshold-slider"></div>
-    <h4>Knee</h4>
-		<div class="vertical-slider" id="compressorKnee-slider"></div>
-    <h4>Attack</h4>
-		<div class="vertical-slider" id="compressorAttack-slider"></div>
-	<h4>Release</h4>
-		<div class="vertical-slider" id="compressorRelease-slider"></div>
-	<h4>Ratio</h4>
-		<div class="vertical-slider" id="compressorRatio-slider"></div>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="compressorMix-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Low-Pass Filter</h2>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="lowPassFilterMix-slider"></div>
-    <h4>Frequency</h4>
-		<div class="vertical-slider" id="lowPassFilterFrequency-slider"></div>
-    <h4>Peak</h4>
-		<div class="vertical-slider" id="lowPassFilterPeak-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>High-Pass Filter</h2>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="highPassFilterMix-slider"></div>
-    <h4>Frequency</h4>
-		<div class="vertical-slider" id="highPassFilterFrequency-slider"></div>
-    <h4>Peak</h4>
-		<div class="vertical-slider" id="highPassFilterPeak-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Stereo Panner</h2>
-		<h4>Pan</h4>
-		<div class="vertical-slider" id="stereoPannerPan-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Reverb</h2>
-	<h4>Time</h4>
-		<div class="vertical-slider" id="reverbTime-slider"></div>
-    <h4>Decay</h4>
-		<div class="vertical-slider" id="reverbDecay-slider"></div>
-    <h4>Mix</h4>
-		<div class="vertical-slider" id="reverbMix-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Ring Modulator</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="ringModulatorMix-slider"></div>
-        <h4>Speed</h4>
-    <div class="vertical-slider" id="ringModulatorSpeed-slider"></div>
-        <h4>Distortion</h4>
-    <div class="vertical-slider" id="ringModulatorDistortion-slider"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Tremolo</h2>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="tremoloMix-slider"></div>
-    <h4>Speed</h4>
-		<div class="vertical-slider" id="tremoloSpeed-slider"></div>
-    <h4>Depth</h4>
-		<div class="vertical-slider" id="tremoloDepth-slider"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Ping-Pong Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="PPdelayMix-slider2"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="PPdelayFeedback-slider2"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="PPdelayTime-slider2"></div>
+            </div>
 
-<div class="clear"></div>
+            <div class="slider-control">
+                <h2>Dub Delay</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="dDelayMix-slider2"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="dDelayFeedback-slider2"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="dDelayTime-slider2"></div>
+                <h4>Cutoff</h4>
+                <div class="vertical-slider" id="dDelayCutoff-slider2"></div>
+            </div>
 
+            <div class="slider-control">
+                <h2>Distortion</h2>
+                <h4>Gain</h4>
+                <div class="vertical-slider" id="distortionGain-slider2"></div>
+            </div>
 
-	<label class="semitone-shift-label">Shifted by <input id='semitones' type="text" value="0"> semitones<br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
-	
-	<div class="js-downloads-section" style='display:none;'>
-		<h2>Recordings</h2>
-		<ul id="recordingslist"></ul>
-		
-		<h2>Status Log</h2>
-		<pre id="log"></pre>
-	</div>
-</div>
+            <div class="slider-control">
+                <h2>Quadrafuzz</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="quadMix-slider2"></div>
+                <h4>Low Gain</h4>
+                <div class="vertical-slider" id="quadLGain-slider2"></div>
+                <h4>Mid Low Gain </h4>
+                <div class="vertical-slider" id="quadMLGain-slider2"></div>
+                <h4>Mid High Gain</h4>
+                <div class="vertical-slider" id="quadMHGain-slider2"></div>
+                <h4>High Gain </h4>
+                <div class="vertical-slider" id="quadHGain-slider2"></div>
+            </div>
 
-<!-- RIGHT SCREEN -->
-<div class="pitch-shifter" style="float:right;">
-  <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" />
+            <div class="slider-control">
+                <h2>Flanger</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="flangerMix-slider2"></div>
+                <h4>Feedback</h4>
+                <div class="vertical-slider" id="flangerFeedback-slider2"></div>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="flangerTime-slider2"></div>
+                <h4>Depth</h4>
+                <div class="vertical-slider" id="flangerDepth-slider2"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="flangerSpeed-slider2"></div>
+            </div>
 
-  <p class="clear"></p>
+            <div class="slider-control">
+                <h2>Compressor</h2>
+                <h4>Threshold</h4>
+                <div class="vertical-slider" id="compressorThreshold-slider2"></div>
+                <h4>Knee</h4>
+                <div class="vertical-slider" id="compressorKnee-slider2"></div>
+                <h4>Attack</h4>
+                <div class="vertical-slider" id="compressorAttack-slider2"></div>
+                <h4>Release</h4>
+                <div class="vertical-slider" id="compressorRelease-slider2"></div>
+                <h4>Ratio</h4>
+                <div class="vertical-slider" id="compressorRatio-slider2"></div>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="compressorMix-slider2"></div>
+            </div>
 
-  <script>var is_playing;</script>
+            <div class="slider-control">
+                <h2>Low-Pass Filter</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="lowPassFilterMix-slider2"></div>
+                <h4>Frequency</h4>
+                <div class="vertical-slider" id="lowPassFilterFrequency-slider2"></div>
+                <h4>Peak</h4>
+                <div class="vertical-slider" id="lowPassFilterPeak-slider2"></div>
+            </div>
 
-   <!-- Toggle between sinewave and frequency bars -->
-  <form class="controls">
-      <div>
-          <label for="visual">Visualizer setting</label>
-          <select id="visual2" name="visual">
-              <option value="sinewave">Sinewave</option>
-              <option value="frequencybars" selected>Frequency bars</option>
-              <option value="off">Off</option>
-          </select>
-      </div>
-  </form>
+            <div class="slider-control">
+                <h2>High-Pass Filter</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="highPassFilterMix-slider2"></div>
+                <h4>Frequency</h4>
+                <div class="vertical-slider" id="highPassFilterFrequency-slider2"></div>
+                <h4>Peak</h4>
+                <div class="vertical-slider" id="highPassFilterPeak-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-    <h2>Volume</h2>
-    <div class="vertical-slider" id="volume-slider2"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Stereo Panner</h2>
+                <h4>Pan</h4>
+                <div class="vertical-slider" id="stereoPannerPan-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-    <h2>Pitch</h2>
-    <div class="vertical-slider pitch-slider2"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Reverb</h2>
+                <h4>Time</h4>
+                <div class="vertical-slider" id="reverbTime-slider2"></div>
+                <h4>Decay</h4>
+                <div class="vertical-slider" id="reverbDecay-slider2"></div>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="reverbMix-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-    <h2>Tempo<br>BPM = <span id="bpm-label2">0</span></h2>
-    <div class="vertical-slider tempo-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-    	<h2>Delay</h2>
-    	<h4>Mix</h4>
-    <div class="vertical-slider" id="delayMix-slider2"></div>
-    	<h4>Feedback</h4>
-    <div class="vertical-slider" id="delayFeedback-slider2"></div>
-	<h4>Time</h4>
-    <div class="vertical-slider" id="delayTime-slider2"></div>
-  </div>
+            <div class="slider-control">
+                <h2>Ring Modulator</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="ringModulatorMix-slider2"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="ringModulatorSpeed-slider2"></div>
+                <h4>Distortion</h4>
+                <div class="vertical-slider" id="ringModulatorDistortion-slider2"></div>
+            </div>
 
-  <div class="slider-control">
-        <h2>Ping-Pong Delay</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="PPdelayMix-slider2"></div>
-        <h4>Feedback</h4>
-    <div class="vertical-slider" id="PPdelayFeedback-slider2"></div>
-        <h4>Time</h4>
-    <div class="vertical-slider" id="PPdelayTime-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Dub Delay</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="dDelayMix-slider2"></div>
-        <h4>Feedback</h4>
-    <div class="vertical-slider" id="dDelayFeedback-slider2"></div>
-        <h4>Time</h4>
-    <div class="vertical-slider" id="dDelayTime-slider2"></div>
-        <h4>Cutoff</h4>
-    <div class="vertical-slider" id="dDelayCutoff-slider2"></div>
- </div>
+            <div class="slider-control">
+                <h2>Tremolo</h2>
+                <h4>Mix</h4>
+                <div class="vertical-slider" id="tremoloMix-slider2"></div>
+                <h4>Speed</h4>
+                <div class="vertical-slider" id="tremoloSpeed-slider2"></div>
+                <h4>Depth</h4>
+                <div class="vertical-slider" id="tremoloDepth-slider2"></div>
+            </div>
 
-   <div class="slider-control">
-    <h2>Distortion</h2>
-	<h4>Gain</h4>
-    <div class="vertical-slider" id="distortionGain-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Quadrafuzz</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="quadMix-slider2"></div>
-        <h4>Low Gain</h4>
-    <div class="vertical-slider" id="quadLGain-slider2"></div>
-        <h4>Mid Low Gain </h4>
-    <div class="vertical-slider" id="quadMLGain-slider2"></div>
-        <h4>Mid High Gain</h4>
-    <div class="vertical-slider" id="quadMHGain-slider2"></div>
-        <h4>High Gain </h4>
-    <div class="vertical-slider" id="quadHGain-slider2"></div>
-  </div>
-  
-    <div class="slider-control">
-        <h2>Flanger</h2>
-        <h4>Mix</h4>
-			<div class="vertical-slider" id="flangerMix-slider2"></div>
-        <h4>Feedback</h4>
-			<div class="vertical-slider" id="flangerFeedback-slider2"></div>
-        <h4>Time</h4>
-			<div class="vertical-slider" id="flangerTime-slider2"></div>
-        <h4>Depth</h4>
-			<div class="vertical-slider" id="flangerDepth-slider2"></div>
-		<h4>Speed</h4>
-			<div class="vertical-slider" id="flangerSpeed-slider2"></div>
-	</div>
- 
-  <div class="slider-control">
-    <h2>Compressor</h2>
-	<h4>Threshold</h4>
-		<div class="vertical-slider" id="compressorThreshold-slider2"></div>
-    <h4>Knee</h4>
-		<div class="vertical-slider" id="compressorKnee-slider2"></div>
-    <h4>Attack</h4>
-		<div class="vertical-slider" id="compressorAttack-slider2"></div>
-	<h4>Release</h4>
-		<div class="vertical-slider" id="compressorRelease-slider2"></div>
-	<h4>Ratio</h4>
-		<div class="vertical-slider" id="compressorRatio-slider2"></div>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="compressorMix-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Low-Pass Filter</h2>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="lowPassFilterMix-slider2"></div>
-    <h4>Frequency</h4>
-		<div class="vertical-slider" id="lowPassFilterFrequency-slider2"></div>
-    <h4>Peak</h4>
-		<div class="vertical-slider" id="lowPassFilterPeak-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>High-Pass Filter</h2>
-		<h4>Mix</h4>
-		<div class="vertical-slider" id="highPassFilterMix-slider2"></div>
-        <h4>Frequency</h4>
-		<div class="vertical-slider" id="highPassFilterFrequency-slider2"></div>
-        <h4>Peak</h4>
-		<div class="vertical-slider" id="highPassFilterPeak-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Stereo Panner</h2>
-		<h4>Pan</h4>
-		<div class="vertical-slider" id="stereoPannerPan-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Reverb</h2>
-	<h4>Time</h4>
-		<div class="vertical-slider" id="reverbTime-slider2"></div>
-    <h4>Decay</h4>
-		<div class="vertical-slider" id="reverbDecay-slider2"></div>
-    <h4>Mix</h4>
-		<div class="vertical-slider" id="reverbMix-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-        <h2>Ring Modulator</h2>
-        <h4>Mix</h4>
-    <div class="vertical-slider" id="ringModulatorMix-slider2"></div>
-        <h4>Speed</h4>
-    <div class="vertical-slider" id="ringModulatorSpeed-slider2"></div>
-        <h4>Distortion</h4>
-    <div class="vertical-slider" id="ringModulatorDistortion-slider2"></div>
-  </div>
-  
-  <div class="slider-control">
-    <h2>Tremolo</h2>
-	<h4>Mix</h4>
-		<div class="vertical-slider" id="tremoloMix-slider2"></div>
-    <h4>Speed</h4>
-		<div class="vertical-slider" id="tremoloSpeed-slider2"></div>
-    <h4>Depth</h4>
-		<div class="vertical-slider" id="tremoloDepth-slider2"></div>
-	</div>
+            <div class="clear"></div>
 
-  <div class="clear"></div>
+            <label class="semitone-shift-label2">Shifted by
+                <input id='semitones' type="text" value="0"> semitones
+                <br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
 
-  <label class="semitone-shift-label2">Shifted by <input id='semitones' type="text" value="0"> semitones<br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
-  
-  <div class="js-downloads-section" style='display:none;'>
-    <h2>Recordings</h2>
-    <ul id="recordingslist2"></ul>
-    
-    <h2>Status Log</h2>
-    <pre id="log"></pre>
-  </div>
+            <div class="js-downloads-section" style='display:none;'>
+                <h2>Recordings</h2>
+                <ul id="recordingslist2"></ul>
 
-</div>
+                <h2>Status Log</h2>
+                <pre id="log"></pre>
+            </div>
 
+        </div>
 
-  <script>
-  function __log(e, data) {
-    log.innerHTML += "\n" + e + " " + (data || '');
-  }
-  var audio_context;
-  var recorder;
-  function startUserMedia(stream) {
-    // var input = audio_context.createMediaStreamSource(stream);
-    var input = node;
-    __log('Media stream created.');
-    // Uncomment if you want the audio to feedback directly
-    //input.connect(audio_context.destination);
-    //__log('Input connected to audio context destination.');
-    
-    recorder = new Recorder(input);
-    __log('Recorder initialised.');
-  }
+        <script>
+            function __log(e, data) {
+                log.innerHTML += "\n" + e + " " + (data || '');
+            }
+            var audio_context;
+            var recorder;
 
-$("#save-output").click(function(){
-	if ($("#save-output").prop("checked") == true){
-		$(".js-downloads-section").css("display","block");
-	} else {
-		$(".js-downloads-section").css("display","none");;
-	}
-})
-  </script>
+            function startUserMedia(stream) {
+                // var input = audio_context.createMediaStreamSource(stream);
+                var input = node;
+                __log('Media stream created.');
+                // Uncomment if you want the audio to feedback directly
+                //input.connect(audio_context.destination);
+                //__log('Input connected to audio context destination.');
 
-<script src="./lib/recorder/recorder.js"></script>
-<script src="./lib/soundtouch/st.min.js"></script>
-<script src="./lib/pizzicato/Pizzicato.js"></script>
+                recorder = new Recorder(input);
+                __log('Recorder initialised.');
+            }
 
-<script src="./rsc/js/bpmCalc.js"></script>
-<script src="./rsc/js/spectrogram.js"></script>
-<script src="./rsc/js/track.js"></script>
-<script src="./rsc/js/Effects.js"></script>
-<script src="./rsc/js/ui.js"></script>
+            $("#save-output").click(function() {
+                if ($("#save-output").prop("checked") == true) {
+                    $(".js-downloads-section").css("display", "block");
+                } else {
+                    $(".js-downloads-section").css("display", "none");;
+                }
+            })
+        </script>
+
+        <script src="./lib/recorder/recorder.js"></script>
+        <script src="./lib/soundtouch/st.min.js"></script>
+        <script src="./lib/pizzicato/Pizzicato.js"></script>
+
+        <script src="./rsc/js/bpmCalc.js"></script>
+        <script src="./rsc/js/spectrogram.js"></script>
+        <script src="./rsc/js/track.js"></script>
+        <script src="./rsc/js/Effects.js"></script>
+        <script src="./rsc/js/ui.js"></script>
 </body>
 </html>
