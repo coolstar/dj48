@@ -10,6 +10,24 @@ class Effects {
 			feedback: 0.6,
 			time: 0.4
 		});
+		this.PPdelay = new Pizzicato.Effects.PingPongDelay({
+			mix: 0.0,
+			feedback: 0.6,
+			time: 0.4
+		});
+		this.dDelay = new Pizzicato.Effects.DubDelay({
+            mix:  0.0,
+            feedback: 0.6,
+            time: 0.4,
+			cutoff: 700
+        });
+		this.quad = new Pizzicato.Effects.Quadrafuzz({
+			lowGain: 0.0,
+   	 		midLowGain: 0.0,
+			midHighGain: 0.0,
+    		highGain: 0.0,
+   			mix: 0.0
+		});
 		this.compressor = new Pizzicato.Effects.Compressor({
 			threshold: -24,
 			knee: 30,

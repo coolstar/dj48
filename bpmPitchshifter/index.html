@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -122,6 +121,42 @@
     <div class="vertical-slider" id="delayTime-slider"></div>
   </div>
 
+	<div class="slider-control">
+		<h2>Ping-Pong Delay</h2>
+			<h4>Mix</h4>
+				<div class="vertical-slider" id="PPdelayMix-slider"></div>
+			<h4>Feedback</h4>
+				<div class="vertical-slider" id="PPdelayFeedback-slider"></div>
+			<h4>Time</h4>
+				<div class="vertical-slider" id="PPdelayTime-slider"></div>
+	</div>
+
+	<div class="slider-control">
+        <h2>Dub Delay</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="dDelayMix-slider"></div>
+        <h4>Feedback</h4>
+    <div class="vertical-slider" id="dDelayFeedback-slider"></div>
+        <h4>Time</h4>
+    <div class="vertical-slider" id="dDelayTime-slider"></div>
+    	<h4>Cutoff</h4>
+    <div class="vertical-slider" id="dDelayCutoff-slider"></div> 
+	</div>
+	
+	<div class="slider-control">
+        <h2>Quadrafuzz</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="quadMix-slider"></div>
+        <h4>Low Gain</h4>
+    <div class="vertical-slider" id="quadLGain-slider"></div>
+        <h4>Mid Low Gain </h4>
+    <div class="vertical-slider" id="quadMLGain-slider"></div>
+        <h4>Mid High Gain</h4>
+    <div class="vertical-slider" id="quadMHGain-slider"></div>
+        <h4>High Gain </h4>
+    <div class="vertical-slider" id="quadHGain-slider"></div>
+	</div>
+  
   <div class="slider-control">
     <h2>Compressor</h2>
 	<h4>Threshold</h4>
@@ -208,6 +243,7 @@
 	</div>
 </div>
 
+<!-- RIGHT SCREEN -->
 <div class="pitch-shifter" style="float:right;">
   <h2>Load Audio File<br />(mp3 or wav)</h2>
   <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" />
@@ -284,6 +320,42 @@
   </div>
 
   <div class="slider-control">
+        <h2>Ping-Pong Delay</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="PPdelayMix-slider2"></div>
+        <h4>Feedback</h4>
+    <div class="vertical-slider" id="PPdelayFeedback-slider2"></div>
+        <h4>Time</h4>
+    <div class="vertical-slider" id="PPdelayTime-slider2"></div>
+  </div>
+  
+  <div class="slider-control">
+        <h2>Dub Delay</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="dDelayMix-slider2"></div>
+        <h4>Feedback</h4>
+    <div class="vertical-slider" id="dDelayFeedback-slider2"></div>
+        <h4>Time</h4>
+    <div class="vertical-slider" id="dDelayTime-slider2"></div>
+        <h4>Cutoff</h4>
+    <div class="vertical-slider" id="dDelayCutoff-slider2"></div>
+ </div>
+
+  <div class="slider-control">
+        <h2>Quadrafuzz</h2>
+        <h4>Mix</h4>
+    <div class="vertical-slider" id="quadMix-slider2"></div>
+        <h4>Low Gain</h4>
+    <div class="vertical-slider" id="quadLGain-slider2"></div>
+        <h4>Mid Low Gain </h4>
+    <div class="vertical-slider" id="quadMLGain-slider2"></div>
+        <h4>Mid High Gain</h4>
+    <div class="vertical-slider" id="quadMHGain-slider2"></div>
+        <h4>High Gain </h4>
+    <div class="vertical-slider" id="quadHGain-slider2"></div>
+  </div>
+  
+  <div class="slider-control">
     <h2>Compressor</h2>
 	<h4>Threshold</h4>
 		<div class="vertical-slider" id="compressorThreshold-slider2"></div>
@@ -353,10 +425,9 @@
 		<div class="vertical-slider" id="tremoloSpeed-slider2"></div>
     <h4>Depth</h4>
 		<div class="vertical-slider" id="tremoloDepth-slider2"></div>
-  </div>
-  
-  <div class="clear"></div>
+	</div>
 
+  <div class="clear"></div>
 
   <label class="semitone-shift-label2">Shifted by <input id='semitones' type="text" value="0"> semitones<br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
   

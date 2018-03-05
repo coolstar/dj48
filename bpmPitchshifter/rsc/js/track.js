@@ -29,7 +29,7 @@ class Track {
         this.spectrogram = new Spectrogram(this);
 
 
-		this.effects = new Effects (this.audioCtx);
+	this.effects = new Effects (this.audioCtx);
 		
         this.gainNode = this.audioCtx.createGain();
         this.gainNode.gain.value = 2.0;
@@ -96,6 +96,7 @@ class Track {
 
     initialize(){
         this.spectrogram.initialize();
+        this.spectrogram.visualize();
     }
 
     play() {
@@ -112,10 +113,13 @@ class Track {
         }
 
         this.node.track = this;
-        this.node.connect(this.effects.distortion);
+        this.node.connect(this.effects.delay);
 		
+		this.effects.delay.connect(this.effects.PPdelay);
 		this.effects.distortion.connect(this.effects.delay);
-		this.effects.delay.connect(this.effects.compressor);
+		this.effects.PPdelay.connect(this.effects.dDelay);
+		this.effects.dDelay.connect(this.effects.quad);
+		this.effects.quad.connect(this.effects.compressor);
 		this.effects.compressor.connect(this.effects.lowPassFilter);
 		this.effects.lowPassFilter.connect(this.effects.highPassFilter);
 		this.effects.highPassFilter.connect(this.effects.stereoPanner);
@@ -123,7 +127,7 @@ class Track {
 		this.effects.reverb.connect(this.effects.ringModulator);
 		this.effects.ringModulator.connect(this.effects.tremolo);
 		this.effects.tremolo.connect(this.gainNode);
-		
+
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);
 

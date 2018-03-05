@@ -25,6 +25,8 @@ $(document.body).on("mouseup",function(e){
     updateSlider = true;
 });
 
+
+
 class TrackUI {
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
         volumeSliderSelector, playButtonSelector, fileInputSelector,
@@ -32,6 +34,9 @@ class TrackUI {
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
         distortionSliderSelector,
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
+		PPdelayMixSliderSelector, PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector,
+		dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector,
+		quadMixSliderSelector, quadLGainSliderSelector, quadMLGainSliderSelector, quadMHGainSliderSelector, quadHGainSliderSelector,
 		compressorThresholdSliderSelector, compressorKneeSliderSelector, compressorAttackSliderSelector, compressorReleaseSliderSelector, compressorRatioSliderSelector, compressorMixSliderSelector,
 		lowPassFilterMixSliderSelector, lowPassFilterFrequencySliderSelector, lowPassFilterPeakSliderSelector,
 		highPassFilterMixSliderSelector, highPassFilterFrequencySliderSelector, highPassFilterPeakSliderSelector,
@@ -50,29 +55,32 @@ class TrackUI {
 
         track.currentTimeSlider = $(currentTimeSliderSelector);
         track.playSlider = $(playSliderSelector)[0];
+        
 
         track.initialize();
-
+        var that = this;
+        this.is_playing = false; 
         $(playButtonSelector).click(function(e){
+            console.log("is_playing = " + that.is_playing);
             if (fileInput.val()==""){
                 //alert("Please choose a file to play");
 		console.log ("No file selected");
-            } else if ($(this).hasClass("disabled")) {
+            } else if ($(this).hasClass("disabled")) { 
+                console.log ("disabled");
                 // alert("Currently loading audio, please wait a few seconds...");
-            } else if (is_playing == false){
+            } else if (that.is_playing == false){
                 track.play();
                 $(playButtonSelector).html("pause");
-                is_playing = true;
+                that.is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(track.gainNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
                     track.recorder && track.recorder.record();
                     __log('Started recording.');
                 }
             } else {
-
                 track.pause();
                 $(playButtonSelector).html( "play");
-                is_playing = false;
+                that.is_playing = false;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder && track.recorder.stop();
                      __log('Stopped recording.');
@@ -103,41 +111,9 @@ class TrackUI {
                     track.recorder && track.recorder.clear();
                   }
             }
+            updatePlayallButton();
         });
 
-    /*
-        $(pauseButtonSelector).click(function (e){
-            track.pause();
-            is_playing = false;
-            if ($(saveOutputSelector).prop("checked") == true){
-                track.recorder && track.recorder.stop();
-                __log('Stopped recording.');
-                
-                // create WAV download link using audio data blob
-                track.recorder && track.recorder.exportAudio(function(blob) {
-                  var recordingslist = document.getElementById(recordingslistSelector);
-
-                  var url = URL.createObjectURL(blob);
-                  var li = document.createElement('li');
-                  var au = document.createElement('audio');
-                  var hf = document.createElement('a');
-                  
-                  au.controls = true;
-                  au.src = url;
-                  hf.href = url;
-                  // hf.download = new Date().toISOString() + '.wav';
-                  // hf.download = new Date().toISOString() + '.mp3';
-                  hf.download = "pitch-shifted-" + $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
-                  hf.innerHTML = hf.download;
-                  li.appendChild(au);
-                  li.appendChild(hf);
-                  recordingslist.appendChild(li);
-                  //ga('send', 'event', 'Pitch shift download', "Download Added");
-                });
-                
-                track.recorder && track.recorder.clear();
-            }
-        }); */
 
         var fileInput = $(fileInputSelector);
         // bufferSource.gain.value = 1;
@@ -146,11 +122,13 @@ class TrackUI {
 
         fileInput.on("change", function() {
 
+            updatePlayallButton();
+            updateSyncButton();
             $(timingSelector).hide();
             $(loadingSelector).show();
             $(playButtonSelector).addClass("disabled");
 
-            if (is_playing) track.pause();
+            if (that.is_playing) track.pause();
             var reader = new FileReader();
             reader.onload = function(ev) {
                 track.audioCtx.decodeAudioData(ev.target.result, function(theBuffer){
@@ -163,7 +141,7 @@ class TrackUI {
 
                     calculateBPM (track.buffer, function (bpm) {
                         track.bpm = bpm;
-            original_bpm = bpm;
+                        original_bpm = bpm;
                         console.log("BPM: " + track.bpm);
                         $(bpmLabelSelector).text(track.bpm);
 
@@ -189,10 +167,13 @@ class TrackUI {
                         $(playButtonSelector).addClass("beginTuning");
                         $(timingSelector).show();
                         $(loadingSelector).hide();
+                       
                     });
                 }, function(){ //error function
+                    $(bpmLabelSelector).text(track.bpm);
                     $(loadingSelector).html("Sorry, we could not process this audio file.");
                     //ga('send', 'event', 'File Upload', "Failure");
+                    console.log("broke");
                 })
             };
             reader.readAsArrayBuffer(this.files[0]);
@@ -282,10 +263,10 @@ class TrackUI {
 
         noUiSlider.create($(volumeSliderSelector)[0], {
             start: 100,
-            range: {
-                'min': 0,
-                'max': 100
-            },
+                range: {
+		'min': 0,
+		'max': 100
+		},
             orientation: 'vertical',
             direction: 'rtl',
             tooltips: true
@@ -296,7 +277,9 @@ class TrackUI {
             track.gainNode.gain.value = value*2/100.0;
             console.log("value: "+ value/100.0);
         });
-
+	
+	//EFFECTS
+	
 		// DISTORTION
         noUiSlider.create($(distortionSliderSelector)[0],{
             start: 0,
@@ -308,7 +291,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        		
+
 		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
@@ -316,7 +299,7 @@ class TrackUI {
             console.log("distortion gain: "+ value/100.0);
         });
 
-		// DELAY
+		//DELAY
 		noUiSlider.create($(delayMixSliderSelector)[0],{
             start: 0,
             range: {
@@ -368,6 +351,213 @@ class TrackUI {
             console.log("delay time: "+ value);
         });
 		
+		// PPDELAY
+		noUiSlider.create($(PPdelayMixSliderSelector)[0],{
+			start: 0,
+			range: {
+				'min': 0,
+				'max': 100
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});	
+		   
+		$(PPdelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(PPdelayMixSliderSelector)[0].noUiSlider.get();
+				track.effects.PPdelay.mix = value/100.0;
+				console.log("PPdelay mix: "+ value/100.0);
+		});
+			
+		noUiSlider.create($(PPdelayFeedbackSliderSelector)[0],{
+			start: 60,
+			range: {
+				'min': 0,
+				'max': 100
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(PPdelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(PPdelayFeedbackSliderSelector)[0].noUiSlider.get();
+				track.effects.PPdelay.feedback = value/100.0;
+				console.log("PPdelay feedback: "+ value/100.0);
+		});
+
+		noUiSlider.create($(PPdelayTimeSliderSelector)[0],{
+			start: 0.4,
+			range: {
+				'min': 0,
+				'max': 5
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(PPdelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(PPdelayTimeSliderSelector)[0].noUiSlider.get();
+				track.effects.PPdelay.time = value;
+				console.log("PPdelay time: "+ value);
+		});
+			
+		//DUBDELAY
+		noUiSlider.create($(dDelayMixSliderSelector)[0],{
+				start: 0,
+				range: {
+					'min': 0,
+					'max': 100
+				},
+				orientation: 'vertical',
+				direction: 'rtl',
+				tooltips: true
+		});
+
+		$(dDelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(dDelayMixSliderSelector)[0].noUiSlider.get();
+				track.effects.dDelay.mix = value/100.0;
+				console.log("dDelay mix: "+ track.effects.dDelay.mix);
+		});
+		
+		noUiSlider.create($(dDelayFeedbackSliderSelector)[0],{
+			start: 60,
+			range: {
+				'min': 0,
+				'max': 100
+			},
+				orientation: 'vertical',
+				direction: 'rtl',
+				tooltips: true
+		});
+		
+		$(dDelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(dDelayFeedbackSliderSelector)[0].noUiSlider.get();
+				track.effects.dDelay.feedback = value/100.0;
+				console.log("dDelay feedback: "+ value/100.0);
+			});
+
+		noUiSlider.create($(dDelayTimeSliderSelector)[0],{
+			start: 0.4,
+			range: {
+				'min': 0,
+				'max': 5
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(dDelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(dDelayTimeSliderSelector)[0].noUiSlider.get();
+				track.effects.dDelay.time = value;
+				console.log("dDelay time: "+ value);
+		});
+
+		noUiSlider.create($(dDelayCutoffSliderSelector)[0],{
+			start: 700,
+			range: {
+				'min': 0,
+				'max': 4000
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(dDelayCutoffSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(dDelayCutoffSliderSelector)[0].noUiSlider.get();
+				track.effects.dDelay.cutoff = value;
+				console.log("dDelay time: "+ value);
+			});
+			
+		//QUADRAFUZZ
+		noUiSlider.create($(quadMixSliderSelector)[0],{
+			start: 0,
+			range: {
+				'min': 0,
+				'max': 1
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(quadMixSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(quadMixSliderSelector)[0].noUiSlider.get();
+				track.effects.quad.mix = parseFloat(value);
+				console.log("quad mix: "+ value);
+			});
+
+		noUiSlider.create($(quadLGainSliderSelector)[0],{
+				start: 0,
+				range: {
+					'min': 0,
+					'max': 1
+				},
+				orientation: 'vertical',
+				direction: 'rtl',
+				tooltips: true
+		});
+		
+		$(quadLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(quadLGainSliderSelector)[0].noUiSlider.get();
+				track.effects.quad.lowGain = parseFloat(value);
+				console.log("quad LG: "+ value);
+			});
+
+		noUiSlider.create($(quadMLGainSliderSelector)[0],{
+			start: 0,
+			range: {
+				'min': 0,
+				'max': 1
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(quadMLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(quadMLGainSliderSelector)[0].noUiSlider.get();
+				track.effects.quad.midLowGain = parseFloat(value);
+				console.log("quad MLG: "+ value);
+		});
+
+		noUiSlider.create($(quadMHGainSliderSelector)[0],{
+			start: 0,
+			range: {
+				'min': 0,
+				'max': 1
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+
+		 $(quadMHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(quadMHGainSliderSelector)[0].noUiSlider.get();
+				track.effects.quad.midHighGain = parseFloat(value);
+				console.log("quad MHG: "+ value);
+			});
+
+		noUiSlider.create($(quadHGainSliderSelector)[0],{
+			start: 0,
+			range: {
+				'min': 0,
+				'max': 1
+			},
+			orientation: 'vertical',
+			direction: 'rtl',
+			tooltips: true
+		});
+		
+		$(quadHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+				var value = $(quadHGainSliderSelector)[0].noUiSlider.get();
+				track.effects.quad.highGain = parseFloat(value);
+				console.log("quad HG: "+ value);
+		});
+
 		// COMPRESSOR
 		noUiSlider.create($(compressorThresholdSliderSelector)[0],{
             start: -24,
@@ -415,7 +605,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        		
+
 		$(compressorAttackSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(compressorAttackSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.attack = parseFloat(value);
@@ -433,7 +623,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        		
+
 		$(compressorReleaseSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(compressorReleaseSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.release = parseFloat(value);
@@ -451,7 +641,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        		
+
 		$(compressorRatioSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(compressorRatioSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.ratio = parseFloat(value);
@@ -616,7 +806,7 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-		
+
 		$(reverbTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(reverbTimeSliderSelector)[0].noUiSlider.get();
             track.effects.reverb.time = parseFloat(value);
@@ -793,7 +983,7 @@ class TrackUI {
 
            track.pos = 0;
            track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
-           if (is_playing){
+           if (that.is_playing){
                track.play();
            }
         });
@@ -805,6 +995,9 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
+ "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider",
+ "#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider",
+ "#quadMix-slider", "#quadLGain-slider", "#quadMLGain-slider", "#quadMHGain-slider", "#quadHGain-slider",
  "#compressorThreshold-slider", "#compressorKnee-slider", "#compressorAttack-slider", "#compressorRelease-slider", "#compressorRatio-slider", "#compressorMix-slider",
  "#lowPassFilterMix-slider", "#lowPassFilterFrequency-slider", "#lowPassFilterPeak-slider",
  "#highPassFilterMix-slider", "#highPassFilterFrequency-slider", "#highPassFilterPeak-slider",
@@ -818,6 +1011,9 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#play-pitchshifter2", "#audio-file2", ".timing2",
  ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
+ "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2", 
+ "#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2", 
+ "#quadMix-slider2", "#quadLGain-slider2", "#quadMLGain-slider2", "#quadMHGain-slider2", "#quadHGain-slider2",
  "#compressorThreshold-slider2", "#compressorKnee-slider2", "#compressorAttack-slider2", "#compressorRelease-slider2", "#compressorRatio-slider2", "#compressorMix-slider2",
  "#lowPassFilterMix-slider2", "#lowPassFilterFrequency-slider2", "#lowPassFilterPeak-slider2",
  "#highPassFilterMix-slider2", "#highPassFilterFrequency-slider2","#highPassFilterPeak-slider2",
@@ -828,6 +1024,14 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  );
 
 $("#sync-together").click (function (e) {
+        
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        if (fileInput == "" || fileInput2 == "") {
+               return;
+        }
 	bpm1 = trackui.track.bpm;
 	bpm2 = trackui2.track.bpm;
 
@@ -846,8 +1050,62 @@ $("#sync-together").click (function (e) {
 
 $("#play-all").click(function (e) {
 
-	document.getElementById ("play-pitchshifter2").click();
-     	document.getElementById ("play-pitchshifter").click();
 	//document.getElementById ("play-pitchshifter2").click();
+        console.log("trackui1_playing = " + trackui.is_playing);
+        console.log("trackui2_playing = " + trackui2.is_playing);
+	if ((!trackui.is_playing && !trackui2.is_playing) || (trackui.is_playing && trackui2.is_playing)) {
+     		document.getElementById ("play-pitchshifter").click();
+                document.getElementById ("play-pitchshifter2").click();
+                console.log("hit both trackui");
+	}
+        else if (!trackui.is_playing && trackui2.is_playing) {
+                document.getElementById("play-pitchshifter2").click();
+                console.log("stop trackui2");
+	}
+        else{
+		document.getElementById ("play-pitchshifter").click();
+                console.log("stop trackui1");
+	}
+        updatePlayallButton(); 
      	console.log ("Play all");	
 });
+
+function updatePlayallButton () {
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        
+        if (fileInput == "" && fileInput2 == "") {
+             $("#play-all").removeClass ("beginTuning");
+             $("#play-all").addClass ("disabled");   
+        }
+        else {
+             $("#play-all").removeClass ("disabled");
+             $("#play-all").addClass ("beginTuning");
+        }
+        
+        var bool = (trackui.is_playing || trackui2.is_playing);
+        if (bool) {
+             $("#play-all").html ("pause");
+        }
+        else {
+             $("#play-all").html ("play");
+        }
+}
+
+
+function updateSyncButton () {
+        var fileInput = $("#audio-file").val();
+        var fileInput2 = $("#audio-file2").val();
+
+
+        if (fileInput == "" || fileInput2 == "") {
+             $("#sync-together").removeClass ("beginTuning");
+             $("#sync-together").addClass ("disabled");   
+        }
+        else {
+             $("#sync-together").removeClass ("disabled");
+             $("#sync-together").addClass ("beginTuning");
+        }
+}
