@@ -113,13 +113,20 @@ class Track {
         }
 
         this.node.track = this;
-        this.node.connect(this.effects.distortion);
-	this.effects.distortion.connect(this.effects.delay);
-	this.effects.delay.connect(this.effects.PPdelay);
-	this.effects.PPdelay.connect(this.effects.dDelay);
-	this.effects.dDelay.connect(this.effects.quad);
-	this.effects.quad.connect(this.effects.flanger);	
-	this.effects.flanger.connect(this.gainNode);
+        this.node.connect(this.effects.delay);
+		
+		this.effects.delay.connect(this.effects.PPdelay);
+		this.effects.distortion.connect(this.effects.delay);
+		this.effects.PPdelay.connect(this.effects.dDelay);
+		this.effects.dDelay.connect(this.effects.quad);
+		this.effects.quad.connect(this.effects.compressor);
+		this.effects.compressor.connect(this.effects.lowPassFilter);
+		this.effects.lowPassFilter.connect(this.effects.highPassFilter);
+		this.effects.highPassFilter.connect(this.effects.stereoPanner);
+		this.effects.stereoPanner.connect(this.effects.reverb);
+		this.effects.reverb.connect(this.effects.ringModulator);
+		this.effects.ringModulator.connect(this.effects.tremolo);
+		this.effects.tremolo.connect(this.gainNode);
 
         this.gainNode.connect(this.audioCtx.destination);
         this.gainNode.connect(this.spectrogram.analyser);
