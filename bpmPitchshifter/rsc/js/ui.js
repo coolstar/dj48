@@ -110,7 +110,12 @@ class TrackUI {
         // bufferSource.connect(oscillatorGain);
 
         fileInput.on("change", function() {
-
+            
+            if (fileInput.val()==""){
+		 track.bpm = 0;
+                 original_bpm = 0;
+                 $(bpmLabelSelector).text(track.bpm);
+            }
             updatePlayallButton();
             updateSyncButton();
             $(timingSelector).hide();
