@@ -35,7 +35,7 @@ class TrackUI {
 		delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector,
 		PPdelayMixSliderSelector, PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector,
 		dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector,
-		distortionSliderSelector,
+		distortionGainSliderSelector,
 		quadMixSliderSelector, quadLGainSliderSelector, quadMLGainSliderSelector, quadMHGainSliderSelector, quadHGainSliderSelector,
 		flangerMixSliderSelector, flangerFeedbackSliderSelector, flangerTimeSliderSelector, flangerDepthSliderSelector, flangerSpeedSliderSelector,
 		compressorThresholdSliderSelector, compressorKneeSliderSelector, compressorAttackSliderSelector, compressorReleaseSliderSelector, compressorRatioSliderSelector, compressorMixSliderSelector,
@@ -459,7 +459,7 @@ class TrackUI {
 		});
 		
 		// DISTORTION
-        noUiSlider.create($(distortionSliderSelector)[0],{
+        noUiSlider.create($(distortionGainSliderSelector)[0],{
             start: 0,
             range: {
                 'min': 0,
@@ -470,8 +470,8 @@ class TrackUI {
             tooltips: true
         });
 
-		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
-            var value = $(distortionSliderSelector)[0].noUiSlider.get();
+		$(distortionGainSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(distortionGainSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
 			console.log("distortion actual gain: " + track.effects.distortion.gain);
             console.log("distortion gain: "+ value/100.0);
@@ -1080,7 +1080,7 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
  ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
  "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider",
  "#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider",
- "#distortion-slider", 
+ "#distortionGain-slider", 
  "#quadMix-slider", "#quadLGain-slider", "#quadMLGain-slider", "#quadMHGain-slider", "#quadHGain-slider",
  "#flangerMix-slider","#flangerFeedback-slider", "#flangerTime-slider","#flangerDepth-slider","#flangerSpeed-slider",
  "#compressorThreshold-slider", "#compressorKnee-slider", "#compressorAttack-slider", "#compressorRelease-slider", "#compressorRatio-slider", "#compressorMix-slider",
@@ -1098,7 +1098,7 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
  "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2", 
  "#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2", 
- "#distortion-slider2", 
+ "#distortionGain-slider2", 
  "#quadMix-slider2", "#quadLGain-slider2", "#quadMLGain-slider2", "#quadMHGain-slider2", "#quadHGain-slider2",
  "#flangerMix-slider2", "#flangerFeedback-slider2", "#flangerTime-slider2", "#flangerDepth-slider2","#flangerSpeed-slider2",
  "#compressorThreshold-slider2", "#compressorKnee-slider2", "#compressorAttack-slider2", "#compressorRelease-slider2", "#compressorRatio-slider2", "#compressorMix-slider2",
