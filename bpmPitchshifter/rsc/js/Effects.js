@@ -1,4 +1,3 @@
-
 class Effects {
 	constructor (audioCtx) {
 		Pizzicato.context = audioCtx;
@@ -24,18 +23,17 @@ class Effects {
 		this.quad = new Pizzicato.Effects.Quadrafuzz({
 			lowGain: 0.6,
    	 		midLowGain: 0.8,
-    			midHighGain: 0.5,
-    			highGain: 0.6,
-   			 mix: 1.0
+			midHighGain: 0.5,
+			highGain: 0.6,
+			mix: 1.0
 		});
 		this.flanger = new Pizzicato.Effects.Flanger({
-                        mix:  0.0,
-                        feedback: 0.1,
-                        time: 0.45,
+			mix:  0.0,
+			feedback: 0.1,
+			time: 0.45,
 			depth: .1,
 			speed: .2
-                    
-                });
+		});
 		this.compressor = new Pizzicato.Effects.Compressor({
 			threshold: -24,
 			knee: 30,
@@ -73,6 +71,5 @@ class Effects {
 			speed: 4,
 			depth: 1
 		});
-
 	}
 }
