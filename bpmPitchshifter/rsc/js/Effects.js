@@ -3,43 +3,43 @@ class Effects {
 		Pizzicato.context = audioCtx;
 		this.delay = new Pizzicato.Effects.Delay({
 			mix: 0.0,
-			feedback: 0.6,
-			time: 0.4
+			feedback: 0.0,
+			time: 0.0
 		});
 		this.PPdelay = new Pizzicato.Effects.PingPongDelay({
 			mix: 0.0,
-			feedback: 0.6,
-			time: 0.4
+			feedback: 0.0,
+			time: 0.0
 		});
 		this.dDelay = new Pizzicato.Effects.DubDelay({
             mix:  0.0,
-            feedback: 0.6,
-            time: 0.4,
+            feedback: 0.0,
+            time: 0.0,
 			cutoff: 700
         });
 		this.distortion = new Pizzicato.Effects.Distortion({
 			gain: 0.0
 		});	
 		this.quad = new Pizzicato.Effects.Quadrafuzz({
-			lowGain: 0.6,
-   	 		midLowGain: 0.8,
-			midHighGain: 0.5,
-			highGain: 0.6,
-			mix: 1.0
+			lowGain: 0.0,
+   	 		midLowGain: 0.0,
+			midHighGain: 0.0,
+			highGain: 0.0,
+			mix: 0.0
 		});
 		this.flanger = new Pizzicato.Effects.Flanger({
 			mix:  0.0,
-			feedback: 0.1,
-			time: 0.45,
-			depth: .1,
-			speed: .2
+			feedback: 0.0,
+			time: 0.0,
+			depth: 0.0,
+			speed: 0.0
 		});
 		this.compressor = new Pizzicato.Effects.Compressor({
-			threshold: -24,
-			knee: 30,
+			threshold: 0,
+			knee: 40,
 			attack: 0.003,
 			release: 0.025,
-			ratio: 12,
+			ratio: 1,
 			mix: 0.0
 		});
 		this.lowPassFilter = new Pizzicato.Effects.LowPassFilter({
@@ -63,13 +63,13 @@ class Effects {
 		});
 		this.ringModulator = new Pizzicato.Effects.RingModulator({
 			mix: 0.0,
-			speed: 30,
-			distortion: 1
+			speed: 0.0,
+			distortion: 0.2
 		});
 		this.tremolo = new Pizzicato.Effects.Tremolo({
 			mix: 0.0,
-			speed: 4,
-			depth: 1
+			speed: 0.0,
+			depth: 0.0
 		});
 	}
 }

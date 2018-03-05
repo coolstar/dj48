@@ -290,7 +290,7 @@ class TrackUI {
             start: 0,
             range: {
                 'min': 0,
-                'max': 100
+                'max': 1
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -299,15 +299,15 @@ class TrackUI {
 
 		$(delayMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayMixSliderSelector)[0].noUiSlider.get();
-            track.effects.delay.mix = value/100.0;
-            console.log("delay mix: "+ value/100.0);		
+            track.effects.delay.mix = parseFloat(value);
+            console.log("delay mix: " + value);		
 		});
 		
      	noUiSlider.create($(delayFeedbackSliderSelector)[0],{
-            start: 60,
+            start: 0.0,
             range: {
                 'min': 0,
-                'max': 100
+                'max': 1
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -316,15 +316,15 @@ class TrackUI {
 
 		$(delayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayFeedbackSliderSelector)[0].noUiSlider.get();
-            track.effects.delay.feedback = value/100.0;
-            console.log("delay feedback: "+ value/100.0);
+            track.effects.delay.feedback = parseFloat(value);
+            console.log("delay feedback: " + value);
         });
 	
 		noUiSlider.create($(delayTimeSliderSelector)[0],{
-            start: 0.4,
+            start: 0,
             range: {
                 'min': 0,
-                'max': 5
+                'max': 180
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -334,7 +334,7 @@ class TrackUI {
 		$(delayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(delayTimeSliderSelector)[0].noUiSlider.get();
             track.effects.delay.time = parseFloat(value);
-            console.log("delay time: "+ value);
+            console.log("delay time: " + value);
         });
 		
 		// PING-PONG DELAY
@@ -342,7 +342,7 @@ class TrackUI {
 			start: 0,
 			range: {
 				'min': 0,
-				'max': 100
+				'max': 1
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -351,15 +351,15 @@ class TrackUI {
 		   
 		$(PPdelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
 				var value = $(PPdelayMixSliderSelector)[0].noUiSlider.get();
-				track.effects.PPdelay.mix = value/100.0;
-				console.log("PPdelay mix: "+ value/100.0);
+				track.effects.PPdelay.mix = parseFloat(value);
+				console.log("PPdelay mix: " + value);
 		});
 			
 		noUiSlider.create($(PPdelayFeedbackSliderSelector)[0],{
-			start: 60,
+			start: 0,
 			range: {
 				'min': 0,
-				'max': 100
+				'max': 1
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -368,15 +368,15 @@ class TrackUI {
 		
 		$(PPdelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(PPdelayFeedbackSliderSelector)[0].noUiSlider.get();
-			track.effects.PPdelay.feedback = value/100.0;
-			console.log("PPdelay feedback: "+ value/100.0);
+			track.effects.PPdelay.feedback = parseFloat(value);
+			console.log("PPdelay feedback: " + value);
 		});
 
 		noUiSlider.create($(PPdelayTimeSliderSelector)[0],{
-			start: 0.4,
+			start: 0,
 			range: {
 				'min': 0,
-				'max': 5
+				'max': 180
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -385,8 +385,8 @@ class TrackUI {
 		
 		$(PPdelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(PPdelayTimeSliderSelector)[0].noUiSlider.get();
-			track.effects.PPdelay.time = value;
-			console.log("PPdelay time: "+ value);
+			track.effects.PPdelay.time = parseFloat(value);
+			console.log("PPdelay time: " + value);
 		});
 
 		// DUB DELAY
@@ -394,7 +394,7 @@ class TrackUI {
 			start: 0,
 			range: {
 				'min': 0,
-				'max': 100
+				'max': 1
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -403,15 +403,15 @@ class TrackUI {
 
 		$(dDelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(dDelayMixSliderSelector)[0].noUiSlider.get();
-			track.effects.dDelay.mix = value/100.0;
-			console.log("dDelay mix: "+ track.effects.dDelay.mix);
+			track.effects.dDelay.mix = parseFloat(value);
+			console.log("dDelay mix: " + track.effects.dDelay.mix);
 		});
 		
 		noUiSlider.create($(dDelayFeedbackSliderSelector)[0],{
-			start: 60,
+			start: 0,
 			range: {
 				'min': 0,
-				'max': 100
+				'max': 1
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -420,15 +420,15 @@ class TrackUI {
 		
 		$(dDelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(dDelayFeedbackSliderSelector)[0].noUiSlider.get();
-			track.effects.dDelay.feedback = value/100.0;
-			console.log("dDelay feedback: "+ value/100.0);
+			track.effects.dDelay.feedback = parseFloat(value);
+			console.log("dDelay feedback: " + value);
 		});
 
 		noUiSlider.create($(dDelayTimeSliderSelector)[0],{
-			start: 0.4,
+			start: 0,
 			range: {
 				'min': 0,
-				'max': 5
+				'max': 180
 			},
 			orientation: 'vertical',
 			direction: 'rtl',
@@ -437,8 +437,8 @@ class TrackUI {
 		
 		$(dDelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(dDelayTimeSliderSelector)[0].noUiSlider.get();
-			track.effects.dDelay.time = value;
-			console.log("dDelay time: "+ value);
+			track.effects.dDelay.time = parseFloat(value);
+			console.log("dDelay time: " + value);
 		});
 
 		noUiSlider.create($(dDelayCutoffSliderSelector)[0],{
@@ -454,8 +454,8 @@ class TrackUI {
 		
 		$(dDelayCutoffSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(dDelayCutoffSliderSelector)[0].noUiSlider.get();
-			track.effects.dDelay.cutoff = value;
-			console.log("dDelay time: "+ value);
+			track.effects.dDelay.cutoff = parseFloat(value);
+			console.log("dDelay time: " + value);
 		});
 		
 		// DISTORTION
@@ -463,7 +463,7 @@ class TrackUI {
             start: 0,
             range: {
                 'min': 0,
-                'max': 100
+                'max': 1
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -472,9 +472,9 @@ class TrackUI {
 
 		$(distortionGainSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionGainSliderSelector)[0].noUiSlider.get();
-            track.effects.distortion.gain = value/100.0;
+            track.effects.distortion.gain = parseFloat(value);
 			console.log("distortion actual gain: " + track.effects.distortion.gain);
-            console.log("distortion gain: "+ value/100.0);
+            console.log("distortion gain: " + value);
         });
 
 		// QUADRAFUZZ
@@ -492,7 +492,7 @@ class TrackUI {
 		$(quadMixSliderSelector)[0].noUiSlider.on("slide", function(){
 				var value = $(quadMixSliderSelector)[0].noUiSlider.get();
 				track.effects.quad.mix = parseFloat(value);
-				console.log("quad mix: "+ value);
+				console.log("quad mix: " + value);
 			});
 
 		noUiSlider.create($(quadLGainSliderSelector)[0],{
@@ -509,7 +509,7 @@ class TrackUI {
 		$(quadLGainSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(quadLGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.lowGain = parseFloat(value);
-			console.log("quad LG: "+ value);
+			console.log("quad LG: " + value);
 		});
 
 		noUiSlider.create($(quadMLGainSliderSelector)[0],{
@@ -526,7 +526,7 @@ class TrackUI {
 		$(quadMLGainSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(quadMLGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.midLowGain = parseFloat(value);
-			console.log("quad MLG: "+ value);
+			console.log("quad MLG: " + value);
 		});
 
 		noUiSlider.create($(quadMHGainSliderSelector)[0],{
@@ -543,7 +543,7 @@ class TrackUI {
 		 $(quadMHGainSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(quadMHGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.midHighGain = parseFloat(value);
-			console.log("quad MHG: "+ value);
+			console.log("quad MHG: " + value);
 		});
 
 		noUiSlider.create($(quadHGainSliderSelector)[0],{
@@ -560,7 +560,7 @@ class TrackUI {
 		$(quadHGainSliderSelector)[0].noUiSlider.on("slide", function(){
 			var value = $(quadHGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.highGain = parseFloat(value);
-			console.log("quad HG: "+ value);
+			console.log("quad HG: " + value);
 		});
 
 		// FLANGER
@@ -578,11 +578,11 @@ class TrackUI {
         $(flangerMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(flangerMixSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.mix = parseFloat(value);
-            console.log("Flanger mix: "+ track.effects.flanger.mix);
+            console.log("Flanger mix: " + track.effects.flanger.mix);
 		});
 
 		noUiSlider.create($(flangerFeedbackSliderSelector)[0],{
-            start: 0.1,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -595,11 +595,11 @@ class TrackUI {
 		$(flangerFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(flangerFeedbackSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.feedback = parseFloat(value);
-            console.log("Flanger Feedback: "+ track.effects.flanger.feedback);
+            console.log("Flanger Feedback: " + track.effects.flanger.feedback);
 		});
 		
 		noUiSlider.create($(flangerTimeSliderSelector)[0],{
-            start: 0.45,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -612,11 +612,11 @@ class TrackUI {
 		$(flangerTimeSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(flangerTimeSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.time = parseFloat(value);
-            console.log("Flanger time: "+ track.effects.flanger.time);
+            console.log("Flanger time: " + track.effects.flanger.time);
 		});
 		
 		noUiSlider.create($(flangerDepthSliderSelector)[0],{
-            start: 0.1,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -629,11 +629,11 @@ class TrackUI {
 		$(flangerDepthSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(flangerDepthSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.depth = parseFloat(value);
-            console.log("Flanger depth: "+ track.effects.flanger.depth);
+            console.log("Flanger depth: " + track.effects.flanger.depth);
 		});
 		
 		noUiSlider.create($(flangerSpeedSliderSelector)[0],{
-            start: 0.2,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -646,12 +646,12 @@ class TrackUI {
 		$(flangerSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(flangerSpeedSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.speed = parseFloat(value);
-            console.log("Flanger speed: "+ track.effects.flanger.speed);
+            console.log("Flanger speed: " + track.effects.flanger.speed);
 		});
 		
 		// COMPRESSOR
 		noUiSlider.create($(compressorThresholdSliderSelector)[0],{
-            start: -24,
+            start: 0,
             range: {
                 'min': -100,
                 'max': 0
@@ -660,16 +660,16 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        		
+		
 		$(compressorThresholdSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(compressorThresholdSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.threshold = parseFloat(value);
 			console.log("compressor actual threshold: " + track.effects.compressor.threshold);
-            console.log("compressor slider threshold: "+ value);
+            console.log("compressor slider threshold: " + value);
         });
 		
 		noUiSlider.create($(compressorKneeSliderSelector)[0],{
-            start: 30,
+            start: 40,
             range: {
                 'min': 0,
                 'max': 40
@@ -683,7 +683,7 @@ class TrackUI {
             var value = $(compressorKneeSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.knee = parseFloat(value);
 			console.log("compressor actual knee: " + track.effects.compressor.knee);
-            console.log("compressor slider knee: "+ value);
+            console.log("compressor slider knee: " + value);
         });
 		
 		noUiSlider.create($(compressorAttackSliderSelector)[0],{
@@ -701,7 +701,7 @@ class TrackUI {
             var value = $(compressorAttackSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.attack = parseFloat(value);
 			console.log("compressor actual attack: " + track.effects.compressor.attack);
-            console.log("compressor slider attack: "+ value);
+            console.log("compressor slider attack: " + value);
         });
 		
 		noUiSlider.create($(compressorReleaseSliderSelector)[0],{
@@ -723,7 +723,7 @@ class TrackUI {
         });
 		
 		noUiSlider.create($(compressorRatioSliderSelector)[0],{
-            start: 12,
+            start: 1,
             range: {
                 'min': 1,
                 'max': 20
@@ -737,7 +737,7 @@ class TrackUI {
             var value = $(compressorRatioSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.ratio = parseFloat(value);
 			console.log("compressor actual ratio: " + track.effects.compressor.ratio);
-            console.log("compressor slider ratio: "+ value);
+            console.log("compressor slider ratio: " + value);
         });
 		
 		noUiSlider.create($(compressorMixSliderSelector)[0],{
@@ -774,7 +774,7 @@ class TrackUI {
             var value = $(lowPassFilterMixSliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.mix = parseFloat(value);
 			console.log("lowPassFilter actual mix: " + track.effects.lowPassFilter.mix);
-            console.log("lowPassFilter slider mix: "+ value);		
+            console.log("lowPassFilter slider mix: " + value);		
 		});
 		
 		noUiSlider.create($(lowPassFilterFrequencySliderSelector)[0],{
@@ -792,7 +792,7 @@ class TrackUI {
             var value = $(lowPassFilterFrequencySliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.frequency = parseFloat(value);
 			console.log("lowPassFilter actual frequency: " + track.effects.lowPassFilter.frequency);
-            console.log("lowPassFilter frequency: "+ value);		
+            console.log("lowPassFilter frequency: " + value);		
 		});
 		
 		noUiSlider.create($(lowPassFilterPeakSliderSelector)[0],{
@@ -810,7 +810,7 @@ class TrackUI {
             var value = $(lowPassFilterPeakSliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.peak = parseFloat(value);
 			console.log("lowPassFilter actual peak: " + track.effects.lowPassFilter.peak);
-            console.log("lowPassFilter slider peak: "+ value);	
+            console.log("lowPassFilter slider peak: " + value);	
 		});
 		
 		// HIGH-PASS FILTER
@@ -829,7 +829,7 @@ class TrackUI {
             var value = $(highPassFilterMixSliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.mix = parseFloat(value);
 			console.log("highPassFilter actual mix: " + track.effects.highPassFilter.mix);
-            console.log("highPassFilter slider mix: "+ value);		
+            console.log("highPassFilter slider mix: " + value);		
 		});
 		
 		noUiSlider.create($(highPassFilterFrequencySliderSelector)[0],{
@@ -847,7 +847,7 @@ class TrackUI {
             var value = $(highPassFilterFrequencySliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.frequency = parseFloat(value);
 			console.log("highPassFilter actual frequency: " + track.effects.highPassFilter.frequency);
-            console.log("highPassFilter frequency: "+ value);		
+            console.log("highPassFilter frequency: " + value);		
 		});
 		
 		noUiSlider.create($(highPassFilterPeakSliderSelector)[0],{
@@ -864,7 +864,7 @@ class TrackUI {
 		$(highPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(highPassFilterPeakSliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.peak = parseFloat(value);
-            console.log("highPassFilter peak: "+ value);		
+            console.log("highPassFilter peak: " + value);		
 		});
 		
 		// STEREO PANNER
@@ -883,7 +883,7 @@ class TrackUI {
             var value = $(stereoPannerPanSliderSelector)[0].noUiSlider.get();
             track.effects.stereoPanner.pan = parseFloat(value);
 			console.log("stereoPanner actual pan: " + track.effects.stereoPanner.pan);
-            console.log("stereoPanner slider pan: "+ value);
+            console.log("stereoPanner slider pan: " + value);
         });
 		
 		// REVERB
@@ -902,7 +902,7 @@ class TrackUI {
             var value = $(reverbTimeSliderSelector)[0].noUiSlider.get();
             track.effects.reverb.time = parseFloat(value);
 			console.log("reverb actual time: " + track.effects.reverb.time);
-            console.log("reverb slider time: "+ value);		
+            console.log("reverb slider time: " + value);		
 		});
 		
 		noUiSlider.create($(reverbDecaySliderSelector)[0],{
@@ -920,7 +920,7 @@ class TrackUI {
             var value = $(reverbDecaySliderSelector)[0].noUiSlider.get();
             track.effects.reverb.decay = parseFloat(value);
 			console.log("reverb actual decay: " + track.effects.reverb.decay);
-            console.log("reverb slider decay: "+ value);		
+            console.log("reverb slider decay: " + value);		
 		});
 		
 		noUiSlider.create($(reverbMixSliderSelector)[0],{
@@ -946,7 +946,7 @@ class TrackUI {
             start: 0,
             range: {
                 'min': 0,
-                'max': 100
+                'max': 1
             },
             orientation: 'vertical',
             direction: 'rtl',
@@ -955,13 +955,13 @@ class TrackUI {
 
 		$(ringModulatorMixSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(ringModulatorMixSliderSelector)[0].noUiSlider.get();
-            track.effects.ringModulator.mix = value/100.0;
+            track.effects.ringModulator.mix = parseFloat(value);
 			console.log("ringModulator actual mix: " + track.effects.ringModulator.mix);
-            console.log("ringModulator mix: "+ value/100.0);		
+            console.log("ringModulator slider mix: " + value);		
 		});
 		
 		noUiSlider.create($(ringModulatorSpeedSliderSelector)[0],{
-            start: 30,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 2000
@@ -974,11 +974,11 @@ class TrackUI {
 		$(ringModulatorSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(ringModulatorSpeedSliderSelector)[0].noUiSlider.get();
             track.effects.ringModulator.speed = parseFloat(value);
-            console.log("ringModulator speed: "+ value);		
+            console.log("ringModulator speed: " + value);		
 		});
 		
 		noUiSlider.create($(ringModulatorDistortionSliderSelector)[0],{
-            start: 0,
+            start: 0.2,
             range: {
                 'min': 0.2,
                 'max': 50
@@ -991,7 +991,7 @@ class TrackUI {
 		$(ringModulatorDistortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(ringModulatorDistortionSliderSelector)[0].noUiSlider.get();
             track.effects.ringModulator.distortion = parseFloat(value);
-            console.log("ringModulator distortion: "+ value);		
+            console.log("ringModulator distortion: " + value);		
 		});
 		
 		// TREMOLO
@@ -1032,7 +1032,7 @@ class TrackUI {
 		});
 		
 		noUiSlider.create($(tremoloDepthSliderSelector)[0],{
-            start: 1,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 1
@@ -1041,6 +1041,13 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+		
+		$(tremoloDepthSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(tremoloDepthSliderSelector)[0].noUiSlider.get();
+            track.effects.tremolo.depth = parseFloat(value);
+			console.log("tremolo actual depth: " + track.effects.tremolo.depth);
+            console.log("tremolo slider speed: " + value);		
+		});
 
 		// PLAY
         noUiSlider.create($(playSliderSelector)[0],{
