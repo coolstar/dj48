@@ -1,5 +1,7 @@
 var audioInitialized = false;
 
+var delayNode = context.createDelay();
+
 class Track {
     constructor(x){
         this.audioCtx = context;
@@ -110,6 +112,8 @@ class Track {
             // Connect to output (speakers)
             source.connect(this.audioCtx.destination);
             source.start(0);
+
+            delayNode.connect(this.audioCtx.destination);
         }
 
         this.node.track = this;
@@ -129,10 +133,10 @@ class Track {
 		this.effects.ringModulator.connect(this.effects.tremolo);
 		this.effects.tremolo.connect(this.gainNode);
 
-        this.gainNode.connect(this.audioCtx.destination);
+        this.gainNode.connect(delayNode);
         this.gainNode.connect(this.spectrogram.analyser);
 
-        this.spectrogram.analyser.connect(this.audioCtx.destination);
+        this.spectrogram.analyser.connect(delayNode);
 
         this.spectrogram.visualize();
     }
