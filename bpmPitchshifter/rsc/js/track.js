@@ -119,7 +119,8 @@ class Track {
 		this.effects.distortion.connect(this.effects.delay);
 		this.effects.PPdelay.connect(this.effects.dDelay);
 		this.effects.dDelay.connect(this.effects.quad);
-		this.effects.quad.connect(this.effects.compressor);
+		this.effects.quad.connect(this.effects.flanger);
+		this.effects.flanger.connect(this.effects.compressor);
 		this.effects.compressor.connect(this.effects.lowPassFilter);
 		this.effects.lowPassFilter.connect(this.effects.highPassFilter);
 		this.effects.highPassFilter.connect(this.effects.stereoPanner);
