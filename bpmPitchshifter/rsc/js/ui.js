@@ -33,7 +33,7 @@ class TrackUI {
         timingSelector, loadingSelector, totalTimeSelector, progressSelector, pitchSliderSelector, 
         tempoSliderSelector, maintainTempoSelector, semitonesSelector, saveOutputSelector, bpmLabelSelector, recordingslistSelector,
         distortionSliderSelector, delayMixSliderSelector, delayFeedbackSliderSelector, delayTimeSliderSelector, PPdelayMixSliderSelector,
-	PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector, dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector){
+	PPdelayFeedbackSliderSelector, PPdelayTimeSliderSelector, dDelayMixSliderSelector, dDelayFeedbackSliderSelector, dDelayTimeSliderSelector, dDelayCutoffSliderSelector, quadMixSliderSelector, quadLGainSliderSelector, quadMLGainSliderSelector, quadMHGainSliderSelector, quadHGainSliderSelector){
 
         this.track = new Track();
 
@@ -247,10 +247,10 @@ class TrackUI {
 
         noUiSlider.create($(volumeSliderSelector)[0], {
             start: 100,
-            range: {
-                'min': 0,
-                'max': 100
-            },
+                range: {
+		'min': 0,
+		'max': 100
+		},
             orientation: 'vertical',
             direction: 'rtl',
             tooltips: true
@@ -261,6 +261,8 @@ class TrackUI {
             track.gainNode.gain.value = value*2/100.0;
             console.log("value: "+ value/100.0);
         });
+	//EFFECTS
+	//DISTORTION
 
         noUiSlider.create($(distortionSliderSelector)[0],{
             start: 0,
@@ -272,8 +274,6 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
-        //EFFECTS
-	//DISTORTION
 		$(distortionSliderSelector)[0].noUiSlider.on("slide", function(){
             var value = $(distortionSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = value/100.0;
@@ -456,6 +456,92 @@ class TrackUI {
             track.effects.dDelay.cutoff = value;
             console.log("dDelay time: "+ value);
         });
+	//QUADRAFUZZ
+	
+	noUiSlider.create($(quadMixSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+        $(quadMixSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(quadMixSliderSelector)[0].noUiSlider.get();
+            track.effects.quad.mix = parseFloat(value);
+            console.log("quad mix: "+ value);
+        });
+
+	noUiSlider.create($(quadLGainSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+        $(quadLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(quadLGainSliderSelector)[0].noUiSlider.get();
+            track.effects.quad.lowGain = parseFloat(value);
+            console.log("quad LG: "+ value);
+        });
+
+	noUiSlider.create($(quadMLGainSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+        $(quadMLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(quadMLGainSliderSelector)[0].noUiSlider.get();
+            track.effects.quad.midLowGain = parseFloat(value);
+            console.log("quad MLG: "+ value);
+        });
+
+	noUiSlider.create($(quadMHGainSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+        $(quadMHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(quadMHGainSliderSelector)[0].noUiSlider.get();
+            track.effects.quad.midHighGain = parseFloat(value);
+            console.log("quad MHG: "+ value);
+        });
+
+	noUiSlider.create($(quadHGainSliderSelector)[0],{
+            start: 0,
+            range: {
+                'min': 0,
+                'max': 1
+            },
+            orientation: 'vertical',
+            direction: 'rtl',
+            tooltips: true
+        });
+
+        $(quadHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+            var value = $(quadHGainSliderSelector)[0].noUiSlider.get();
+            track.effects.quad.highGain = parseFloat(value);
+            console.log("quad HG: "+ value);
+        });
 
         noUiSlider.create($(playSliderSelector)[0],{
             start: 0,
@@ -492,7 +578,7 @@ class TrackUI {
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#audio-file", ".timing",
  ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider", "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider","#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider" );
+ ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#distortion-slider", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider", "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider","#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider", "#quadMix-slider", "#quadLGain-slider", "#quadMLGain-slider", "#quadMHGain-slider", "#quadHGain-slider");
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
@@ -501,7 +587,8 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
  "#bpm-label2", "recordingslist2", "#distortion-slider2", "#delayMix-slider2", 
  "#delayFeedback-slider2", "#delayTime-slider2", 
  "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2",
-"#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2");
+"#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2",
+"#quadMix-slider2", "#quadLGain-slider2", "#quadMLGain-slider2", "#quadMHGain-slider2", "#quadHGain-slider2");
 
 $("#sync-together").click (function (e) {
 	bpm1 = trackui.track.bpm;
