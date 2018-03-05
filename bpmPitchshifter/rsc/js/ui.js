@@ -43,10 +43,9 @@ class TrackUI {
 		stereoPannerPanSliderSelector,
 		reverbTimeSliderSelector, reverbDecaySliderSelector, reverbMixSliderSelector,
 		ringModulatorMixSliderSelector, ringModulatorSpeedSliderSelector, ringModulatorDistortionSliderSelector,
-		tremoloMixSliderSelector, tremoloSpeedSliderSelector, tremoloDepthSliderSelector
+		tremoloMixSliderSelector, tremoloSpeedSliderSelector, tremoloDepthSliderSelector,
 		flangerMixSliderSelector, flangerFeedbackSliderSelector, flangerTimeSliderSelector, flangerDepthSliderSelector, flangerSpeedSliderSelector
 		){
->>>>>>> 8338083cca520f51369f9599eccb11c517fc6a97
 
         this.track = new Track();
 
@@ -958,7 +957,6 @@ class TrackUI {
             tooltips: true
         });
 
-<<<<<<< HEAD
 	noUiSlider.create($(flangerMixSliderSelector)[0],{
             start: 0,
             range: {
