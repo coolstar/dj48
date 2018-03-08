@@ -3,10 +3,10 @@ body{
     background-image:url("");
     padding:0;
     margin:0;
-    font-family:courier,"Courier New",monospace
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif
 }
 button,strong{
-    font-family:courier,"Courier New",monospace
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif
 }
 #wrapper{
     max-width:1200px;
@@ -16,10 +16,11 @@ button,strong{
     -moz-box-sizing:border-box;
     box-sizing:border-box;
     margin:0 auto;
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     -moz-box-shadow:0 0 20px #888;
     -webkit-box-shadow:0 0 20px #888;
-    box-shadow:0 0 20px #888
+    box-shadow:0 0 20px #888;
+    color:#6B6E70;
 }
 #wrapper.wide{
     min-width:468px
@@ -41,7 +42,7 @@ button,strong{
     margin-bottom:15px
 }
 .generator{
-    border:thin solid #999;
+    border:thin solid #000;
     border-radius:3px;
     max-width:420px;
     width:100%;
@@ -49,7 +50,7 @@ button,strong{
     box-sizing:border-box;
     margin:20px auto;
     padding:30px 0;
-    background:#f0f0f0
+    background:#000000
 }
 .volume-wrapper{
     padding:10px 20px
@@ -71,7 +72,7 @@ button,strong{
     text-align:right;
     margin-left:40px;
     margin-bottom:0px;
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     border:solid 1px #999
 }
 #units{
@@ -82,7 +83,7 @@ button,strong{
     margin-top:-8px;
     line-height:1.4;
     font-size:45px;
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     border-left:none
 }
 .generator-buttons{
@@ -237,7 +238,7 @@ p{
     display:block
 }
 #footer{
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     color:#999;
     font-size:0.8em;
     text-align:center;
@@ -467,7 +468,7 @@ select{
     background-color:#48C5FF;
     background-color:#38a3eb;
     border-radius:3px;
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     -webkit-transition:background-color 0.5s;
     -ms-transition:background-color 0.5s;
     -moz-transition:background-color 0.5s;
@@ -612,7 +613,7 @@ select{
 }
 .pitch-shifter{
     border:solid 1px #999;
-    background:#f0f0f0;
+    background:#222629;
     padding: 0 20px 0 20px;
     padding-top:0;
     -webkit-border-radius:3px;
@@ -704,7 +705,7 @@ select{
     margin-bottom:0
 }
 .voice-synth textarea{
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     text-align:left;
     display:block;
     padding:10px;
@@ -751,7 +752,7 @@ select{
     margin:10px;
     margin-left:0;
     width:100%;
-    font-family:courier,"Courier New",monospace;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
     font-size:30px
 }
 .frequency-sweeper p{
@@ -994,7 +995,7 @@ select{
 
 .toolbar{
     border:solid 1px #999;
-    background:#f0f0f0;
+    background:#222629;
     padding: 0;
     -webkit-border-radius:3px;
     -ms-border-radius:3px;
@@ -1031,6 +1032,17 @@ select{
     top: 0;
     right: 0;
 }
+.fontcolor {
+    color:#909090;
+}
 .noUi-connects {
     position: absolute !important;
 }
+
+h2 {
+    color:#909090;
+} 
+
+h4 {
+    color:#909090;
+} 

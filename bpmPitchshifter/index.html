@@ -39,8 +39,8 @@
                     <button id="play-pitchshifter" class="tuningButton" style="float:left;">play</button>
                     <div id='play-slider' class="play-slider"></div>
                     <div id="timing" style="width: 110px;" class="timingcontainer">
-                        <div class="timing">
-                            <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
+                        <div class="timing" class="fontcolor">
+                            <span id="current-time" class="fontcolor">0:00</span><span class="fontcolor"> / </span><span id="total-time" class="fontcolor">0:00</span>
                         </div>
                         <span id='loading2' style='display:none;'>Loading...</span>
                     </div>
@@ -49,7 +49,7 @@
             <div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
                 <button id="play-all" class="tuningButton">play</button>
                 <button id="sync-together" class="tuningButton">sync</button>
-                <label for="save-output">
+                <label for="save-output" class="fontcolor">
                     <input type="checkbox" id='save-output'>Record
                 </label>
             </div>
@@ -60,7 +60,7 @@
                     <div id='play-slider2' class="play-slider"></div>
                     <div id="timing2" style="width: 110px;" class="timingcontainer">
                         <div class="timing">
-                            <span id="current-time2">0:00</span> / <span id="total-time2">0:00</span>
+                            <span id="current-time2" class="fontcolor">0:00</span><span class="fontcolor"> / </span><span id="total-time2" class="fontcolor">0:00</span>
                         </div>
                         <span id='loading2' style='display:none;'>Loading...</span>
                     </div>
@@ -80,11 +80,11 @@
             <!-- Toggle between sinewave and frequency bars -->
             <form class="controls">
                 <div>
-                    <label for="visual">Visualizer setting</label>
+                    <label for="visual" class="fontcolor">Visualizer setting</label>
                     <select id="visual" name="visual">
                         <option value="sinewave">Sinewave</option>
                         <option value="frequencybars" selected>Frequency bars</option>
-                        <option value="off">Off</option>
+                        <!-- <option value="off">Off</option> -->
                     </select>
                 </div>
             </form>
@@ -270,7 +270,7 @@
             <!-- Toggle between sinewave and frequency bars -->
             <form class="controls">
                 <div>
-                    <label for="visual">Visualizer setting</label>
+                    <label for="visual" class="fontcolor">Visualizer setting</label>
                     <select id="visual2" name="visual">
                         <option value="sinewave">Sinewave</option>
                         <option value="frequencybars" selected>Frequency bars</option>

@@ -53,7 +53,7 @@ class Spectrogram {
                 
                 self.analyser.getByteTimeDomainData(dataArray);
                 
-                self.canvasCtx.fillStyle = 'black';
+                self.canvasCtx.fillStyle = "#222629";
                 self.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
                 
                 self.canvasCtx.lineWidth = 2;
@@ -99,7 +99,7 @@ class Spectrogram {
                 
                 self.analyser.getByteFrequencyData(dataArrayAlt);
                 
-                self.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+                self.canvasCtx.fillStyle = '#222629';
                 self.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
                 
                 var barWidth = (WIDTH / bufferLengthAlt) * 2.5;
@@ -109,7 +109,7 @@ class Spectrogram {
                 for(var i = 0; i < bufferLengthAlt; i++) {
                     barHeight = dataArrayAlt[i];
                     
-                    self.canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+                    self.canvasCtx.fillStyle = 'rgb(134,'+(180 +barHeight)+',50)';
                     self.canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
                     
                     x += barWidth + 1;
@@ -120,7 +120,7 @@ class Spectrogram {
             
         } else if(visualSetting == "off") {
             this.canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-            this.canvasCtx.fillStyle = "black";
+            this.canvasCtx.fillStyle = "#222629";
             this.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
         }
         
