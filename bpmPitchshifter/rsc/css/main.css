@@ -928,7 +928,7 @@ select{
     height:1px;
     left:6px;
     top:14px
-}
+ class="fontcolor"}
 .noUi-vertical .noUi-handle:after{
     top:17px
 }
@@ -987,7 +987,7 @@ select{
     margin: auto;
  }
  .slider-control {
-    width: 150px;
+    width: 100px;
     float: left;
     text-align: center;
  }
@@ -1039,10 +1039,10 @@ select{
     position: absolute !important;
 }
 
-h2 {
+h6 {
     color:#909090;
 } 
 
-h4 {
+h5 {
     color:#909090;
 } 
