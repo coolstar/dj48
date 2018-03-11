@@ -48,6 +48,9 @@ class Spectrogram {
             var self = this;
 
             var draw = function() {
+
+                var WIDTH = self.canvas.width;
+                var HEIGHT = self.canvas.height;
                 
                 self.drawVisual = requestAnimationFrame(draw);
                 
@@ -95,6 +98,9 @@ class Spectrogram {
             var self = this;
 
             var drawAlt = function() {
+                var WIDTH = self.canvas.width;
+                var HEIGHT = self.canvas.height;
+
                 self.drawVisual = requestAnimationFrame(drawAlt);
                 
                 self.analyser.getByteFrequencyData(dataArrayAlt);
