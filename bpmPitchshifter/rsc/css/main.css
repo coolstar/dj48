@@ -1037,6 +1037,13 @@ select{
 }
 
 
+.slider-6group {
+    margin-top: 0px;
+    width: 600px;
+    float:left;
+    text-align: center;
+    height: 250px;
+}
 
 .toolbar{
     border:solid 1px #999;
