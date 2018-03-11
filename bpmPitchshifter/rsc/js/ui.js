@@ -25,7 +25,15 @@ $(document.body).on("mouseup",function(e){
     updateSlider = true;
 });
 
+document.getElementById('buttonFile').addEventListener('click', openDialog);
+function openDialog() {
+ document.getElementById('audio-file').click();
+}
 
+document.getElementById('buttonFile2').addEventListener('click', openDialog2);
+function openDialog2() {
+ document.getElementById('audio-file2').click();
+}
 
 class TrackUI {
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
