@@ -1112,11 +1112,14 @@ select{
 }
 
 h6 {
+    font-size: 120%;
+    margin-top: 15px;
     margin-bottom: 0px;
     color:#909090;
 } 
 
 h5 {
+    
 
     /* argin-bottom: 3px; */
     color:#909090;
