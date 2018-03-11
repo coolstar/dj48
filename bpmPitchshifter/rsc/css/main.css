@@ -1081,15 +1081,15 @@ select{
 }
 
 .volume-slider {
-    width: calc(15% - 44px);
+    width: calc(18% - 44px);
     top: 0px;
-    left: calc(80% - 64px);
+    left: calc(80% + 44px);
 
 }
 .timingcontainer {
     position: absolute;;
     top: 0;
-    right: 0;
+    right: calc(15% - 20px);
 }
 .fontcolor {
     color:#909090;
