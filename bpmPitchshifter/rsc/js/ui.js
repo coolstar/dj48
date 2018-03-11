@@ -807,7 +807,7 @@ class TrackUI {
 		noUiSlider.create($(lowPassFilterPeakSliderSelector)[0],{
             start: 1,
             range: {
-                'min': 0.0001,
+                'min': 0,
                 'max': 1000
             },
             orientation: 'vertical',
@@ -860,9 +860,9 @@ class TrackUI {
 		});
 		
 		noUiSlider.create($(highPassFilterPeakSliderSelector)[0],{
-            start: 1,
+            start: 0,
             range: {
-                'min': 0.0001,
+                'min': 0,
                 'max': 1000
             },
             orientation: 'vertical',
@@ -897,9 +897,9 @@ class TrackUI {
 		
 		// REVERB
 		noUiSlider.create($(reverbTimeSliderSelector)[0],{
-            start: 0.01,
+            start: 0,
             range: {
-                'min': 0.0001,
+                'min': 0,
                 'max': 10
             },
             orientation: 'vertical',
@@ -915,7 +915,7 @@ class TrackUI {
 		});
 		
 		noUiSlider.create($(reverbDecaySliderSelector)[0],{
-            start: 0.01,
+            start: 0,
             range: {
                 'min': 0,
                 'max': 10
@@ -987,9 +987,9 @@ class TrackUI {
 		});
 		
 		noUiSlider.create($(ringModulatorDistortionSliderSelector)[0],{
-            start: 0.2,
+            start: 0,
             range: {
-                'min': 0.2,
+                'min': 0,
                 'max': 50
             },
             orientation: 'vertical',
