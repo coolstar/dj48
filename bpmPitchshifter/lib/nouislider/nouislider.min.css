@@ -89,7 +89,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle{
     border-radius:3px
 }
 .noUi-connect{
-    background:#3FB8AF
+    background:#61892F;
 }
 .noUi-draggable{
     cursor:ew-resize

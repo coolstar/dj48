@@ -1051,12 +1051,13 @@ class TrackUI {
 
 		// PLAY
         noUiSlider.create($(playSliderSelector)[0],{
+            connect: [true, false],
             start: 0,
             range: {
                 'min': 0,
                 'max': 100
             },
-            connect: [true, false]
+            
         });
 
         $(playSliderSelector).on("pointerdown touchstart",function(e){
