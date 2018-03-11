@@ -1019,6 +1019,14 @@ select{
     height: 250px;
 }
 
+.slider-4group {
+    margin-top: 0px;
+    width: 400px;
+    float:left;
+    text-align: center;
+    height: 250px;
+}
+
 
 
 .toolbar{
