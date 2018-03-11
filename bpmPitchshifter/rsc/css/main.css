@@ -1028,6 +1028,15 @@ select{
 }
 
 
+.slider-5group {
+    margin-top: 0px;
+    width: 500px;
+    float:left;
+    text-align: center;
+    height: 250px;
+}
+
+
 
 .toolbar{
     border:solid 1px #999;
