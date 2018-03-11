@@ -1075,9 +1075,16 @@ select{
     overflow:hidden
 }
 .play-slider {
-    width: calc(100% - 220px);
+    width: calc(80% - 176px);
     top: 15px;
     left: 100px;
+}
+
+.volume-slider {
+    width: calc(15% - 44px);
+    top: 0px;
+    left: calc(80% - 64px);
+
 }
 .timingcontainer {
     position: absolute;;

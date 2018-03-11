@@ -272,9 +272,10 @@ class TrackUI {
 		'min': 0,
 		'max': 100
 		},
-            orientation: 'vertical',
-            direction: 'rtl',
-            tooltips: true
+            connect: [true, false],
+            orientation: 'horizontal',
+            direction: 'ltr',
+            tooltips: false
         });
 
         $(volumeSliderSelector)[0].noUiSlider.on("slide", function(){
