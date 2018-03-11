@@ -39,6 +39,24 @@
                    <button id="play-pitchshifter" class="tuningButton" style="float:left;">&#9658;</button>
                    <div id='play-slider' class="play-slider"></div>
                    <div id='volume-slider' class="volume-slider"></div>
+
+
+
+
+            <div class="dropdown">
+                 <button class="dropbtn" onclick="myFunction()">Dropdown
+                 <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content" id="myDropdown">
+                 <a href="#">Link 1</a>
+                 <a href="#">Link 2</a>
+                 <a href="#">Link 3</a>
+            </div>
+            </div>
+
+
+
+
                     <div id="timing" style="width: 110px;" class="timingcontainer">
                         <div class="timing" class="fontcolor">
                             <span id="current-time" class="fontcolor">0:00</span><span class="fontcolor"> / </span><span id="total-time" class="fontcolor">0:00</span>
@@ -48,6 +66,46 @@
                    
                 </div>
             </div>
+  <!--
+            <div class="js-downloads-section" style='display:none;'>
+                <h5>Recordings</h5>
+                <ul id="recordingslist"></ul>
+            </div>
+      
+-->
+
+
+<!--
+            <div class="dropdown">
+                 <button class="dropbtn" onclick="myFunction()">Dropdown
+                 <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content" id="myDropdown">
+                 <a href="#">Link 1</a>
+                 <a href="#">Link 2</a>
+                 <a href="#">Link 3</a>
+            </div>
+            </div>
+-->
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+    var myDropdown = document.getElementById("myDropdown");
+      if (myDropdown.classList.contains('show')) {
+        myDropdown.classList.remove('show');
+      }
+  }
+}
+</script>
+            
+            
             <div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
                 <button id="play-all" class="tuningButton">&#9658;</button>
                 <button id="sync-together" class="tuningButton">sync</button>
@@ -55,6 +113,13 @@
                     <input type="checkbox" id='save-output'>Record
                 </label>
             </div>
+
+<!--
+            <div class="js-downloads-section" style='display:none;'>
+                <h5>Recordings</h5>
+                <ul id="recordingslist"></ul>
+            </div>
+-->
             <div style="float: left;width:calc(50% - 120px);height:100px;">
                 <canvas class="visualizer2" style="width: 100%;height: 50px;"></canvas>
                 <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
@@ -392,9 +457,9 @@
                 <br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
 -->
             <div class="js-downloads-section" style='display:none;'>
-                <h5>Recordings</h5>
+<!--                <h5>Recordings</h5>
                 <ul id="recordingslist"></ul>
-
+-->
                 <h5>Status Log</h5>
                 <pre id="log"></pre>
             </div>
