@@ -996,53 +996,66 @@ select{
  }
 
 .slider-1group {
+    margin-left: 4px;
+    margin-top: 5px;
+    margin-right: 1px;
     width: 100px;
     float:left;
     text-align: center;
-    height: 270px;
-}
-
-
-.slider-2group {
-    width: 200px;
-    float:left;
-    text-align: center;
     height: 250px;
+    border-style: double;
+    border-color: #61892F;
+    /*border-width: 1px*/	
 }
-
 
 .slider-3group {
-    margin-top: 0px;
+    margin-top: 5px; 
+    margin-bottom: 5px;
+    margin-right: 12px; 
+    margin-left: 17px;
     width: 300px;
     float:left;
     text-align: center;
     height: 250px;
+    border-style: double;
+    border-color: #61892F;
 }
 
 .slider-4group {
-    margin-top: 0px;
+    margin-top: 5px;
+    margin-right: 15px;
     width: 400px;
     float:left;
     text-align: center;
     height: 250px;
+    border-style: double;
+    border-color: #61892F;
 }
 
 
 .slider-5group {
-    margin-top: 0px;
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-top: 5px;
     width: 500px;
     float:left;
     text-align: center;
     height: 250px;
+    border-style: double;
+    border-color: #61892F;
 }
 
 
 .slider-6group {
-    margin-top: 0px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 5px;
     width: 600px;
     float:left;
     text-align: center;
     height: 250px;
+    border-style: double;
+    border-color: #61892F;
 }
 
 .toolbar{
@@ -1101,5 +1114,6 @@ h5 {
     /* argin-bottom: 3px; */
     color:#909090;
 } 
-
+.headers {
+ 
 
