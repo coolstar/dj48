@@ -70,7 +70,7 @@ class TrackUI {
                 // alert("Currently loading audio, please wait a few seconds...");
             } else if (that.is_playing == false){
                 track.play();
-                $(playButtonSelector).html("pause");
+                $(playButtonSelector).html("&#10074;&#10074;");
                 that.is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(delayNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
@@ -79,7 +79,7 @@ class TrackUI {
                 }
             } else {
                 track.pause();
-                $(playButtonSelector).html( "play");
+                $(playButtonSelector).html("&#9658;");
                 that.is_playing = false;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder && track.recorder.stop();
@@ -1182,10 +1182,10 @@ function updatePlayallButton () {
         
         var bool = (trackui.is_playing || trackui2.is_playing);
         if (bool) {
-             $("#play-all").html ("pause");
+             $("#play-all").html ("&#10074;&#10074;");
         }
         else {
-             $("#play-all").html ("play");
+             $("#play-all").html ("&#9658;");
         }
 }
 
