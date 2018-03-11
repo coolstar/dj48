@@ -38,12 +38,14 @@
                 <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
                    <button id="play-pitchshifter" class="tuningButton" style="float:left;">play</button>
                    <div id='play-slider' class="play-slider"></div>
+                   <div id='volume-slider' class="volume-slider"></div>
                     <div id="timing" style="width: 110px;" class="timingcontainer">
                         <div class="timing" class="fontcolor">
                             <span id="current-time" class="fontcolor">0:00</span><span class="fontcolor"> / </span><span id="total-time" class="fontcolor">0:00</span>
                         </div>
                         <span id='loading2' style='display:none;'>Loading...</span>
                     </div>
+                   
                 </div>
             </div>
             <div class="sharedbuttons" style="float: left;width: 240px;height: 50px;">
@@ -58,6 +60,7 @@
                 <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
                     <button id="play-pitchshifter2" class="tuningButton" style="float:left;">play</button>
                     <div id='play-slider2' class="play-slider"></div>
+                    <div id='volume-slider2' class="volume-slider"></div>
                     <div id="timing2" style="width: 110px;" class="timingcontainer">
                         <div class="timing">
                             <span id="current-time2" class="fontcolor">0:00</span><span class="fontcolor"> / </span><span id="total-time2" class="fontcolor">0:00</span>
@@ -88,6 +91,7 @@
                     </select>
                 </div>
             </form>
+            <!--
             <div class="slider-1group">
             <div class="slider-control">
             <h5>Volume</h5>
@@ -95,7 +99,7 @@
                 <div class="vertical-slider" id="volume-slider"></div>
             </div>
             </div>
-
+            -->
             <div class="slider-1group">
             <div class="slider-control">
                 <h5>Pitch</h5>
@@ -416,6 +420,7 @@
                     </select>
                 </div>
             </form>
+<!--
             <div class="slider-1group">
             <div class="slider-control">
             <h5>Volume</h5>
@@ -423,6 +428,7 @@
                 <div class="vertical-slider" id="volume-slider2"></div>
             </div>
             </div>
+-->
 
             <div class="slider-1group">
             <div class="slider-control">
@@ -596,8 +602,8 @@
 
             <div class="slider-6group">
             <div class="slider-control">
-                <h5>&nbsp</h5>
-                <h5>Threshold</h5>
+            <h5>&nbsp</h5>    
+	    <h5>Threshold</h5>
                 <div class="vertical-slider" id="compressorThreshold-slider2"></div>
             </div>
             <div class="slider-control">
