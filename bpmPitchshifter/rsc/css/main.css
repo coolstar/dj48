@@ -1203,3 +1203,7 @@ h5 {
     display: block;
 }
 
+
+li {
+    list-style: none;
+}
