@@ -1,0 +1,16 @@
+<script type="text/javascript" src="../Macros.js"></script>
+
+<button type="button" id="test">Test Button 1</button><br>
+<button type="button" id="test2">Test Button 2</button>
+
+<script type="text/javascript">
+	var macros = new Module.Macros();
+	document.getElementById("test").addEventListener("click", function(){
+		alert("Test1 clicked!");
+		macros.gotButtonClick(this.id);
+	});
+	document.getElementById("test2").addEventListener("click", function(){
+		alert("Test2 clicked!");
+		macros.gotButtonClick(this.id);
+	});
+</script>
