@@ -36,23 +36,12 @@
             <div style="float: left;width:calc(50% - 120px);height:100px;">
                 <canvas class="visualizer" style="width: 100%;height: 50px;"></canvas>
                 <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
-                   <button id="play-pitchshifter" class="tuningButton" style="float:left;">&#9658;</button>
+                   <!--<button id="play-pitchshifter" class="tuningButton" style="float:left;">&#9658;</button>-->
+		  <input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" hidden/>
+		  <input id="buttonFile" type="button" class="tuningButton2" style="float:left; background-color:#6B6E70; color: white;  margin-left: 3px; border-color:#6B6E70" value="&#8593;"/> 
+		  <button id="play-pitchshifter" class="tuningButton" style="float:left;">&#9658;</button>
                    <div id='play-slider' class="play-slider"></div>
                    <div id='volume-slider' class="volume-slider"></div>
-
-
-
-
-            <div class="dropdown">
-                 <button class="dropbtn" onclick="myFunction()">Dropdown
-                 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="myDropdown">
-                 <a href="#">Link 1</a>
-                 <a href="#">Link 2</a>
-                 <a href="#">Link 3</a>
-            </div>
-            </div>
 
 
 
@@ -65,39 +54,35 @@
                     </div>
                    
                 </div>
-            </div>
-  <!--
-            <div class="js-downloads-section" style='display:none;'>
-                <h5>Recordings</h5>
-                <ul id="recordingslist"></ul>
-            </div>
-      
--->
 
+                <div class="dropdown">
+                    <button class="dropbtn" onclick="myFunction()">Recordings
+                    <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="recordingslist">
+                    </div>
+                </div>
 
 <!--
-            <div class="dropdown">
-                 <button class="dropbtn" onclick="myFunction()">Dropdown
-                 <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="myDropdown">
-                 <a href="#">Link 1</a>
-                 <a href="#">Link 2</a>
-                 <a href="#">Link 3</a>
+            <div class="js-downloads-section" style='display:none;'>
+                <h5>Recordings</h5>
+                <ul id="recordingslist2"></ul>
+
+                <h5>Status Log</h5>
+                <pre id="log2"></pre>
+            </div> -->
             </div>
-            </div>
--->
 <script>
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
+    document.getElementById("recordingslist").classList.toggle("show");
 }
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
   if (!e.target.matches('.dropbtn')) {
-    var myDropdown = document.getElementById("myDropdown");
+    var myDropdown = document.getElementById("recordingslist");
       if (myDropdown.classList.contains('show')) {
         myDropdown.classList.remove('show');
       }
@@ -114,16 +99,12 @@ window.onclick = function(e) {
                 </label>
             </div>
 
-<!--
-            <div class="js-downloads-section" style='display:none;'>
-                <h5>Recordings</h5>
-                <ul id="recordingslist"></ul>
-            </div>
--->
             <div style="float: left;width:calc(50% - 120px);height:100px;">
                 <canvas class="visualizer2" style="width: 100%;height: 50px;"></canvas>
                 <div style="height: 50px;top: 50px;position: absolute;width: calc(50% - 120px);">
-                    <button id="play-pitchshifter2" class="tuningButton" style="float:left;">&#9658;</button>
+                    <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" hidden/>
+                    <input id="buttonFile2" type="button" class="tuningButton2" style="float:left; background-color:#6B6E70; border-color:#6B6E70; color: white;  margin-left: 3px;" value="&#8593;"/>
+		    <button id="play-pitchshifter2" class="tuningButton" style="float:left;">&#9658;</button>
                     <div id='play-slider2' class="play-slider"></div>
                     <div id='volume-slider2' class="volume-slider"></div>
                     <div id="timing2" style="width: 110px;" class="timingcontainer">
@@ -137,7 +118,6 @@ window.onclick = function(e) {
         </div>
 
         <div class="pitch-shifter" style="float:left;">
-            <input autocomplete="off" id="audio-file" type="file" accept=".wav, .mp3" />
 
             <p class="clear"></p>
 
@@ -146,7 +126,7 @@ window.onclick = function(e) {
             </script>
 
             <!-- Toggle between sinewave and frequency bars -->
-            <form class="controls">
+            <form class="controls" style="margin-top:5px; margin-bottom:5px;">
                 <div>
                     <label for="visual" class="fontcolor">Visualizer setting</label>
                     <select id="visual" name="visual">
@@ -165,14 +145,14 @@ window.onclick = function(e) {
             </div>
             </div>
             -->
-            <div class="slider-1group">
+            <div class="slider-1group" id="pitchSlider">
             <div class="slider-control">
                 <h6>Pitch</h6>
                 <h5>&nbsp </h5>
                 <div class="vertical-slider pitch-slider"></div>
             </div>
             </div>
-            <div class="slider-1group">
+            <div class="slider-1group" id="tempoSlider">
             <div class="slider-control">
                 <h6>Tempo</h6>
                 <h5>BPM = <span id="bpm-label">0</span><h5>
@@ -451,11 +431,6 @@ window.onclick = function(e) {
             </div>
 
             <div class="clear"></div>
-
-            <label class="semitone-shift-label">Shifted by
-                <input id='semitones' type="text" value="0"> semitones
-                <br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
-
             <div class="js-downloads-section" style='display:none;'>
 <!--                <h5>Recordings</h5>
                 <ul id="recordingslist"></ul>
@@ -467,7 +442,6 @@ window.onclick = function(e) {
 
         <!-- RIGHT SCREEN -->
         <div class="pitch-shifter" style="float:right;">
-            <input autocomplete="off" id="audio-file2" type="file" accept=".wav, .mp3" />
 
             <p class="clear"></p>
 
@@ -476,7 +450,7 @@ window.onclick = function(e) {
             </script>
 
             <!-- Toggle between sinewave and frequency bars -->
-            <form class="controls">
+            <form class="controls" style="margin-top:5px; margin-bottom:5px;">
                 <div>
                     <label for="visual" class="fontcolor">Visualizer setting</label>
                     <select id="visual2" name="visual">
@@ -496,14 +470,14 @@ window.onclick = function(e) {
             </div>
 -->
 
-            <div class="slider-1group">
+            <div class="slider-1group" id="pitchSlider">
             <div class="slider-control">
                 <h6>Pitch</h6>
                 <h5>&nbsp </h5>
                 <div class="vertical-slider pitch-slider2"></div>
             </div>
             </div>
-            <div class="slider-1group">
+            <div class="slider-1group" id="tempoSlider">
             <div class="slider-control">
                 <h6>Tempo</h6>
                 <h5>BPM = <span id="bpm-label2">0</span><h5>
@@ -781,11 +755,7 @@ window.onclick = function(e) {
             </div>
             </div>
             <div class="clear"></div>
-
-            <label class="semitone-shift-label">Shifted by
-                <input id='semitones2' type="text" value="0"> semitones
-                <br />(shifting by one semitone is equivalent to shifting by 5.946%)</label>
-
+            <!--
             <div class="js-downloads-section" style='display:none;'>
                 <h5>Recordings</h5>
                 <ul id="recordingslist2"></ul>
@@ -793,6 +763,7 @@ window.onclick = function(e) {
                 <h5>Status Log</h5>
                 <pre id="log2"></pre>
             </div>
+            -->
         </div>
 
         <script>
