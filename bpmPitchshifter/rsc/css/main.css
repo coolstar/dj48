@@ -267,6 +267,13 @@ p{
     padding:5px 7px 7px;
     border-radius:3px
 }
+
+.tuningButton2{
+    margin-top: 9px;
+    font-size:1em;
+    padding:4px 6.5px 6.5px;
+    border-radius:3px
+}
 .beginTuning{
     background-color:#57c24d
 }
@@ -1124,11 +1131,19 @@ h5 {
     /* argin-bottom: 3px; */
     color:#909090;
 } 
-.headers {
+#pitchSlider {
+    margin-right: 20px;
+    margin-left: 50px;
+}
+
+#tempoSlider {
+    margin-right: 32px;
+    margin-left: 20px;
+}
  
 
 
-}
+
 
 
 
@@ -1138,15 +1153,15 @@ h5 {
 
 
 .dropdown {
+    position: relative;
     float: left;
     overflow: hidden;
-    top: 15px;
-    left: calc(100%-50px)
+    left: calc(115%);
 }
 
 .dropdown .dropbtn {
     cursor: pointer;
-    font-size: 10px;    
+    font-size: 16px;    
     border: none;
     outline: none;
     color: white;
@@ -1161,21 +1176,23 @@ h5 {
 }
 
 .dropdown-content {
+    
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 9999;
 }
 
 .dropdown-content a {
-    float: none;
+    float: inline-block;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     text-align: left;
+    font-size: 16px;
 }
 
 .dropdown-content a:hover {
