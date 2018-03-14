@@ -7,6 +7,7 @@ public:
 	long startTime;
 	int currentMacroActionIndex;
 	void startPlayback();
+    void startExport();
 	void queueAction();
 	void callbackReceived();
 };
