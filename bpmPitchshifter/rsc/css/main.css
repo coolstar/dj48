@@ -1146,20 +1146,12 @@ h5 {
  
 
 
-
-
-
-
-
-
-
-
-
 .dropdown {
+    padding: 7px 3px;
+    margin: 9px;
     position: relative;
     float: left;
     overflow: hidden;
-    left: calc(115%);
 }
 
 .dropdown .dropbtn {
