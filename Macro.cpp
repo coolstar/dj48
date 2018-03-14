@@ -21,9 +21,39 @@ void Macro::stopRecording(){
 	duration = stopTime - startTime;
 }
 
+void Macro::startLoading(){
+    isLoading = true;
+}
+
+void Macro::stopLoading(){
+    isLoading = false;
+}
+
+void Macro::addButtonClick(std::string selector, long offset){
+    if (!isLoading){
+#if DEBUG
+        printf("Not Loading!\n");
+#endif
+        return;
+    }
+    
+    MacroAction *buttonAction = new MacroAction;
+    buttonAction->macroTimeOffset = offset;
+#if DEBUG
+    printf("Added Macro with offset %ld\n", buttonAction->macroTimeOffset);
+#endif
+    buttonAction->macroSelector = selector;
+    buttonAction->macroType = MacroActionTypeClick;
+    buttonAction->macroSliderValue = 0;
+    buttonAction->macroDropDownValue = "";
+    macroActionsList.push_back(buttonAction);
+}
+
 void Macro::gotButtonClick(std::string selector){
 	if (!isRecording){
+#if DEBUG
 		printf("Not Recording!\n");
+#endif
 		return;
 	}
 
@@ -33,7 +63,9 @@ void Macro::gotButtonClick(std::string selector){
 
 	MacroAction *buttonAction = new MacroAction;
 	buttonAction->macroTimeOffset = nowTime + duration - startTime;
+#if DEBUG
 	printf("Added Macro with offset %ld\n", buttonAction->macroTimeOffset);
+#endif
 	buttonAction->macroSelector = selector;
 	buttonAction->macroType = MacroActionTypeClick;
 	buttonAction->macroSliderValue = 0;
@@ -43,7 +75,9 @@ void Macro::gotButtonClick(std::string selector){
 
 void Macro::gotSliderAction(std::string selector, long sliderValue){
 	if (!isRecording){
+#if DEBUG
 		printf("Not Recording!\n");
+#endif
 		return;
 	}
 
@@ -53,7 +87,9 @@ void Macro::gotSliderAction(std::string selector, long sliderValue){
 
 	MacroAction *sliderAction = new MacroAction;
 	sliderAction->macroTimeOffset = nowTime + duration - startTime;
+#if DEBUG
 	printf("Added Macro with offset %ld\n", sliderAction->macroTimeOffset);
+#endif
 	sliderAction->macroSelector = selector;
 	sliderAction->macroType = MacroActionTypeSetSliderValue;
 	sliderAction->macroSliderValue = sliderValue;
@@ -61,9 +97,31 @@ void Macro::gotSliderAction(std::string selector, long sliderValue){
 	macroActionsList.push_back(sliderAction);
 }
 
+void Macro::addSliderAction(std::string selector, long sliderValue, long offset){
+    if (!isLoading){
+#if DEBUG
+        printf("Not Loading!\n");
+#endif
+        return;
+    }
+    
+    MacroAction *sliderAction = new MacroAction;
+    sliderAction->macroTimeOffset = offset;
+#if DEBUG
+    printf("Added Macro with offset %ld\n", offset);
+#endif
+    sliderAction->macroSelector = selector;
+    sliderAction->macroType = MacroActionTypeSetSliderValue;
+    sliderAction->macroSliderValue = sliderValue;
+    sliderAction->macroDropDownValue = "";
+    macroActionsList.push_back(sliderAction);
+}
+
 void Macro::gotDropdownAction(std::string selector, std::string dropDownValue){
 	if (!isRecording){
+#if DEBUG
 		printf("Not Recording!\n");
+#endif
 		return;
 	}
 
@@ -73,10 +131,32 @@ void Macro::gotDropdownAction(std::string selector, std::string dropDownValue){
 
 	MacroAction *dropDownAction = new MacroAction;
 	dropDownAction->macroTimeOffset = nowTime + duration - startTime;
+#if DEBUG
 	printf("Added Macro with offset %ld\n", dropDownAction->macroTimeOffset);
+#endif
 	dropDownAction->macroSelector = selector;
 	dropDownAction->macroType = MacroActionTypeSetDropDownValue;
 	dropDownAction->macroSliderValue = 0;
 	dropDownAction->macroDropDownValue = dropDownValue;
 	macroActionsList.push_back(dropDownAction);
+}
+
+void Macro::addDropdownAction(std::string selector, std::string dropDownValue, long offset){
+    if (!isLoading){
+#if DEBUG
+        printf("Not Loading!\n");
+#endif
+        return;
+    }
+    
+    MacroAction *dropDownAction = new MacroAction;
+    dropDownAction->macroTimeOffset = offset;
+#if DEBUG
+    printf("Added Macro with offset %ld\n", dropDownAction->macroTimeOffset);
+#endif
+    dropDownAction->macroSelector = selector;
+    dropDownAction->macroType = MacroActionTypeSetDropDownValue;
+    dropDownAction->macroSliderValue = 0;
+    dropDownAction->macroDropDownValue = dropDownValue;
+    macroActionsList.push_back(dropDownAction);
 }

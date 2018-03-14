@@ -15,8 +15,27 @@ void MacroPlayback::startPlayback(){
 		this->queueAction();
 }
 
+void MacroPlayback::startExport(){
+    printf("macros.createNewMacro('testExport');\n");
+    for (int i = 0; i < currentMacro->macroActionsList.size(); i++){
+        MacroAction *currentAction = currentMacro->macroActionsList[i];
+        if (currentAction->macroType == MacroActionTypeClick){
+            printf("macros.addButtonClick('%s',%ld);\n",currentAction->macroSelector.c_str(), currentAction->macroTimeOffset);
+        }
+        if (currentAction->macroType == MacroActionTypeSetSliderValue){
+            printf("macros.addSliderAction('%s',%ld,%ld);\n",currentAction->macroSelector.c_str(), currentAction->macroSliderValue, currentAction->macroTimeOffset);
+        }
+        if (currentAction->macroType == MacroActionTypeSetDropDownValue){
+            printf("macros.gotDropdownAction('%s','%s',%ld);\n",currentAction->macroSelector.c_str(), currentAction->macroDropDownValue.c_str(), currentAction->macroTimeOffset);
+        }
+    }
+    printf("macros.stopCurrentLoading();\n");
+}
+
 void MacroPlayback::queueAction(){
+#if DEBUG
 	printf("Queuing Action!\n");
+#endif
 
 	struct timeval tp;
 	gettimeofday(&tp, NULL);
@@ -25,24 +44,32 @@ void MacroPlayback::queueAction(){
 
 	MacroAction *currentAction = currentMacro->macroActionsList[currentMacroActionIndex];
 	long diff = currentAction->macroTimeOffset - offset;
+#if DEBUG
 	printf("Queue for %ld milliseconds\n", diff);
+#endif
 
 	emscripten_sleep(diff);
 	this->callbackReceived();
 }
 
 void MacroPlayback::callbackReceived(){
+#if DEBUG
 	printf("Callback Received for action %d!\n", currentMacroActionIndex);
-
+#endif
+    
 	MacroAction *currentAction = currentMacro->macroActionsList[currentMacroActionIndex];
+#if DEBUG
 	printf("Selector: %s; Type: %d\n", currentAction->macroSelector.c_str(), currentAction->macroType);
+#endif
 
 	if (currentAction->macroType == MacroActionTypeClick){
         std::string buttonJavascript = "$('";
         buttonJavascript += currentAction->macroSelector;
         buttonJavascript += "')[0].click();";
         
+#if DEBUG
         printf("Running: %s\n", buttonJavascript.c_str());
+#endif
 		emscripten_run_script(buttonJavascript.c_str());
 	}
 	if (currentAction->macroType == MacroActionTypeSetSliderValue){
@@ -62,18 +89,9 @@ void MacroPlayback::callbackReceived(){
         
         sliderJavascript += "/100.0);";
         sliderJavascript += "updateSlider=true;";
-        
-        /*std::stringstream sliderJavascriptStream;
-        sliderJavascriptStream << "updateSlider=false;";
-		sliderJavascriptStream << "$('";
-		sliderJavascriptStream << currentAction->macroSelector;
-		sliderJavascriptStream << "')[0].noUiSlider.set(";
-		sliderJavascriptStream << currentAction->macroSliderValue;
-		sliderJavascriptStream << "/100.0);";
-        sliderJavascriptStream << "updateSlider=true;";
-        std::string sliderJavascript;
-        sliderJavascriptStream >> sliderJavascript;*/
+#if DEBUG
         printf("Running: %s\n", sliderJavascript.c_str());
+#endif
 		emscripten_run_script(sliderJavascript.c_str());
 	}
 	if (currentAction->macroType == MacroActionTypeSetDropDownValue){
@@ -82,7 +100,9 @@ void MacroPlayback::callbackReceived(){
         dropdownJavascript += "')[0].value='";
         dropdownJavascript += currentAction->macroDropDownValue;
         dropdownJavascript += "';";
+#if DEBUG
         printf("Running: %s\n", dropdownJavascript.c_str());
+#endif
 		emscripten_run_script(dropdownJavascript.c_str());
 	}
 
