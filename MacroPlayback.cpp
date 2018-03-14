@@ -46,7 +46,7 @@ void MacroPlayback::callbackReceived(){
 		sliderJavascript += currentAction->macroSelector;
 		sliderJavascript += "').noUiSlider.set(";
 		sliderJavascript += currentAction->macroSliderValue;
-		sliderJavascript += ");";
+		sliderJavascript += "/100.0);";
 		emscripten_run_script(sliderJavascript.c_str());
 	}
 	if (currentAction->macroType == MacroActionTypeSetDropDownValue){
