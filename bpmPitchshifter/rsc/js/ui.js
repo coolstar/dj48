@@ -37,10 +37,18 @@ function openDialog2() {
 
 var elements = [];
 
+var playAllClicked = false;
+
 function resetSliders(){
     updateSlider = false;
     for (var i = 0; i < elements.length; i++){
         $(elements[i])[0].noUiSlider.reset();
+    }
+    if (trackui.is_playing){
+        document.getElementById("play-pitchshifter").click();
+    }
+    if (trackui2.is_playing){
+        document.getElementById("play-pitchshifter2").click();
     }
     updateSlider = true;
 }
@@ -131,7 +139,8 @@ class TrackUI {
                   }
             }
             updatePlayallButton();
-            macros.gotButtonClick(playButtonSelector);
+            if (!playAllClicked)
+                macros.gotButtonClick(playButtonSelector);
         });
 
 
@@ -1236,14 +1245,14 @@ var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-s
 );
 
 $("#sync-together").click (function (e) {
-        
-        var fileInput = $("#audio-file").val();
-        var fileInput2 = $("#audio-file2").val();
+    macros.gotButtonClick("#sync-together");
+    var fileInput = $("#audio-file").val();
+    var fileInput2 = $("#audio-file2").val();
 
 
-        if (fileInput == "" || fileInput2 == "") {
-               return;
-        }
+    if (fileInput == "" || fileInput2 == "") {
+           return;
+    }
 	bpm1 = trackui.track.bpm;
 	bpm2 = trackui2.track.bpm;
 
@@ -1254,17 +1263,19 @@ $("#sync-together").click (function (e) {
 	trackui2.track.st.tempo = trackui2.track.st.tempo*(average/bpm2);
 	$("#bpm-label").text(Math.round(trackui.track.bpm));
 	$("#bpm-label2").text(Math.round(trackui2.track.bpm));
-	$(".tempo-slider")[0].noUiSlider.set(trackui.track.st.tempo*100);
-	$(".tempo-slider2")[0].noUiSlider.set(trackui2.track.st.tempo*100);
+	$("#tempo-slider")[0].noUiSlider.set(trackui.track.st.tempo*100);
+	$("#tempo-slider2")[0].noUiSlider.set(trackui2.track.st.tempo*100);
 	console.log(trackui.track.bpm + " and " + trackui.track.st.tempo);
 	console.log(trackui2.track.bpm + " and " + trackui2.track.st.tempo);
 });
 
 $("#play-all").click(function (e) {
+    macros.gotButtonClick("#play-all");
+    playAllClicked = true;
 
 	//document.getElementById ("play-pitchshifter2").click();
-        console.log("trackui1_playing = " + trackui.is_playing);
-        console.log("trackui2_playing = " + trackui2.is_playing);
+    console.log("trackui1_playing = " + trackui.is_playing);
+    console.log("trackui2_playing = " + trackui2.is_playing);
 	if ((!trackui.is_playing && !trackui2.is_playing) || (trackui.is_playing && trackui2.is_playing)) {
      		document.getElementById ("play-pitchshifter").click();
                 document.getElementById ("play-pitchshifter2").click();
@@ -1278,16 +1289,15 @@ $("#play-all").click(function (e) {
 		document.getElementById ("play-pitchshifter").click();
                 console.log("stop trackui1");
 	}
-        updatePlayallButton(); 
-     	console.log ("Play all");	
+    updatePlayallButton(); 
+    console.log ("Play all");
+    playAllClicked = false;	
 });
 
 function updatePlayallButton () {
         var fileInput = $("#audio-file").val();
         var fileInput2 = $("#audio-file2").val();
 
-
-        
         if (fileInput == "" && fileInput2 == "") {
              $("#play-all").removeClass ("beginTuning");
              $("#play-all").addClass ("disabled");   
