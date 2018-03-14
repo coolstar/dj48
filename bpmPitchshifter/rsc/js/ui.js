@@ -1093,8 +1093,8 @@ class TrackUI {
 
 var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slider", "#volume-slider",
  "#play-pitchshifter", "#audio-file", ".timing",
- ".loading", "#total-time", "#progress", ".pitch-slider",
- ".tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
+ ".loading", "#total-time", "#progress", "#pitch-slider",
+ "#tempo-slider", "#maintain-tempo", "#semitones", "#save-output", "#bpm-label", "recordingslist", "#delayMix-slider", "#delayFeedback-slider", "#delayTime-slider",
  "#PPdelayMix-slider", "#PPdelayFeedback-slider", "#PPdelayTime-slider",
  "#dDelayMix-slider", "#dDelayFeedback-slider", "#dDelayTime-slider", "#dDelayCutoff-slider",
  "#distortionGain-slider", 
@@ -1111,8 +1111,8 @@ var trackui = new TrackUI('.visualizer', "visual", "#current-time", "#play-slide
 
 var trackui2 = new TrackUI('.visualizer2', "visual2", "#current-time2", "#play-slider2", "#volume-slider2",
  "#play-pitchshifter2", "#audio-file2", ".timing2",
- ".loading2", "#total-time2", "#progress2", ".pitch-slider2",
- ".tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
+ ".loading2", "#total-time2", "#progress2", "#pitch-slider2",
+ "#tempo-slider2", "#maintain-tempo2", "#semitones2", "#save-output2", "#bpm-label2", "recordingslist2", "#delayMix-slider2", "#delayFeedback-slider2", "#delayTime-slider2",
  "#PPdelayMix-slider2", "#PPdelayFeedback-slider2", "#PPdelayTime-slider2", 
  "#dDelayMix-slider2", "#dDelayFeedback-slider2", "#dDelayTime-slider2", "#dDelayCutoff-slider2", 
  "#distortionGain-slider2", 
