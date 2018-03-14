@@ -38,9 +38,11 @@ function openDialog2() {
 var elements = [];
 
 function resetSliders(){
+    updateSlider = false;
     for (var i = 0; i < elements.length; i++){
         $(elements[i])[0].noUiSlider.reset();
     }
+    updateSlider = true;
 }
 
 
