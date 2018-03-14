@@ -1,4 +1,5 @@
 #include "Macros.h"
+#include <emscripten/emscripten.h>
 
 Macros::Macros(){
 	printf("Hello from C++!\n");
@@ -10,6 +11,7 @@ void Macros::recordNewMacro(std::string macroName){
 	macro->startRecording();
 	currentMacro = macro;
 	macroList.push_back(macro);
+    emscripten_run_script("resetSliders();");
 }
 
 void Macros::stopCurrentRecording(){
@@ -25,6 +27,8 @@ void Macros::playMacro(std::string macroName){
 	for (int i = 0; i < macroList.size(); i++){
 		Macro *macro = macroList[i];
 		if (macro->macroName == macroName){
+            emscripten_run_script("resetSliders();");
+            
 			macroPlayer.currentMacro = macro;
 			macroPlayer.startPlayback();
 			return;
