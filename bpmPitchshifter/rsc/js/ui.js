@@ -97,7 +97,7 @@ class TrackUI {
                 // alert("Currently loading audio, please wait a few seconds...");
             } else if (that.is_playing == false){
                 track.play();
-                $(playButtonSelector).html("&#10074;&#10074;");
+                $(playButtonSelector).html('<img src="rsc/img/icon-pause.png" width="20" height="20" />');
                 that.is_playing = true;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder = new Recorder(delayNode, {workerPath: "lib/recorder/recorderWorkerMP3.js"});
@@ -106,7 +106,7 @@ class TrackUI {
                 }
             } else {
                 track.pause();
-                $(playButtonSelector).html("&#9658;");
+                $(playButtonSelector).html('<img src="rsc/img/icon-play.png" width="20" height="20" />');
                 that.is_playing = false;
                 if ($(saveOutputSelector).prop("checked") == true){
                     track.recorder && track.recorder.stop();
@@ -1309,10 +1309,10 @@ function updatePlayallButton () {
         
         var bool = (trackui.is_playing || trackui2.is_playing);
         if (bool) {
-             $("#play-all").html ("&#10074;&#10074;");
+             $("#play-all-img").attr("src","rsc/img/icon-pause.png");
         }
         else {
-             $("#play-all").html ("&#9658;");
+             $("#play-all-img").attr("src","rsc/img/icon-play.png");
         }
 }
 
