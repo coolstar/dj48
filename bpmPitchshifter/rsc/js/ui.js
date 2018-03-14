@@ -35,6 +35,15 @@ function openDialog2() {
  document.getElementById('audio-file2').click();
 }
 
+var elements = [];
+
+function resetSliders(){
+    for (var i = 0; i < elements.length; i++){
+        $(elements[i])[0].noUiSlider.reset();
+    }
+}
+
+
 class TrackUI {
     constructor(visualizerSelector, visualSelectIdentifier, currentTimeSliderSelector, playSliderSelector, 
         volumeSliderSelector, playButtonSelector, fileInputSelector,
@@ -203,11 +212,12 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(pitchSliderSelector);
 
         var twelth_root = 1.05946309436;
         track.st.pitch = 1;
 
-        $(pitchSliderSelector)[0].noUiSlider.on("slide", function(){
+        $(pitchSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(pitchSliderSelector)[0].noUiSlider.get();
             track.st.pitch = (value / 100);
             track.st.tempo = 1;
@@ -229,10 +239,11 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(tempoSliderSelector);
 
         track.st.tempo = 1;
 
-        $(tempoSliderSelector)[0].noUiSlider.on("slide", function(){
+        $(tempoSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(tempoSliderSelector)[0].noUiSlider.get();
             track.st.tempo = (value / 100);
             if (track.bpm != 0){
@@ -289,12 +300,13 @@ class TrackUI {
             tooltips: false
         });
 
-        $(volumeSliderSelector)[0].noUiSlider.on("slide", function(){
+        $(volumeSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(volumeSliderSelector)[0].noUiSlider.get();
             track.gainNode.gain.value = value*2/100.0;
             console.log("value: "+ value/100.0);
             macros.gotSliderAction(volumeSliderSelector, 100*value);
         });
+        elements.push(volumeSliderSelector);
 	
 		//EFFECTS
 	
@@ -310,12 +322,13 @@ class TrackUI {
             tooltips: true
         });
 
-		$(delayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(delayMixSliderSelector)[0].noUiSlider.get();
             track.effects.delay.mix = parseFloat(value);
             console.log("delay mix: " + value);		
             macros.gotSliderAction(delayMixSliderSelector, 100*value);
 		});
+        elements.push(delayMixSliderSelector);
 		
      	noUiSlider.create($(delayFeedbackSliderSelector)[0],{
             start: 0.0,
@@ -328,12 +341,13 @@ class TrackUI {
             tooltips: true
         });
 
-		$(delayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayFeedbackSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(delayFeedbackSliderSelector)[0].noUiSlider.get();
             track.effects.delay.feedback = parseFloat(value);
             console.log("delay feedback: " + value);
             macros.gotSliderAction(delayFeedbackSliderSelector, 100*value);
         });
+        elements.push(delayFeedbackSliderSelector);
 	
 		noUiSlider.create($(delayTimeSliderSelector)[0],{
             start: 0,
@@ -346,12 +360,13 @@ class TrackUI {
             tooltips: true
         });
 
-		$(delayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(delayTimeSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(delayTimeSliderSelector)[0].noUiSlider.get();
             track.effects.delay.time = parseFloat(value);
             console.log("delay time: " + value);
             macros.gotSliderAction(delayTimeSliderSelector, 100*value);
         });
+        elements.push(delayTimeSliderSelector);
 		
 		// PING-PONG DELAY
 		noUiSlider.create($(PPdelayMixSliderSelector)[0],{
@@ -363,9 +378,10 @@ class TrackUI {
 			orientation: 'vertical',
 			direction: 'rtl',
 			tooltips: true
-		});	
+		});
+        elements.push(PPdelayMixSliderSelector);
 		   
-		$(PPdelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(PPdelayMixSliderSelector)[0].noUiSlider.on("update", function(){
 				var value = $(PPdelayMixSliderSelector)[0].noUiSlider.get();
 				track.effects.PPdelay.mix = parseFloat(value);
 				console.log("PPdelay mix: " + value);
@@ -382,8 +398,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(PPdelayFeedbackSliderSelector);
 		
-		$(PPdelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(PPdelayFeedbackSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(PPdelayFeedbackSliderSelector)[0].noUiSlider.get();
 			track.effects.PPdelay.feedback = parseFloat(value);
 			console.log("PPdelay feedback: " + value);
@@ -400,8 +417,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(PPdelayTimeSliderSelector);
 		
-		$(PPdelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(PPdelayTimeSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(PPdelayTimeSliderSelector)[0].noUiSlider.get();
 			track.effects.PPdelay.time = parseFloat(value);
 			console.log("PPdelay time: " + value);
@@ -419,8 +437,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(dDelayMixSliderSelector);
 
-		$(dDelayMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(dDelayMixSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(dDelayMixSliderSelector)[0].noUiSlider.get();
 			track.effects.dDelay.mix = parseFloat(value);
 			console.log("dDelay mix: " + track.effects.dDelay.mix);
@@ -437,8 +456,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(dDelayFeedbackSliderSelector);
 		
-		$(dDelayFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(dDelayFeedbackSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(dDelayFeedbackSliderSelector)[0].noUiSlider.get();
 			track.effects.dDelay.feedback = parseFloat(value);
 			console.log("dDelay feedback: " + value);
@@ -455,8 +475,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(dDelayTimeSliderSelector);
 		
-		$(dDelayTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(dDelayTimeSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(dDelayTimeSliderSelector)[0].noUiSlider.get();
 			track.effects.dDelay.time = parseFloat(value);
 			console.log("dDelay time: " + value);
@@ -473,8 +494,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(dDelayCutoffSliderSelector);
 		
-		$(dDelayCutoffSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(dDelayCutoffSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(dDelayCutoffSliderSelector)[0].noUiSlider.get();
 			track.effects.dDelay.cutoff = parseFloat(value);
 			console.log("dDelay time: " + value);
@@ -492,8 +514,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(distortionGainSliderSelector);
 
-		$(distortionGainSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(distortionGainSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(distortionGainSliderSelector)[0].noUiSlider.get();
             track.effects.distortion.gain = parseFloat(value);
 			console.log("distortion actual gain: " + track.effects.distortion.gain);
@@ -512,8 +535,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(quadMixSliderSelector);
 		
-		$(quadMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(quadMixSliderSelector)[0].noUiSlider.on("update", function(){
 				var value = $(quadMixSliderSelector)[0].noUiSlider.get();
 				track.effects.quad.mix = parseFloat(value);
 				console.log("quad mix: " + value);
@@ -530,8 +554,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(quadLGainSliderSelector);
 		
-		$(quadLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(quadLGainSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(quadLGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.lowGain = parseFloat(value);
 			console.log("quad LG: " + value);
@@ -548,8 +573,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(quadMLGainSliderSelector);
 		
-		$(quadMLGainSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(quadMLGainSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(quadMLGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.midLowGain = parseFloat(value);
 			console.log("quad MLG: " + value);
@@ -566,8 +592,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(quadMHGainSliderSelector);
 
-		 $(quadMHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+		 $(quadMHGainSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(quadMHGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.midHighGain = parseFloat(value);
 			console.log("quad MHG: " + value);
@@ -584,8 +611,9 @@ class TrackUI {
 			direction: 'rtl',
 			tooltips: true
 		});
+        elements.push(quadHGainSliderSelector);
 		
-		$(quadHGainSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(quadHGainSliderSelector)[0].noUiSlider.on("update", function(){
 			var value = $(quadHGainSliderSelector)[0].noUiSlider.get();
 			track.effects.quad.highGain = parseFloat(value);
 			console.log("quad HG: " + value);
@@ -603,8 +631,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(flangerMixSliderSelector);
 
-        $(flangerMixSliderSelector)[0].noUiSlider.on("slide", function(){
+        $(flangerMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(flangerMixSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.mix = parseFloat(value);
             console.log("Flanger mix: " + track.effects.flanger.mix);
@@ -621,8 +650,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(flangerFeedbackSliderSelector);
 
-		$(flangerFeedbackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(flangerFeedbackSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(flangerFeedbackSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.feedback = parseFloat(value);
             console.log("Flanger Feedback: " + track.effects.flanger.feedback);
@@ -639,8 +669,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(flangerTimeSliderSelector);
 
-		$(flangerTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(flangerTimeSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(flangerTimeSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.time = parseFloat(value);
             console.log("Flanger time: " + track.effects.flanger.time);
@@ -657,8 +688,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(flangerDepthSliderSelector);
 		
-		$(flangerDepthSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(flangerDepthSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(flangerDepthSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.depth = parseFloat(value);
             console.log("Flanger depth: " + track.effects.flanger.depth);
@@ -675,8 +707,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(flangerSpeedSliderSelector);
 
-		$(flangerSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(flangerSpeedSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(flangerSpeedSliderSelector)[0].noUiSlider.get();
             track.effects.flanger.speed = parseFloat(value);
             console.log("Flanger speed: " + track.effects.flanger.speed);
@@ -694,8 +727,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorThresholdSliderSelector);
 		
-		$(compressorThresholdSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorThresholdSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorThresholdSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.threshold = parseFloat(value);
 			console.log("compressor actual threshold: " + track.effects.compressor.threshold);
@@ -713,8 +747,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorKneeSliderSelector);
 	
-		$(compressorKneeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorKneeSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorKneeSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.knee = parseFloat(value);
 			console.log("compressor actual knee: " + track.effects.compressor.knee);
@@ -732,8 +767,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorAttackSliderSelector);
 
-		$(compressorAttackSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorAttackSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorAttackSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.attack = parseFloat(value);
 			console.log("compressor actual attack: " + track.effects.compressor.attack);
@@ -751,8 +787,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorReleaseSliderSelector);
 
-		$(compressorReleaseSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorReleaseSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorReleaseSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.release = parseFloat(value);
 			console.log("compressor actual release: " + track.effects.compressor.release);
@@ -770,8 +807,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorRatioSliderSelector);
 
-		$(compressorRatioSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorRatioSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorRatioSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.ratio = parseFloat(value);
 			console.log("compressor actual ratio: " + track.effects.compressor.ratio);
@@ -789,8 +827,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(compressorMixSliderSelector);
         		
-		$(compressorMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(compressorMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(compressorMixSliderSelector)[0].noUiSlider.get();
             track.effects.compressor.mix = parseFloat(value);
 			console.log("compressor actual mix: " + track.effects.compressor.mix);
@@ -809,8 +848,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(lowPassFilterMixSliderSelector);
 		
-		$(lowPassFilterMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(lowPassFilterMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(lowPassFilterMixSliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.mix = parseFloat(value);
 			console.log("lowPassFilter actual mix: " + track.effects.lowPassFilter.mix);
@@ -828,8 +868,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(lowPassFilterFrequencySliderSelector);
 		
-		$(lowPassFilterFrequencySliderSelector)[0].noUiSlider.on("slide", function(){
+		$(lowPassFilterFrequencySliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(lowPassFilterFrequencySliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.frequency = parseFloat(value);
 			console.log("lowPassFilter actual frequency: " + track.effects.lowPassFilter.frequency);
@@ -847,8 +888,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(lowPassFilterPeakSliderSelector);
 
-		$(lowPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(lowPassFilterPeakSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(lowPassFilterPeakSliderSelector)[0].noUiSlider.get();
             track.effects.lowPassFilter.peak = parseFloat(value);
 			console.log("lowPassFilter actual peak: " + track.effects.lowPassFilter.peak);
@@ -867,8 +909,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(highPassFilterMixSliderSelector);
 		
-		$(highPassFilterMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(highPassFilterMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(highPassFilterMixSliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.mix = parseFloat(value);
 			console.log("highPassFilter actual mix: " + track.effects.highPassFilter.mix);
@@ -886,8 +929,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(highPassFilterFrequencySliderSelector);
 		
-		$(highPassFilterFrequencySliderSelector)[0].noUiSlider.on("slide", function(){
+		$(highPassFilterFrequencySliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(highPassFilterFrequencySliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.frequency = parseFloat(value);
 			console.log("highPassFilter actual frequency: " + track.effects.highPassFilter.frequency);
@@ -905,8 +949,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(highPassFilterPeakSliderSelector);
 
-		$(highPassFilterPeakSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(highPassFilterPeakSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(highPassFilterPeakSliderSelector)[0].noUiSlider.get();
             track.effects.highPassFilter.peak = parseFloat(value);
             console.log("highPassFilter peak: " + value);
@@ -924,8 +969,9 @@ class TrackUI {
             direction: 'ltr',
             tooltips: true
         });
+        elements.push(stereoPannerPanSliderSelector);
         		
-		$(stereoPannerPanSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(stereoPannerPanSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(stereoPannerPanSliderSelector)[0].noUiSlider.get();
             track.effects.stereoPanner.pan = parseFloat(value);
 			console.log("stereoPanner actual pan: " + track.effects.stereoPanner.pan);
@@ -944,8 +990,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(reverbTimeSliderSelector);
 
-		$(reverbTimeSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(reverbTimeSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(reverbTimeSliderSelector)[0].noUiSlider.get();
             track.effects.reverb.time = parseFloat(value);
 			console.log("reverb actual time: " + track.effects.reverb.time);
@@ -963,8 +1010,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(reverbDecaySliderSelector);
 		
-		$(reverbDecaySliderSelector)[0].noUiSlider.on("slide", function(){
+		$(reverbDecaySliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(reverbDecaySliderSelector)[0].noUiSlider.get();
             track.effects.reverb.decay = parseFloat(value);
 			console.log("reverb actual decay: " + track.effects.reverb.decay);
@@ -982,8 +1030,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(reverbMixSliderSelector);
 		
-		$(reverbMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(reverbMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(reverbMixSliderSelector)[0].noUiSlider.get();
             track.effects.reverb.mix = parseFloat(value);
 			console.log("reverb actual mix: " + track.effects.reverb.mix);
@@ -1002,8 +1051,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(ringModulatorMixSliderSelector);
 
-		$(ringModulatorMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(ringModulatorMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(ringModulatorMixSliderSelector)[0].noUiSlider.get();
             track.effects.ringModulator.mix = parseFloat(value);
 			console.log("ringModulator actual mix: " + track.effects.ringModulator.mix);
@@ -1021,8 +1071,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(ringModulatorSpeedSliderSelector);
 
-		$(ringModulatorSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(ringModulatorSpeedSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(ringModulatorSpeedSliderSelector)[0].noUiSlider.get();
             track.effects.ringModulator.speed = parseFloat(value);
             console.log("ringModulator speed: " + value);
@@ -1039,8 +1090,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(ringModulatorDistortionSliderSelector);
 
-		$(ringModulatorDistortionSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(ringModulatorDistortionSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(ringModulatorDistortionSliderSelector)[0].noUiSlider.get();
             track.effects.ringModulator.distortion = parseFloat(value);
             console.log("ringModulator distortion: " + value);
@@ -1058,8 +1110,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(tremoloMixSliderSelector);
 
-		$(tremoloMixSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(tremoloMixSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(tremoloMixSliderSelector)[0].noUiSlider.get();
             track.effects.tremolo.mix = parseFloat(value);
 			console.log("tremolo actual mix: " + track.effects.tremolo.mix);
@@ -1077,8 +1130,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(tremoloSpeedSliderSelector);
 
-		$(tremoloSpeedSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(tremoloSpeedSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(tremoloSpeedSliderSelector)[0].noUiSlider.get();
             track.effects.tremolo.speed = parseFloat(value);
 			console.log("tremolo actual speed: " + track.effects.tremolo.speed);
@@ -1096,8 +1150,9 @@ class TrackUI {
             direction: 'rtl',
             tooltips: true
         });
+        elements.push(tremoloDepthSliderSelector);
 		
-		$(tremoloDepthSliderSelector)[0].noUiSlider.on("slide", function(){
+		$(tremoloDepthSliderSelector)[0].noUiSlider.on("update", function(){
             var value = $(tremoloDepthSliderSelector)[0].noUiSlider.get();
             track.effects.tremolo.depth = parseFloat(value);
 			console.log("tremolo actual depth: " + track.effects.tremolo.depth);
@@ -1115,26 +1170,29 @@ class TrackUI {
             },
             
         });
+        elements.push(playSliderSelector);
 
         $(playSliderSelector).on("pointerdown touchstart",function(e){
             updateSlider = false;
             console.log("Mouse down");
         });
 
-        $(playSliderSelector)[0].noUiSlider.on("slide", function(){
-            var value = $(playSliderSelector)[0].noUiSlider.get();
-            track.pause();
-            track.st = new SoundTouch();
-           track.st.pitch = $(pitchSliderSelector)[0].noUiSlider.get() /100;
-           track.st.tempo = !$(maintainTempoSelector).prop("checked") ? ($(pitchSliderSelector)[0].noUiSlider.get() / 100) : 1;
-           track.f = new SimpleFilter(track.source, track.st);
+        $(playSliderSelector)[0].noUiSlider.on("update", function(){
+            if (!updateSlider){
+                var value = $(playSliderSelector)[0].noUiSlider.get();
+                track.pause();
+                track.st = new SoundTouch();
+                track.st.pitch = $(pitchSliderSelector)[0].noUiSlider.get() /100;
+                track.st.tempo = !$(maintainTempoSelector).prop("checked") ? ($(pitchSliderSelector)[0].noUiSlider.get() / 100) : 1;
+                track.f = new SimpleFilter(track.source, track.st);
 
-           track.pos = 0;
-           track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
-           if (that.is_playing){
-               track.play();
-           }
-           macros.gotSliderAction(playSliderSelector, 100*value);
+                track.pos = 0;
+                track.f.sourcePosition = parseInt((value / 100) * track.bufferDuration * track.audioCtx.sampleRate);
+                if (that.is_playing){
+                    track.play();
+                }
+                macros.gotSliderAction(playSliderSelector, 100*value);
+            }
         });
 	}
 }
