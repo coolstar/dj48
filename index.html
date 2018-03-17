@@ -104,6 +104,16 @@
             </div>
          </div>
       </div>
+      <div class="code-editor" style="display: none" id="macroEditor">
+         <div class="window-titlebar">
+            <div class="window-title">Macro Editor</div>
+            <div class="window-buttons">
+               <button id="acceptMacro" class="tuningButton beginTuning"><img src="rsc/img/icon-accept.png" width="20" height="20" /></button>
+               <button id="closeMacroEditor" class="tuningButton stopTuning" style="margin-right: 9px;"><img src="rsc/img/icon-cancel.png" width="20" height="20" /></button>
+            </div>
+         </div>
+         <pre id="editor"></pre>
+      </div>
       <div class="pitch-shifter" style="float:left;">
          <p class="clear"></p>
          <script>
@@ -730,10 +740,11 @@
       <script type="text/javascript" src="./rsc/js/track.js"></script>
       <script type="text/javascript" src="./rsc/js/Effects.js"></script>
       <script type="text/javascript" src="./rsc/js/Macros.js"></script>
-      <script type="text/javascript" src="./rsc/js/macroUI.js"></script>
       <script type="text/javascript">
           var macros = new Module.Macros();
       </script>
       <script type="text/javascript" src="./rsc/js/ui.js"></script>
+      <script src="ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript" src="./rsc/js/macroUI.js"></script>
    </body>
 </html>
