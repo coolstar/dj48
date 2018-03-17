@@ -1269,6 +1269,7 @@ input:checked + .slider:before {
     background-color: #141414;
     z-index: 9000;
     border: 1px white solid;
+    border-radius: 10px;
 }
 
 .window-titlebar {
@@ -1284,6 +1285,8 @@ input:checked + .slider:before {
     padding-top: 11px;
     font-size: 23px;
     border-bottom: 1px white solid;
+    border-radius: 10px 10px 0 0;
+    background: #232323;
 }
 
 .window-buttons {
@@ -1295,6 +1298,7 @@ input:checked + .slider:before {
 .window-buttons .tuningButton {
     margin-right: 2px;
     margin-left: 2px;
+    margin-top: 7px;
 }
 
 #editor {
@@ -1305,4 +1309,5 @@ input:checked + .slider:before {
     height: calc(100% - 50px);
     background: transparent;
     margin: 0;
+    border-radius: 0 0 10px 10px;
 }
