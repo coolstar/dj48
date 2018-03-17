@@ -91,6 +91,7 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 8. The visualizer setting can be changed by selecting your choice from the dropdown menu next to 'Visualizer setting'.
 9. Create a macro that copies user inputs on the transport and effects controls by clicking on the record button (tooltip: 'Record Macro').
 10. Replay a macro by clicking on the play button (tooltip: 'Play Macro').
+11. To import a macro, click on the button with tooltip: 'Upload Macro'.
 #### Web Access
 To more conveniently view the application, visit the below link.
 The recording feature works on this server-hosted application.
@@ -105,6 +106,7 @@ The recording feature works on this server-hosted application.
 7. Recorded output is available by clicking 'Recordings'.
 8. Create a macro that copies user inputs on the transport and effects controls by clicking on the record button (tooltip: 'Record Macro').
 9. Replay a macro by clicking on the play button (tooltip: 'Play Macro').
+10. To import a macro, click on the button with tooltip: 'Upload Macro'.
 
 ### Testing
 Testing details can be found in the 'tests' directory.
@@ -114,7 +116,7 @@ Testing details can be found in the 'tests' directory.
   * Sometimes prevents proper dragging of seeker
 
 ### Dependencies
-All below libraries are included in the repo under 'lib'.
+All libraries below are included in the repo under 'lib'.
 * jquery
 * nouislider
 * pizzicato
