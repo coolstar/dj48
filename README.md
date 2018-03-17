@@ -1,9 +1,22 @@
 # DJ48 - CS48 Project at UCSB
-
 ## Final Project
 
 ### Description
 DJ48 is a web-based DJ application that allows users to upload and play tracks, add live effects, and produce recordings of their mixes.
+
+### Table of Contents
+* [Features](https://github.com/coolstar/dj48#features)
+  * [Track Retrieval](https://github.com/coolstar/dj48#track-retrieval)
+  * [Audio Visualization](https://github.com/coolstar/dj48#audio-visualization)
+  * [Playback Controls](https://github.com/coolstar/dj48#playback-controls)
+  * [Sync BPMs](https://github.com/coolstar/dj48#sync-bpms)
+  * [Real-Time Effects](https://github.com/coolstar/dj48#real-time-effects)
+* [Build, Execute, and Run](https://github.com/coolstar/dj48#build-execute-and-run)
+  * [Local Access](https://github.com/coolstar/dj48#local-access)
+  * [Server Access](https://github.com/coolstar/dj48#server-access)
+* [Testing](https://github.com/coolstar/dj48#testing)
+* [Known Bugs](https://github.com/coolstar/dj48#known-bugs)
+* [Dependencies](https://github.com/coolstar/dj48#dependencies)
 
 ### Features
 #### Track Retrieval
@@ -79,12 +92,12 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 ### Build, Execute, and Run
 #### Local Access
   Note: Recorder feature requires web workers; some browsers may not allow this functionality on local files.
-  In this case, see the below section 'Web Access'.
+  In this case, see the below section 'Server Access'.
 1. Clone repo.
 2. Checkout 'finalproject' branch.
 3. Open the top-level index.html file.
-4. Load songs by clicking either upload button, and choosing mp3 files of your choice.
-  Samples are provided for convenience in 'samples' folder of repo.
+4. Load songs by clicking either upload button, and choosing mp3 files of your choice.  
+   Samples are provided for convenience in 'samples' folder of repo.
 5. Click the sync button (tooltip: 'Sync') at the top of the page to set the BPMs of both tracks to the average of the two, if necessary.
 6. Click respective play buttons to play individual tracks, or click the play button (tooltip: 'Play All') at the top to play both at once.
 7. Add and modify effects using their respective sliders.
@@ -92,12 +105,12 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 9. Create a macro that copies user inputs on the transport and effects controls by clicking on the record button (tooltip: 'Record Macro').
 10. Replay a macro by clicking on the play button (tooltip: 'Play Macro').
 11. To import a macro, click on the button with tooltip: 'Upload Macro'.
-#### Web Access
+#### Server Access
 To more conveniently view the application, visit the below link.
 The recording feature works on this server-hosted application.
-(link)[http://cs48-vps.coolstar.org/finalproject/dj48/]
-1. Load songs by clicking either upload button, and choosing mp3 files of your choice.
-  Samples are provided for convenience in 'samples' folder of repo.
+[link](http://cs48-vps.coolstar.org/finalproject/dj48/)
+1. Load songs by clicking either upload button, and choosing mp3 files of your choice.  
+   Samples are provided for convenience in 'samples' folder of repo.
 2. Turn on the 'Record' switch to record your output.
 3. Click the sync button (tooltip: 'Sync') at the top of the page to set the BPMs of both tracks to the average of the two, if necessary.
 4. Click respective play buttons to play individual tracks, or click the play button (tooltip: 'Play All') at the top to play both at once.
