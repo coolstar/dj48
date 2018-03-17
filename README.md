@@ -93,7 +93,7 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 #### Local Access
   Note: Recorder feature requires web workers; some browsers may not allow this functionality on local files.  
   In this case, see the below section '[Server Access]'(https://github.com/coolstar/dj48#server-access).
-1. Clone repo.
+1. Clone repo with recursive option.
 2. Checkout 'finalproject' branch.
 3. Open the top-level index.html file.
 4. Load songs by clicking either upload button, and choosing mp3 files of your choice.  
@@ -106,7 +106,7 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 10. Replay a macro by clicking on the play button (tooltip: 'Play Macro').
 11. To import a macro, click on the button with tooltip: 'Upload Macro'.
 #### Server Access
-To more conveniently view the application, visit (http://cs48-vps.coolstar.org/finalproject/dj48/).  
+To more conveniently view the application, visit http://cs48-vps.coolstar.org/finalproject/dj48/.  
 The recording feature works on this server-hosted application.
 1. Load songs by clicking either upload button, and choosing mp3 files of your choice.  
    Samples are provided for convenience in 'samples' folder of repo.
