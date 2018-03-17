@@ -92,7 +92,7 @@ DJ48 is a web-based DJ application that allows users to upload and play tracks, 
 ### Build, Execute, and Run
 #### Local Access
   Note: Recorder feature requires web workers; some browsers may not allow this functionality on local files.  
-  In this case, see the below section 'Server Access'.
+  In this case, see the below section '[Server Access]'(https://github.com/coolstar/dj48#server-access).
 1. Clone repo.
 2. Checkout 'finalproject' branch.
 3. Open the top-level index.html file.
